@@ -1,0 +1,20 @@
+{
+  "metadata": {},
+  "require_auth_for_profile_image": false,
+  "is_active": true,
+  "preferred_languages": [],
+  "profile_url": "",
+  "discovery_keys": [],
+  "created_at": 1696187206,
+  "has_ever_logged_in": false,
+  "locale": "",
+  "access_token": "",
+  "is_shadow_blocked": false,
+  "user_id": "test",
+  "nickname": "test",
+  "session_tokens": [],
+  "phone_number": "",
+  "is_online": false,
+  "is_hide_me_from_friends": false,
+  "last_seen_at": -1
+}
