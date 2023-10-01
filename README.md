@@ -26,8 +26,7 @@ Sending a message to the group channel:
 ### Example Output of Running Java Code
 Formatted json output when we call the API to get the user information 
 (the user for which we want to extract information about has user_id: test).
-
-<img alt="formatted output" height="600" src="README_photo/screenshot_formatted_output.png" width="600"/>
+![formatted output](README_photo/screenshot_formatted_output.png)
 
 Unformatted json output of creating a new user, getting a message, and sending a message.
 ![Unformatted output](README_photo/screenshot_unformatted_output.png)
