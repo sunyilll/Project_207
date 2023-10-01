@@ -16,9 +16,12 @@ Chatting API: SendBird
 Documentation: https://sendbird.com/docs/chat/platform-api/v3/overview
 
 ### Example of Using API
-![Creating a user](photos/screenshot_create_user.png)
-![Creating a group channel of two users](photos/screenshot_group_channel.png)
-![Sending a message to the group channel](photos/screenshot_send_message.png)
+Creating a user:
+![Creating a user](README_photo/screenshot_create_user.png)
+Creating a group channel of two users:
+![Creating a group channel of two users](README_photo/screenshot_group_channel.png)
+Sending a message to the group channel:
+![Sending a message to the group channel](README_photo/screenshot_send_message.png)
 
 ### Example Output of Running Java Code
 
