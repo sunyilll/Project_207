@@ -25,6 +25,5 @@ Sending a message to the group channel:
 
 ### Example Output of Running Java Code
 
-### Techincal Problems
-
-
+### Technical Problems
+We have not yet encountered any technical problems. 
