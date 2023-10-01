@@ -24,7 +24,12 @@ Sending a message to the group channel:
 ![Sending a message to the group channel](README_photo/screenshot_send_message.png)
 
 ### Example Output of Running Java Code
+Formatted json output when we call the API to get the user information 
+(the user for which we want to extract information about has user_id: test).
+![formatted output](README_photo/screenshot_formatted_output.png)
 
-### Techincal Problems
+Unformatted json output of creating a new user, getting a message, and sending a message.
+![Unformatted output](README_photo/screenshot_unformatted_output.png)
 
-
+### Technical Problems
+We have not yet encountered any technical problems. 
