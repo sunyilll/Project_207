@@ -19,7 +19,7 @@ public class Main {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \"test\",\n\"nickname\": \"test\",\n\"profile_url\": \"\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \"test3\",\n\"nickname\": \"test\",\n\"profile_url\": \"\"}");
         Request request = new Request.Builder()
                 .url("https://api-D7382E93-9788-4C47-96BD-C1A030963830.sendbird.com/v3/users")
                 .method("POST", body)
@@ -29,7 +29,9 @@ public class Main {
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
+            System.out.println("Response body of creating a new user:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
@@ -47,7 +49,9 @@ public class Main {
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
+            System.out.println("Response body of getting a message");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
@@ -68,7 +72,9 @@ public class Main {
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
+            System.out.println("Response body of sending message:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
