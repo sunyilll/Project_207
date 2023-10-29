@@ -130,7 +130,7 @@ public class SendBirdAPI {
 
 
     }
-
+//qwq
     public static void main(String[] args) {
         getUser("test");
     }
