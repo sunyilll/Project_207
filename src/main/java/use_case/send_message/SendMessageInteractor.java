@@ -23,7 +23,7 @@ public class SendMessageInteractor implements SendMessageInputBoundary{
         if (!sendMessageDataAccessObject.sendMessage(message, user_id, channel)) {
             SendMessagePresenter.prepareFailView("Failed to send.");
         } else {
-            
+            //TODO
         }
     }
 }
