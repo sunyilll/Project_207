@@ -1,4 +1,4 @@
-package api;
+package main.java.api;
 
 import okhttp3.*;
 import org.json.JSONArray;
@@ -10,19 +10,27 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class SendBirdAPI {
-    private static final String API_URL = "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3";
+    // TODO: Change all the concrete API info to be passed in by parameter, initialized by constructor
+
+    private final String API_URL; // = "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3";
 
 
-    private static final String applicationId = "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5";
+    private final String applicationId; // = "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5";
     // you have to create your own API_TOKEN
-    private static final String API_TOKEN = System.getenv("API_TOKEN");
+    private final String API_TOKEN; // = System.getenv("API_TOKEN");
 
-    public static String getApiToken() {
-        return API_TOKEN;
+//    public static String getApiToken() {
+//        return API_TOKEN;
+//    }
+
+    public SendBirdAPI(String apiURL, String applicationId, String apiToken) {
+        this.API_URL = apiURL;
+        this.applicationId = applicationId;
+        this.API_TOKEN = apiToken;
+
     }
 
-
-    public static void setUser(String user_id, String nickname, String profile_url, boolean issue_access_token) {
+    public void setUser(String user_id, String nickname, String profile_url, boolean issue_access_token) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -54,7 +62,7 @@ public class SendBirdAPI {
 
 
     //    GET https://api-{application_id}.sendbird.com/v3/users/{user_id}
-    public static void getUser(String user_id) {
+    public void getUser(String user_id) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -106,7 +114,7 @@ public class SendBirdAPI {
         }
     }
 
-    public void sendMessage() {
+    public boolean sendMessage() {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -122,7 +130,12 @@ public class SendBirdAPI {
             Response response = client.newCall(request).execute();
             System.out.println("Response body of sending message:");
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
+//            System.out.println(responseBody);
+            if (responseBody.has("error") && responseBody.get("error").equals(true)) {
+                return false;
+            } else {
+                return true;
+            }
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
@@ -131,7 +144,7 @@ public class SendBirdAPI {
 
     }
 //qwq
-    public static void main(String[] args) {
+    public void main(String[] args) {
         getUser("test");
     }
 }
