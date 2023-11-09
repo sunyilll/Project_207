@@ -1,6 +1,15 @@
 package main.java.interface_adapter.send_message;
 
+import main.java.entity.ChatChannel;
+
 public class SendMessageState {
+    //TODO
+    private String messgae = "";
+    private String messageError = null;
+    private String user_id = "";
+    private String user_id_error = null;
+    private ChatChannel channel = new ChatChannel();
+    private String channelError = null;
     private boolean messageSentSuccessful = false;
 
     private String errorMessage = null;

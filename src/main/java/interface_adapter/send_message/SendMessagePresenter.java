@@ -20,6 +20,7 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
     }
 
     public static void prepareFailView(String error) {
+        //TODO
 
     }
 
