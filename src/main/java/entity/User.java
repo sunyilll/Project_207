@@ -1,4 +1,5 @@
 package main.java.entity;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -17,18 +18,18 @@ public class User implements Student, Tutor{
     // Variables for Tutor
     public List<Integer> tutorRatings = new ArrayList<>();
     public float tutorRating; // the average of all ratings
-    public Map<String, Course> coursesToTeach;
+    public Map<String, Course> coursesToTeach = new HashMap<>();
     public List<String> tutorAvailability = new ArrayList<>();	// available hours
-    public Map<String, Integer> expectedWage;  // mapping of course to expected wage
+    public Map<String, Integer> expectedWage = new HashMap<>();  // mapping of course to expected wage
     public List<String> preferredModeOfTeaching = new ArrayList<>();
 
     // Variables for Student
     public List<Integer> studentRatings = new ArrayList<>();
     public float studentRating;
-    public Map<String, Course> coursesToLearn;
-    public Map<String, Integer> expectedPrice;  // how much the user would like to pay for each course
+    public Map<String, Course> coursesToLearn = new HashMap<>();
+    public Map<String, Integer> expectedPrice = new HashMap<>();
+    // how much the user would like to pay for each course
     public List<String> preferredModeOfLearning = new ArrayList<>();
-
 
     public User(String userid, String nickname, String password, String gender){
         this.userid = userid;

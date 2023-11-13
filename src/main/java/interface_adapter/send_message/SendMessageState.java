@@ -8,7 +8,7 @@ public class SendMessageState {
     private String messageError = null;
     private String user_id = "";
     private String user_id_error = null;
-    private ChatChannel channel = new ChatChannel();
+    private ChatChannel channel = null;
     private String channelError = null;
     private boolean messageSentSuccessful = false;
 
