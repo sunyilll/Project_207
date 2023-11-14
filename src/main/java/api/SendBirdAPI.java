@@ -1,5 +1,6 @@
 package main.java.api;
 
+import main.java.entity.ChatChannel;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,13 +115,16 @@ public class SendBirdAPI {
         }
     }
 
-    public boolean sendMessage() {
+    public boolean sendMessage(String user_id, String message, ChatChannel channel) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"message_type\": \"MESG\",\n\"user_id\": \"randomperson1\",\n\"message\": \"Hello, Bob!\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"message_type\": \"MESG\",\n\"user_id\": \"" + user_id + "\",\n\"message\": \"" + message + "\"}");
+
+//                "{\"message_type\": \"MESG\",\n\"user_id\": \"randomperson1\",\n\"message\": \"Hello, Bob!\"}");
+//                        .url("https://api-d7382e93-9788-4c47-96bd-c1a030963830.sendbird.com/v3/group_channels/sendbird_group_channel_196644307_c84d1445faa3181e31b0bfe491c8f62413505bbe/messages")
         Request request = new Request.Builder()
-                .url("https://api-d7382e93-9788-4c47-96bd-c1a030963830.sendbird.com/v3/group_channels/sendbird_group_channel_196644307_c84d1445faa3181e31b0bfe491c8f62413505bbe/messages")
+                .url(channel.getChannelURL())
                 .post(body)
                 .addHeader("content-type", "application/json")
                 .addHeader("Api-Token", "e1f5fd4563f9eb2a9435349febb34c4fb2428c4b")

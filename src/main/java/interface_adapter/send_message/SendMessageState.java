@@ -4,7 +4,7 @@ import main.java.entity.ChatChannel;
 
 public class SendMessageState {
     //TODO
-    private String messgae = "";
+    private String message = "";
     private String messageError = null;
     private String user_id = "";
     private String user_id_error = null;
@@ -21,6 +21,31 @@ public class SendMessageState {
 
     public SendMessageState() {
     }
+
+    public String getMessage(){
+        return message;
+    }
+
+    public void setMessgae(String messgae){
+        this.message = messgae;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id){
+        this.user_id = user_id;
+    }
+
+    public ChatChannel getChannel(){
+        return this.channel;
+    }
+
+    public void setChannel(ChatChannel channel){
+        this.channel = channel;
+    }
+
 
     public boolean isMessageSentSuccessful() {
         return messageSentSuccessful;

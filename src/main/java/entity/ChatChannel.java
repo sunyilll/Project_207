@@ -28,4 +28,8 @@ public class ChatChannel {
     public void removeUser(User user){
         this.members.remove(user.getUserID());
     }
+
+    public String getChannelURL(){
+        return channelURL;
+    }
 }

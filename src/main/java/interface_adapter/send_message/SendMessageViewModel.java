@@ -9,10 +9,16 @@ import java.beans.PropertyChangeListener;
 
 public class SendMessageViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Chat Channel";
-    private final User currentUser;
-    private final ChatChannel channel;
+    private User currentUser = null;
+    private ChatChannel channel = null;
 
     private SendMessageState state = new SendMessageState();
+
+    public SendMessageViewModel(){
+        super("send message");
+
+    }
+
     public SendMessageViewModel(User currentUser, ChatChannel channel){
         super("send message");
         this.currentUser = currentUser;
