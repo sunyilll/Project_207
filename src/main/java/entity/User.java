@@ -9,7 +9,7 @@ public class User implements Student, Tutor{
     private final String userid;
     private String nickname;
     private String password;
-    private String gender;
+    private String pronouns;
     private Map<String, User> following;
     private Map<String, User> follower;
     private List<String> personalityTag = new ArrayList<>();
@@ -31,11 +31,11 @@ public class User implements Student, Tutor{
     // how much the user would like to pay for each course
     public List<String> preferredModeOfLearning = new ArrayList<>();
 
-    public User(String userid, String nickname, String password, String gender){
+    public User(String userid, String nickname, String password, String pronouns){
         this.userid = userid;
         this.nickname = nickname;
         this.password = password;
-        this.gender = gender;
+        this.pronouns = pronouns;
     }
 
     public String getUserID() {
@@ -60,12 +60,12 @@ public class User implements Student, Tutor{
         return true;
     }
 
-    public String getGender() {
-        return this.gender;
+    public String getPronouns() {
+        return this.pronouns;
     }
 
-    public boolean setGender(String gender) {
-        this.gender = gender;
+    public boolean setPronouns(String pronouns) {
+        this.pronouns = pronouns;
         return true;
     }
 
