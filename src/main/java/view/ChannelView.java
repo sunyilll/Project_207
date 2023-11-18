@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 
 public class ChannelView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "channel";
-    private final SendMessageViewModel sendMessageViewModel;
+    private final SendMessageViewModel sendMessageViewModelw;
 
     private final SendMessageController sendMessageControllerw;
 
@@ -25,10 +25,11 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
     private JTextArea chatArea;
 
     public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController){
-        this.sendMessageViewModel = sendMessageViewModel;
+        this.sendMessageViewModelw = sendMessageViewModel;
         this.sendMessageControllerw = sendMessageController;
         this.send = new JButton("send");
-        sendMessageViewModel.addPropertyChangeListener(this);
+        sendMessageViewModelw.addPropertyChangeListener(this);
+        sendMessageViewModelw.firePropertyChanged();
 
         JLabel title = new JLabel(sendMessageViewModel.TITLE_LABEL);
 
@@ -50,7 +51,9 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)){
-                            SendMessageState currentState = sendMessageViewModel.getState();
+
+                            SendMessageState currentState = sendMessageViewModelw.getState();
+                            System.out.println(currentState);
 
                             sendMessageControllerw.execute(
                                     currentState.getMessage(),
@@ -58,6 +61,27 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                                     currentState.getChannel()
                             );
                         }
+                    }
+                }
+        );
+
+        messageInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SendMessageState currentState = sendMessageViewModelw.getState();
+                        currentState.setMessgae(messageInputField.getText() + e.getKeyChar());
+                        sendMessageViewModelw.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
                     }
                 }
         );
@@ -76,7 +100,10 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
     }
     public void actionPerformed(ActionEvent evt){}
     public void propertyChange(PropertyChangeEvent evt){  // called when view model firePropertyChange()
-
+        SendMessageState sendMessageState = (SendMessageState) evt.getNewValue();
+        if(sendMessageState.getErrorMessage() != null) {
+            JOptionPane.showMessageDialog(this, sendMessageState.getErrorMessage());
+        }
     }
 
 

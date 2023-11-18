@@ -124,21 +124,24 @@ public class SendBirdAPI {
 //                "{\"message_type\": \"MESG\",\n\"user_id\": \"randomperson1\",\n\"message\": \"Hello, Bob!\"}");
 //                        .url("https://api-d7382e93-9788-4c47-96bd-c1a030963830.sendbird.com/v3/group_channels/sendbird_group_channel_196644307_c84d1445faa3181e31b0bfe491c8f62413505bbe/messages")
         Request request = new Request.Builder()
-                .url(channel.getChannelURL())
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/" + channel.getChannelURL() + "/messages")
                 .post(body)
                 .addHeader("content-type", "application/json")
-                .addHeader("Api-Token", "e1f5fd4563f9eb2a9435349febb34c4fb2428c4b")
+                .addHeader("Api-Token", API_TOKEN)
                 .build();
 
         try {
             Response response = client.newCall(request).execute();
             System.out.println("Response body of sending message:");
             JSONObject responseBody = new JSONObject(response.body().string());
-//            System.out.println(responseBody);
-            if (responseBody.has("error") && responseBody.get("error").equals(true)) {
+            System.out.println(responseBody);
+            if (responseBody.has("error")) {
+//                 && responseBody.get("error").equals(true)
                 return false;
             } else {
+                System.out.println("sent");
                 return true;
+
             }
 
         } catch (IOException | JSONException e) {
@@ -148,7 +151,7 @@ public class SendBirdAPI {
 
     }
 //qwq
-    public void main(String[] args) {
-        getUser("test");
-    }
+//    public void main(String[] args) {
+//        getUser("test");
+//    }
 }
