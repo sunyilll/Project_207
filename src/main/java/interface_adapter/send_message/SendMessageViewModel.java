@@ -14,21 +14,28 @@ public class SendMessageViewModel extends ViewModel {
 
     private SendMessageState state = new SendMessageState();
 
-    public SendMessageViewModel(){
-        super("send message");
+//    public SendMessageViewModel(){
+//        super("send message");
+//    }//这个不应该存在，必须用user init
 
-    }
-
-    public SendMessageViewModel(User currentUser, ChatChannel channel){
+    public SendMessageViewModel(User currentUser, ChatChannel channel, SendMessageState state){
         super("send message");
         this.currentUser = currentUser;
         this.channel = channel;
+        this.state = state;
     }
     public void setState(SendMessageState state){this.state = state;}
     public SendMessageState getState(){return state;}
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     // Presenter call firePropertyChanged() to let ViewModel know state changed
-    public void firePropertyChanged(){support.firePropertyChange("state", null, this.state);}
+    public void firePropertyChanged(){
+        if (this.state.getUser_id() != null) {
+            support.firePropertyChange("state", null, this.state);
+        } else {
+            this.state.setUser_id(currentUser.getUserID());
+            this.state.setChannel(channel);
+        }
+    }
     public void addPropertyChangeListener(PropertyChangeListener listener){
         support.addPropertyChangeListener(listener);
     }
