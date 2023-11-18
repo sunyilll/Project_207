@@ -3,11 +3,14 @@ package main.java.api;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,6 +117,50 @@ public class APIUsedForTesting {
 
 
     }
+    public ArrayList<String> getMessageListFromNovTenth(ChatChannel channel){
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+
+        LocalDateTime dateTime = LocalDateTime.of(2023, 11, 10, 0, 0, 0);
+
+        // Get the Unix timestamp (seconds since Unix epoch)
+        long unixTimestamp = dateTime.toEpochSecond(ZoneOffset.UTC);
+
+
+        RequestBody body = RequestBody.create(mediaType, "{\"channel_type\": \"group_channels\",\n\"channel_url\": \"" + channel.getChannelURL() + "\",\n\"message_ts\": \"" + unixTimestamp + "\"}");
+
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/" + channel.getChannelURL() + "/messages?channel_type=group_channels&channel_url="
+                        + channel.getChannelURL() + "&message_ts=" + unixTimestamp)
+                .get()
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println("Response body of sending message:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
+            if (responseBody.has("error")) {
+//                 && responseBody.get("error").equals(true)
+                throw new JSONException("Error Object is returned");
+            } else {
+                JSONArray messageList =  responseBody.getJSONArray("messages");
+                ArrayList<String> messageListToReturn = new ArrayList<String>();
+                for (int i = 0; i < messageList.length(); i++) {
+                    JSONObject obj = messageList.getJSONObject(i);
+                    String message = obj.getString("message");
+                    messageListToReturn.add(message);
+                }
+                return messageListToReturn;
+
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
@@ -134,7 +181,9 @@ public class APIUsedForTesting {
 
 
         APIUsedForTesting a = new APIUsedForTesting();
-        a.sendMessage("test1", "message1", channel);
+        ArrayList<String> x = a.getMessageListFromNovTenth(channel);
+
+        System.out.println(x);
 
 //        String user_id = "test1";
 //        String message = "message1";
@@ -152,3 +201,5 @@ public class APIUsedForTesting {
 //    Response body of sending message:
 //        {"silent":false,"data":"","message_events":{"update_last_message":true,"update_mention_count":true,"send_push_notification":"receivers","update_unread_count":true},"custom_type":"","created_at":1700271912438,"message_id":83152821,"is_removed":false,"mention_type":"users","type":"MESG","message":"message1","channel_url":"sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7","is_op_msg":false,"file":{},"message_retention_hour":-1,"updated_at":0,"translations":{},"mentioned_users":[],"channel_type":"group","user":{"metadata":{},"require_auth_for_profile_image":false,"role":"","is_active":true,"user_id":"test1","profile_url":"","nickname":"test1"},"message_survival_seconds":-1}
 //        sent
+
+//{"messages":[{"silent":false,"data":"","message_events":{"update_last_message":true,"update_mention_count":true,"send_push_notification":"receivers","update_unread_count":true},"custom_type":"","created_at":1700271912438,"message_id":83152821,"is_removed":false,"mention_type":"users","type":"MESG","message":"message1","channel_url":"sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7","is_op_msg":false,"file":{},"message_retention_hour":-1,"updated_at":0,"translations":{},"mentioned_users":[],"channel_type":"group","user":{"metadata":{},"require_auth_for_profile_image":false,"role":"","is_active":true,"user_id":"test1","profile_url":"","nickname":"test1"},"message_survival_seconds":-1},{"silent":false,"data":"","message_events":{"update_last_message":true,"update_mention_count":true,"send_push_notification":"receivers","update_unread_count":true},"custom_type":"","created_at":1700277100486,"message_id":83154860,"is_removed":false,"mention_type":"users","type":"MESG","message":"ha","channel_url":"sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7","is_op_msg":false,"file":{},"message_retention_hour":-1,"updated_at":0,"translations":{},"mentioned_users":[],"channel_type":"group","user":{"metadata":{},"require_auth_for_profile_image":false,"role":"","is_active":true,"user_id":"test1","profile_url":"","nickname":"test1"},"message_survival_seconds":-1}]}

@@ -7,6 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -150,8 +153,51 @@ public class SendBirdAPI {
 
 
     }
-//qwq
-//    public void main(String[] args) {
-//        getUser("test");
-//    }
+
+    public ArrayList<String> getMessageListFromNovTenth(ChatChannel channel){
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+
+        LocalDateTime dateTime = LocalDateTime.of(2023, 11, 10, 0, 0, 0);
+
+        // Get the Unix timestamp (seconds since Unix epoch)
+        long unixTimestamp = dateTime.toEpochSecond(ZoneOffset.UTC);
+
+
+        RequestBody body = RequestBody.create(mediaType, "{\"channel_type\": \"group_channels\",\n\"channel_url\": \"" + channel.getChannelURL() + "\",\n\"message_ts\": \"" + unixTimestamp + "\"}");
+
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/" + channel.getChannelURL() + "/messages?channel_type=group_channels&channel_url="
+                        + channel.getChannelURL() + "&message_ts=" + unixTimestamp)
+                .get()
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println("Response body of sending message:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
+            if (responseBody.has("error")) {
+//                 && responseBody.get("error").equals(true)
+                throw new JSONException("Error Object is returned");
+            } else {
+                JSONArray messageList =  responseBody.getJSONArray("messages");
+                ArrayList<String> messageListToReturn = new ArrayList<String>();
+                for (int i = 0; i < messageList.length(); i++) {
+                    JSONObject obj = messageList.getJSONObject(i);
+                    String message = obj.getString("message");
+                    messageListToReturn.add(message);
+                }
+                return messageListToReturn;
+
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
