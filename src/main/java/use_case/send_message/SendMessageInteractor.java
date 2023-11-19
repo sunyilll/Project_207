@@ -21,9 +21,10 @@ public class SendMessageInteractor implements SendMessageInputBoundary{
         String user_id = sendMessageInputData.getUserId();
         ChatChannel channel = sendMessageInputData.getChannel();
         if (!sendMessageDataAccessObject.sendMessage(message, user_id, channel)) {
-            SendMessagePresenter.prepareFailView("Failed to send.");
+            sendMessagePresenter.prepareFailView("Failed to send.");
         } else {
-            //TODO
+            SendMessageOutputData sendMessageOutputData = new SendMessageOutputData("Sent successfully.");
+            sendMessagePresenter.prepareSuccessView(sendMessageOutputData);
         }
     }
 }

@@ -11,5 +11,6 @@ public class SendMessageController {
     }
     public void execute(String message, String user_id, ChatChannel channel) {
         SendMessageInputData sendMessageInputData = new SendMessageInputData(message, user_id, channel);
+        sendMessageUseCaseInteractor.execute(sendMessageInputData);
     }
 }
