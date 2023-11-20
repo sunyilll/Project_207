@@ -66,7 +66,7 @@ public class Main {
         viewManagerModel.setActiveView(channelView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+//        application.pack();
         application.setVisible(true);
 
     }
