@@ -1,13 +1,12 @@
 package main.java.app;
 
 import main.java.data_access.SendMessageDataAccessObject;
-import main.java.entity.ChatChannel;
-import main.java.entity.User;
+import main.java.entity.*;
 import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.send_message.SendMessageState;
-import main.java.interface_adapter.send_message.SendMessageViewModel;
-import main.java.view.ChannelView;
-import main.java.view.ViewManager;
+import main.java.interface_adapter.go_to_personal_profile.*;
+import main.java.interface_adapter.send_message.*;
+import main.java.use_case.go_to_personal_profile.*;
+import main.java.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,55 +17,47 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame application = new JFrame("Send Message example");
+        // Build the main program window, the main panel containing the
+        // various cards, and the layout, and stitch them together.
+
+        // The main application window.
+        JFrame application = new JFrame("Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
+
+        // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
+        // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
+        // The data for the views, such as username and password, are in the ViewModels.
+        // This information will be changed by a presenter object that is reporting the
+        // results from the use case. The ViewModels are observable, and will
+        // be observed by the Views.
+        User current_user = new User("user1", "sushidog", "123456","she/her");
+        GoToPersonalProfileViewModel personalProfileViewModel = new GoToPersonalProfileViewModel();
 
-        /*
-        * 这里手动initialize一个currentuser和chatchannel, state
-        * */
-        User testUser1 = new User("test1", "test1", "test1", "male");
-        User testUser2 = new User("test1", "test1", "test1", "male");
+        GoToPersonalProfileOutputBoundary personalProfilePresenter = new GoToPersonalProfilePresenter(personalProfileViewModel, viewManagerModel);
 
-        Map<String, User> testMap = new HashMap<>();
-        testMap.put("test1", testUser1);
-        testMap.put("test2", testUser2);
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        GoToPersonalProfileInteractor personalProfileInteractor = new GoToPersonalProfileInteractor(personalProfilePresenter);
 
+        GoToPersonalProfileController personalProfileController = new GoToPersonalProfileController(personalProfileInteractor);
 
-        ChatChannel channel = new ChatChannel(testMap, currentDateTime, "sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7");
+        GoToPersonalProfileState personalProfileState = new GoToPersonalProfileState();
+        personalProfileState.setUser(current_user);
+        personalProfileViewModel.setState(personalProfileState);
 
-        SendMessageState testState = new SendMessageState(testUser1, channel);
-        /*
-        * 这里结束手动initialize一个currentuser和chatchannel
-        * */
+        PersonalProfileView personalProfileView = new PersonalProfileView(personalProfileController, personalProfileViewModel);
+        views.add(personalProfileView, personalProfileView.viewName);
 
-        SendMessageViewModel sendMessageViewModel = new SendMessageViewModel(testUser1, channel, testState);
-        SendMessageDataAccessObject sendMessageDataAccessObject;
-        try {
-            sendMessageDataAccessObject = new SendMessageDataAccessObject(
-                    "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
-                    "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5"
-
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject);
-        views.add(channelView, channelView.viewName);
-
-        viewManagerModel.setActiveView(channelView.viewName);
+        viewManagerModel.setActiveView(personalProfileView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
-
     }
 }

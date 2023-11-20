@@ -14,6 +14,7 @@ public class User implements Student, Tutor{
     private Map<String, User> follower;
     private List<String> personalityTag = new ArrayList<>();
     private String profileURL = null;
+    private String description = null;
 
     // Variables for Tutor
     public List<Integer> tutorRatings = new ArrayList<>();
@@ -67,6 +68,10 @@ public class User implements Student, Tutor{
     public boolean setPronouns(String pronouns) {
         this.pronouns = pronouns;
         return true;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public boolean isFollwing(User user) {

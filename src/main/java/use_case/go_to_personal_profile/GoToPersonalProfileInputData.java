@@ -9,7 +9,11 @@ public class GoToPersonalProfileInputData {
         this.User = user;
     }
 
-    String getNickname() {
-        return User.getNickname();
+    boolean isUserLoggedIn() {
+        return User != null;
+    }
+
+    User getUser() {
+        return User;
     }
 }

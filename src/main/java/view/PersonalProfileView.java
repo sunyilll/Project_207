@@ -19,7 +19,7 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
     private final JButton signOut;
     private final JButton home;
     private final JButton chatList;
-    private final JButton privateProfle;
+    private final JButton personalProfile;
 
     public PersonalProfileView(GoToPersonalProfileController personalProfileController, GoToPersonalProfileViewModel personalProfileViewModel) {
         this.personalProfileController = personalProfileController;
@@ -63,8 +63,8 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
         bottomBar.add(home);
         chatList = new JButton(personalProfileViewModel.CHAT_LIST_BUTTON_LABEL);
         bottomBar.add(chatList);
-        privateProfle = new JButton(personalProfileViewModel.PRIVATE_PROFILE_BUTTON_LABEL);
-        bottomBar.add(privateProfle);
+        personalProfile = new JButton(personalProfileViewModel.PRIVATE_PROFILE_BUTTON_LABEL);
+        bottomBar.add(personalProfile);
         bottomBar.setLayout(new BoxLayout(bottomBar, BoxLayout.X_AXIS));
         bottomBar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -85,7 +85,9 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(personalProfile)) {
+            personalProfileController.excute(personalProfileViewModel.getState().getUser());
+        }
     }
 
     @Override
