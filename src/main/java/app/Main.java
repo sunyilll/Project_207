@@ -7,6 +7,7 @@ import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.send_message.SendMessageState;
 import main.java.interface_adapter.send_message.SendMessageViewModel;
 import main.java.view.ChannelView;
+import main.java.view.FrameModel;
 import main.java.view.ViewManager;
 
 import javax.swing.*;
@@ -18,11 +19,11 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame application = new JFrame("Send Message example");
+        JFrame application = new FrameModel("Tutoring APP");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
-        JPanel views = new JPanel(cardLayout);
+        JPanel views = new JPanel(cardLayout);  // 所有view加入这个views
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
