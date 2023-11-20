@@ -1,6 +1,7 @@
 package main.java.interface_adapter.send_message;
 
 import main.java.entity.ChatChannel;
+import main.java.entity.User;
 
 public class SendMessageState {
     //TODO
@@ -17,9 +18,20 @@ public class SendMessageState {
     public SendMessageState(SendMessageState copy) {
         this.messageSentSuccessful = copy.messageSentSuccessful;
         this.errorMessage = copy.errorMessage;
+        this.message = copy.message;
+        this.user_id = copy.user_id;
+        this.channel = copy.channel;
+        this.messageError = copy.messageError;;
+        this.user_id_error = copy.user_id_error;
+        this.channelError = copy.channelError;
     }
 
-    public SendMessageState() {
+    public SendMessageState(User user, ChatChannel channel) {
+        this.user_id = user.getUserID();
+        this.channel = channel;
+    }
+    public SendMessageState(){
+
     }
 
     public String getMessage(){
@@ -66,7 +78,6 @@ public class SendMessageState {
     public String toString() {
         return "SendMessageState{" +
                 "messageSentSuccessful=" + messageSentSuccessful +
-                ", errorMessage='" + errorMessage + '\'' +
-                '}';
+                ", errorMessage='" + errorMessage +"\"";
     }
 }
