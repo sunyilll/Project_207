@@ -1,5 +1,6 @@
 package main.java.data_access;
 
+import kotlin.Pair;
 import main.java.api.SendBirdAPI;
 import main.java.entity.ChatChannel;
 import main.java.use_case.refresh_chat_page.RefreshChatPageDataAccessInterface;
@@ -13,7 +14,7 @@ public class RefreshChatPageDataAccessObject implements RefreshChatPageDataAcces
     }
 
     @Override
-    public ArrayList<String> getMessageList(ChatChannel channel) {
+    public ArrayList<Pair<String, String>> getMessageList(ChatChannel channel) {
         SendBirdAPI sendBirdAPIObject = new SendBirdAPI("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
                 "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5",
                 "0ecfef313ab2989479b70e30e3ee37a1d105b770");
