@@ -1,5 +1,6 @@
 package main.java.use_case.refresh_chat_page;
 
+import kotlin.Pair;
 import main.java.entity.ChatChannel;
 
 import java.util.ArrayList;
@@ -15,7 +16,9 @@ public class RefreshChatPageInteractor implements RefreshChatPageInputBoundary{
     public void execute(RefreshChatPageInputData refreshChatPageInputData) {
         ChatChannel channel = refreshChatPageInputData.getChannel();
         try{
-            ArrayList<String> messageList = refreshChatPageDataAccessObject.getMessageList(channel);
+            ArrayList<Pair<String, String>> messageList = refreshChatPageDataAccessObject.getMessageList(channel);
+            System.out.println(messageList);
+            System.out.println("DAO");
             RefreshChatPageOutputData refreshChatPageOutputData = new RefreshChatPageOutputData(messageList);
             refreshChatPagePresenter.prepareSuccessView(refreshChatPageOutputData);
         } catch (RuntimeException e){

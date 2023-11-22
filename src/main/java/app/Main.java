@@ -1,12 +1,16 @@
 package main.java.app;
 
+import main.java.data_access.RefreshChatPageDataAccessObject;
 import main.java.data_access.SendMessageDataAccessObject;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.refresh_chat_page.RefreshChatPageState;
+import main.java.interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 import main.java.interface_adapter.send_message.SendMessageState;
 import main.java.interface_adapter.send_message.SendMessageViewModel;
-import main.java.view.ChannelView;
+import main.java.view.ChannelView.ChannelView;
+import main.java.view.FrameModel;
 import main.java.view.ViewManager;
 
 import javax.swing.*;
@@ -18,7 +22,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame application = new JFrame("Send Message example");
+        FrameModel application = new FrameModel("Send Message example");
+//        application.setVisible(true);
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -44,28 +49,35 @@ public class Main {
         ChatChannel channel = new ChatChannel(testMap, currentDateTime, "sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7");
 
         SendMessageState testState = new SendMessageState(testUser1, channel);
+        RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
+//        SendMessageState testState = new SendMessageState();
         /*
         * 这里结束手动initialize一个currentuser和chatchannel
         * */
 
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel(testUser1, channel, testState);
         SendMessageDataAccessObject sendMessageDataAccessObject;
+
+        RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel(testUser1, channel, refreshTestState);
+        RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
+
         try {
             sendMessageDataAccessObject = new SendMessageDataAccessObject(
                     "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
                     "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5"
 
             );
+            refreshChatPageDataAccessObject = new RefreshChatPageDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject);
+        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject);
         views.add(channelView, channelView.viewName);
 
         viewManagerModel.setActiveView(channelView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+//        application.pack();
         application.setVisible(true);
 
     }
