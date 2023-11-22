@@ -2,20 +2,18 @@ package main.java.view;
 
 import javax.swing.*;
 
-public class ViewWithHomeBar extends FrameModel{
+public class ViewWithHomeBar extends JPanel{
     private JPanel mainPanel;
     private JPanel homePanel;
     private JButton searchButton;
     private JButton profileButton;
     private JButton messageButton;
 
-    ViewWithHomeBar(){
-        super("ViewNamexxxx");
-        super.setContentPane(mainPanel);
-        super.setVisible(true);
-    }
+    ViewWithHomeBar(){}
 
     public static void main(String[] args) {
-        new ViewWithHomeBar();
+        JFrame f = new FrameModel("SearchView");
+        f.add(new ViewWithHomeBar());
+        f.setVisible(true);
     }
 }

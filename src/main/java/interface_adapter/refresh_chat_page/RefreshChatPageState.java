@@ -1,5 +1,6 @@
 package main.java.interface_adapter.refresh_chat_page;
 
+import kotlin.Pair;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public class RefreshChatPageState {
     private ChatChannel channel = null;
-    private ArrayList<String> messageList = null;
+    private ArrayList<Pair<String, String>> messageList = null;
     private String user_id = "";
     private boolean refreshSuccessful = false;
     private String errorMessage = null;
@@ -38,10 +39,10 @@ public class RefreshChatPageState {
     public String getUser_id(){
         return user_id;
     }
-    public void setMessageList(ArrayList<String> messageList){
+    public void setMessageList(ArrayList<Pair<String, String>> messageList){
         this.messageList = messageList;
     }
-    public ArrayList<String> getMessageList(){
+    public ArrayList<Pair<String, String>> getMessageList(){
         return messageList;
     }
     public void setRefreshSuccessful(boolean refreshSuccessful){
