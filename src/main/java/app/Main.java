@@ -9,7 +9,10 @@ import main.java.interface_adapter.refresh_chat_page.RefreshChatPageState;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 import main.java.interface_adapter.send_message.SendMessageState;
 import main.java.interface_adapter.send_message.SendMessageViewModel;
+
 import main.java.view.ChannelView.ChannelView;
+
+
 import main.java.view.FrameModel;
 import main.java.view.ViewManager;
 
@@ -22,12 +25,16 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        FrameModel application = new FrameModel("Send Message example");
+
+//         FrameModel application = new FrameModel("Send Message example");
 //        application.setVisible(true);
+
+        JFrame application = new FrameModel("Tutoring APP");
+
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
-        JPanel views = new JPanel(cardLayout);
+        JPanel views = new JPanel(cardLayout);  // 所有view加入这个views
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
