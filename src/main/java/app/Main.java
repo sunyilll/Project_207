@@ -1,63 +1,63 @@
 package main.java.app;
 
-import main.java.data_access.SendMessageDataAccessObject;
+import main.java.data_access.*;
 import main.java.entity.*;
-import main.java.interface_adapter.ViewManagerModel;
-import main.java.interface_adapter.go_to_personal_profile.*;
-import main.java.interface_adapter.send_message.*;
-import main.java.use_case.go_to_personal_profile.*;
 import main.java.view.*;
+
+import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.To_signup.ToSignupViewModel;
+import main.java.interface_adapter.login.LoginViewModel;
+import main.java.interface_adapter.signup.SignupViewModel;
+import main.java.interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
+import main.java.interface_adapter.send_message.SendMessageViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Main {
-    public static void main(String[] args) {
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
 
-        // The main application window.
-        JFrame application = new JFrame("Example");
+    public static void main(String[] args) {
+        // Login & Signup
+        JFrame application = new FrameModel("DYP");
+
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
 
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
+
         application.add(views);
 
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-        User current_user = new User("user1", "sushidog", "123456","she/her");
-        GoToPersonalProfileViewModel personalProfileViewModel = new GoToPersonalProfileViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        ToSignupViewModel toSignupViewModel = new ToSignupViewModel();
 
-        GoToPersonalProfileOutputBoundary personalProfilePresenter = new GoToPersonalProfilePresenter(personalProfileViewModel, viewManagerModel);
+        FileUserDataAccessObject userDataAccessObject;
+        try {
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserFactory() {
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        GoToPersonalProfileInteractor personalProfileInteractor = new GoToPersonalProfileInteractor(personalProfilePresenter);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        views.add(signupView, signupView.viewName);
 
-        GoToPersonalProfileController personalProfileController = new GoToPersonalProfileController(personalProfileInteractor);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject);
+        views.add(loginView, loginView.viewName);
 
-        GoToPersonalProfileState personalProfileState = new GoToPersonalProfileState();
-        personalProfileState.setUser(current_user);
-        personalProfileViewModel.setState(personalProfileState);
+        viewManagerModel.setActiveView(loginView.viewName);
 
-        PersonalProfileView personalProfileView = new PersonalProfileView(personalProfileController, personalProfileViewModel);
-        views.add(personalProfileView, personalProfileView.viewName);
-
-        viewManagerModel.setActiveView(personalProfileView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
         application.setVisible(true);
     }
 }

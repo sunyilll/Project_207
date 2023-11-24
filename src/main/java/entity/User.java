@@ -32,11 +32,10 @@ public class User implements Student, Tutor{
     // how much the user would like to pay for each course
     public List<String> preferredModeOfLearning = new ArrayList<>();
 
-    public User(String userid, String nickname, String password, String pronouns){
+    public User(String userid, String nickname, String password){
         this.userid = userid;
         this.nickname = nickname;
         this.password = password;
-        this.pronouns = pronouns;
     }
 
     public String getUserID() {

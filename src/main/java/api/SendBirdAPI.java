@@ -1,5 +1,6 @@
 package main.java.api;
 
+import kotlin.Pair;
 import main.java.entity.ChatChannel;
 import okhttp3.*;
 import org.json.JSONArray;
@@ -154,7 +155,7 @@ public class SendBirdAPI {
 
     }
 
-    public ArrayList<String> getMessageListFromNovTenth(ChatChannel channel){
+    public ArrayList<Pair<String, String>> getMessageListFromNovTenth(ChatChannel channel){
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -184,11 +185,13 @@ public class SendBirdAPI {
                 throw new JSONException("Error Object is returned");
             } else {
                 JSONArray messageList =  responseBody.getJSONArray("messages");
-                ArrayList<String> messageListToReturn = new ArrayList<String>();
+                ArrayList<Pair<String, String>> messageListToReturn = new ArrayList<Pair<String, String>>();
                 for (int i = 0; i < messageList.length(); i++) {
                     JSONObject obj = messageList.getJSONObject(i);
                     String message = obj.getString("message");
-                    messageListToReturn.add(message);
+                    JSONObject userObject = obj.getJSONObject("user");
+                    String userId = userObject.getString("user_id");
+                    messageListToReturn.add(new Pair<>(message, userId));
                 }
                 return messageListToReturn;
 
