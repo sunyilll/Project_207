@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileState;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 
 import javax.swing.*;
@@ -21,6 +22,9 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
     private final JButton chatList;
     private final JButton personalProfile;
 
+    private JLabel nickName;
+    private JLabel descriptionText;
+
     public PersonalProfileView(GoToPersonalProfileController personalProfileController, GoToPersonalProfileViewModel personalProfileViewModel) {
         this.personalProfileController = personalProfileController;
         this.personalProfileViewModel = personalProfileViewModel;
@@ -28,16 +32,16 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
         JLabel title = new JLabel(personalProfileViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel nickName = new JLabel(personalProfileViewModel.NICKNAME_TEXT);
+        nickName = new JLabel(personalProfileViewModel.nicknameText);
         nickName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        JLabel aboutMeTitle = new JLabel(personalProfileViewModel.ABOUT_ME_LABEL);
-        content.add(aboutMeTitle);
-        JLabel aboutMeText = new JLabel(personalProfileViewModel.ABOUT_ME_TEXT);
-        content.add(aboutMeText);
+        JLabel descriptionTitle = new JLabel(personalProfileViewModel.DESCRIPTION_LABEL);
+        content.add(descriptionTitle);
+        descriptionText = new JLabel(personalProfileViewModel.descriptionText);
+        content.add(descriptionText);
         JLabel personalityTags = new JLabel(personalProfileViewModel.PERSONALITY_TAGS_LABEL);
         content.add(personalityTags);
         // TODO: add personality tags
@@ -92,6 +96,9 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        GoToPersonalProfileState state = (GoToPersonalProfileState) evt.getNewValue();
+        personalProfileViewModel.setState(state);
+        nickName.setText(personalProfileViewModel.nicknameText);
+        descriptionText.setText(personalProfileViewModel.descriptionText);
     }
 }

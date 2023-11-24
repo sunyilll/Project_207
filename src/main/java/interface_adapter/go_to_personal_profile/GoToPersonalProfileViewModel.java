@@ -8,9 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class GoToPersonalProfileViewModel extends ViewModel {
     private GoToPersonalProfileState state = new GoToPersonalProfileState();
     public final String TITLE_LABEL = "My Profile View";
-    public String NICKNAME_TEXT = "Nickname";
-    public final String ABOUT_ME_LABEL = "About Me";
-    public String ABOUT_ME_TEXT = "HELLO WORLD";
+    public final String DESCRIPTION_LABEL = "About Me";
     public final String PERSONALITY_TAGS_LABEL = "Personality Tags";
     public final String COURSES_TO_TEACH_LABEL = "Courses to Teach";
     public final String TUTOR_RATING_LABEL = "Tutor Rating";
@@ -21,6 +19,15 @@ public class GoToPersonalProfileViewModel extends ViewModel {
     public final String HOME_BUTTON_LABEL = "Home";
     public final String CHAT_LIST_BUTTON_LABEL = "Chat";
     public final String PRIVATE_PROFILE_BUTTON_LABEL = "My Profile";
+
+    public String nicknameText = "NICKNAME";
+    public String descriptionText = "HELLO WORLD!";
+    public String pronounsText = "";
+    public String personalityTagsText = "";
+    public String coursesToTeachText = "None";
+    public String tutorRatingText = "N/A";
+    public String coursesToLearnText = "None";
+    public String studentRatingText = "N/A";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -48,7 +55,13 @@ public class GoToPersonalProfileViewModel extends ViewModel {
 
     public void setState(GoToPersonalProfileState state) {
         this.state = state;
-        this.NICKNAME_TEXT = state.getUser().getNickname();
-        this.ABOUT_ME_TEXT = state.getUser().getDescription();
+        nicknameText = state.getUser().getNickname();
+        descriptionText = state.getUser().getDescription();
+        pronounsText = state.getUser().getPronouns();
+        personalityTagsText = state.getUser().getPersonalityTags().toString();
+        coursesToTeachText = state.getUser().getCoursesToTeach().toString();
+        tutorRatingText = String.valueOf(state.getUser().getTutorRating());
+        coursesToLearnText = state.getUser().getCoursesToLearn().toString();
+        studentRatingText = String.valueOf(state.getUser().getStudentRating());
     }
 }

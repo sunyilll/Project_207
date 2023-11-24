@@ -2,6 +2,7 @@ package main.java.app;
 
 import main.java.data_access.*;
 import main.java.entity.*;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import main.java.view.*;
 
 import main.java.interface_adapter.ViewManagerModel;
@@ -39,6 +40,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         ToSignupViewModel toSignupViewModel = new ToSignupViewModel();
+        GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -51,8 +53,11 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel);
         views.add(loginView, loginView.viewName);
+
+        PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel);
+        views.add(personalProfileView, personalProfileView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
 

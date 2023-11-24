@@ -73,6 +73,20 @@ public class User implements Student, Tutor{
         return this.description;
     }
 
+    public boolean setDescription(String description) {
+        this.description = description;
+        return true;
+    }
+
+    public List<String> getPersonalityTags() {
+        return this.personalityTag;
+    }
+
+    public boolean addPersonalityTag(String tag) {
+        this.personalityTag.add(tag);
+        return true;
+    }
+
     public boolean isFollwing(User user) {
         return this.following.containsKey(user.getUserID());
     }
@@ -114,7 +128,10 @@ public class User implements Student, Tutor{
     }
 
     public boolean updateTutorRating(Integer rating){
-        // TODO check if rating is valid
+        // check if rating is valid: 0<= rating <= 5
+        if (rating < 0 || rating > 5) {
+            return false;
+        }
         this.tutorRatings.add(rating);
         this.tutorRating = (float) tutorRatings.stream().mapToInt(Integer::intValue).sum() / tutorRatings.size();
         return true;
@@ -160,7 +177,10 @@ public class User implements Student, Tutor{
     }
 
     public boolean updateStudentRating(Integer rating){
-        // TODO check if rating is valid
+        // check if rating is valid: 0<= rating <= 5
+        if (rating < 0 || rating > 5) {
+            return false;
+        }
         this.studentRatings.add(rating);
         this.studentRating = (float) studentRatings.stream().mapToInt(Integer::intValue).sum() / studentRatings.size();
         return true;
