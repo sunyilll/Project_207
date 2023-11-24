@@ -170,8 +170,8 @@ public class APIUsedForTesting {
     public static void main(String[] args) {
 
 
-        User testUser1 = new User("test1", "test1", "test1", "male");
-        User testUser2 = new User("test1", "test1", "test1", "male");
+        User testUser1 = new User("test1", "test1", "test1");
+        User testUser2 = new User("test1", "test1", "test1");
 
         Map<String, User> testMap = new HashMap<>();
         testMap.put("test1", testUser1);
