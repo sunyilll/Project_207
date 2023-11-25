@@ -2,17 +2,17 @@ package main.java.api;
 
 import kotlin.Pair;
 import main.java.entity.ChatChannel;
+import main.java.entity.User;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class SendBirdAPI {
     // TODO: Change all the concrete API info to be passed in by parameter, initialized by constructor
@@ -203,4 +203,59 @@ public class SendBirdAPI {
     }
 
 
+    public ArrayList<ChatChannel> getAllChatChannels(String userID) {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/?show_member=true&members_include_in=" + userID)
+                .get()
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println("Response body of sending message:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
+            if (responseBody.has("error")) {
+//                 && responseBody.get("error").equals(true)
+                throw new JSONException("Error Object is returned");
+            } else {
+                JSONArray channelList = responseBody.getJSONArray("channels");
+                ArrayList<ChatChannel> channelListToReturn = new ArrayList<ChatChannel>();
+
+                for (int i = 0; i < channelList.length(); i++) {
+                    JSONObject obj = channelList.getJSONObject(i);
+                    String channelURL = obj.getString("channel_url");
+
+                    JSONArray members = obj.getJSONArray("members");
+                    ArrayList<User> usersOfThisChannel = new ArrayList<User>();
+
+
+                    for (int j = 0; j < members.length(); j++) {
+                        JSONObject user = members.getJSONObject(j);
+                        String user_id = user.getString("user_id");
+                        String nickname = user.getString("nickname");
+                        String profileURL = user.getString("profile_url");
+                        usersOfThisChannel.add(new User(user_id, nickname, profileURL));
+                    }
+                    LocalDateTime creationTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(obj.getLong("created_at")), ZoneOffset.UTC);
+                    Map<String, User> userMap = new HashMap<>();
+                    for (User user : usersOfThisChannel) {
+                        userMap.put(user.getUserID(), user);
+                    }
+                    ChatChannel channel = new ChatChannel(userMap, creationTime, channelURL);
+
+
+                    channelListToReturn.add(channel);
+                }
+                return channelListToReturn;
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

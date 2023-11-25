@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -165,6 +166,67 @@ public class APIUsedForTesting {
         }
     }
 
+    public ArrayList<ChatChannel> getAllChatChannels(String userID) {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+
+//        members_include_in
+
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/?show_member=true&members_include_in=" + userID)
+                .get()
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println("Response body of sending message:");
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
+            if (responseBody.has("error")) {
+//                 && responseBody.get("error").equals(true)
+                throw new JSONException("Error Object is returned");
+            } else {
+                JSONArray channelList = responseBody.getJSONArray("channels");
+                ArrayList<ChatChannel> channelListToReturn = new ArrayList<ChatChannel>();
+
+                for (int i = 0; i < channelList.length(); i++) {
+                    JSONObject obj = channelList.getJSONObject(i);
+                    System.out.println("break\n\n");
+                    System.out.println(obj);
+                    String channelURL = obj.getString("channel_url");
+                    System.out.println(channelURL);
+
+                    JSONArray members = obj.getJSONArray("members");
+                    ArrayList<User> usersOfThisChannel = new ArrayList<User>();
+
+
+                    for (int j = 0; j < members.length(); j++) {
+                        JSONObject user = members.getJSONObject(j);
+                        String user_id = user.getString("user_id");
+                        String nickname = user.getString("nickname");
+                        String profileURL = user.getString("profile_url");
+                        usersOfThisChannel.add(new User(user_id, nickname, profileURL));
+                    }
+                    LocalDateTime creationTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(obj.getLong("created_at")), ZoneOffset.UTC);
+                    Map<String, User> userMap = new HashMap<>();
+                    for (User user : usersOfThisChannel) {
+                        userMap.put(user.getUserID(), user);
+                    }
+                    ChatChannel channel = new ChatChannel(userMap, creationTime, channelURL);
+
+
+                    channelListToReturn.add(channel);
+                }
+                return channelListToReturn;
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     public static void main(String[] args) {
@@ -184,9 +246,12 @@ public class APIUsedForTesting {
 
 
         APIUsedForTesting a = new APIUsedForTesting();
-        ArrayList<Pair<String, String>> x = a.getMessageListFromNovTenth(channel);
 
-        System.out.println(x);
+        ArrayList<ChatChannel> x = a.getAllChatChannels("test1");
+        System.out.println(x.get(0).getChannelURL());
+//        ArrayList<Pair<String, String>> x = a.getMessageListFromNovTenth(channel);
+//
+//        System.out.println(x);
 
 //        String user_id = "test1";
 //        String message = "message1";
@@ -195,6 +260,7 @@ public class APIUsedForTesting {
 
 //        System.out.println("{\"user_ids\": [\"test1\", \"test2\"], name: \"test1 and test2\", is_distinct: true}");
     }
+
 }
 
 //    Response{protocol=h2, code=200, message=, url=https://api-1f4c3d4f-01db-4a99-8704-be4cb1fe3ae5.sendbird.com/v3/group_channels}
