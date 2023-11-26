@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
 
 import main.java.interface_adapter.search_course.*;
 
-public class SearchView extends JPanel implements PropertyChangeListener {
+public class SearchCourseView extends JPanel implements PropertyChangeListener {
     private JPanel mainPanel;
     private JPanel homePanel;
     private JButton gosearchButton;
@@ -28,7 +28,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     private JButton searchButton;
     SearchCourseViewModel searchCourseViewModel;
 
-    SearchView(SearchCourseViewModel searchCourseViewModel, SearchCourseController searchCourseController){
+    public SearchCourseView(SearchCourseViewModel searchCourseViewModel, SearchCourseController searchCourseController){
         this.searchCourseViewModel = searchCourseViewModel;
         this.searchCourseViewModel.addPropertyChangeListener(this);
         this.add(mainPanel);
