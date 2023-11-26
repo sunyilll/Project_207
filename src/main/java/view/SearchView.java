@@ -1,47 +1,79 @@
 package main.java.view;
 
-import main.java.interface_adapter.search.SearchViewModel;
+import main.java.interface_adapter.search_course.SearchCourseViewModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.interface_adapter.search.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SearchView extends JPanel{
+import main.java.interface_adapter.search_course.*;
+
+public class SearchView extends JPanel implements PropertyChangeListener {
     private JPanel mainPanel;
     private JPanel homePanel;
-    private JButton searchButton;
-    private JButton profileButton;
-    private JButton messageButton;
+    private JButton gosearchButton;
+    private JButton goprofileButton;
+    private JButton gomessageButton;
     private JPanel upPanel;
     private JLabel searchLabel;
-    private JFormattedTextField searchField;
     private JPanel midPanel;
     private JButton isStudentButton;
-    private JButton searchbutton;
     private JButton isTutorButton;
-    SearchViewModel searchViewModel;
+    private JPanel searchPanel;
+    private JTextField searchField;
+    private JButton searchButton;
+    SearchCourseViewModel searchCourseViewModel;
 
-    SearchView(SearchViewModel searchViewModel){
-        this.searchViewModel = searchViewModel;
+    SearchView(SearchCourseViewModel searchCourseViewModel, SearchCourseController searchCourseController){
+        this.searchCourseViewModel = searchCourseViewModel;
+        this.searchCourseViewModel.addPropertyChangeListener(this);
         this.add(mainPanel);
+        searchField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                SearchCourseState currState = searchCourseViewModel.getState();
+                currState.setCourseCode(searchField.getText() + e.getKeyChar());
+                searchCourseViewModel.setState(currState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         isTutorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SearchState s = searchViewModel.getState();
-                s.setIsStudent(false);
-                searchViewModel.setState(s);
-                isStudentButton.disable();
+                SearchCourseState s = searchCourseViewModel.getState();
+                s.setSearchForTutor(false);
+                searchCourseViewModel.setState(s);
+                isStudentButton.setEnabled(false);  //todo: should add a reset button?
             }
         });
         isStudentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SearchState s = searchViewModel.getState();
-                s.setIsStudent(true);
-                searchViewModel.setState(s);
-                isTutorButton.disable();
+                SearchCourseState s = searchCourseViewModel.getState();
+                s.setSearchForTutor(true);
+                searchCourseViewModel.setState(s);
+                isTutorButton.setEnabled(false);
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SearchCourseState s = searchCourseViewModel.getState();
+                searchCourseController.execute(s.getCourseCode(), s.getSearchForTutor());
             }
         });
 
@@ -49,7 +81,19 @@ public class SearchView extends JPanel{
 
     public static void main(String[] args) {
         JFrame f = new FrameModel("SearchTest");
-        f.add(new SearchView(new SearchViewModel(new SearchState())));
+        //todo: f.add(...);
         f.setVisible(true);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // todo: what to do when view model changed
+        SearchCourseState state = (SearchCourseState) evt.getNewValue();
+        if (state.getCourseCodeError() != null){
+            JOptionPane.showMessageDialog(this, state.getCourseCode());
+        } else {
+            searchField.setText(state.getCourseCode());
+            System.out.println("Property change in Search View");
+        }
     }
 }
