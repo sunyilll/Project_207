@@ -19,4 +19,7 @@ public class Course {
     public void addStudent(Student student){
         this.students.add(student);
     }
+    public String getCourseCode(){return courseCode;}
+    public List<Tutor> getTutors(){return tutors;}
+    public List<Student> getStudents(){return students;}
 }
