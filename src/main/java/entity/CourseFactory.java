@@ -8,7 +8,7 @@ public class CourseFactory {
         this.fileUserDataAccessObject = fileUserDataAccessObject;
     }
     public Course create(String courseCode, String[] tutorids, String[] studentids){
-        Course c = new Course(courseCode, "CourseNameNotImplemented"); //todo: courseName not implemented
-
+        Course c = new Course(courseCode, "CourseNameNotImplemented");
+        //todo: courseName not implemented
     }
 }
