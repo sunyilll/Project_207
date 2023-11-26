@@ -1,5 +1,6 @@
 package main.java.api;
 
+import kotlin.Pair;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 import okhttp3.*;
@@ -117,7 +118,7 @@ public class APIUsedForTesting {
 
 
     }
-    public ArrayList<String> getMessageListFromNovTenth(ChatChannel channel){
+    public ArrayList<Pair<String, String>> getMessageListFromNovTenth(ChatChannel channel){
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -147,11 +148,13 @@ public class APIUsedForTesting {
                 throw new JSONException("Error Object is returned");
             } else {
                 JSONArray messageList =  responseBody.getJSONArray("messages");
-                ArrayList<String> messageListToReturn = new ArrayList<String>();
+                ArrayList<Pair<String, String>> messageListToReturn = new ArrayList<Pair<String, String>>();
                 for (int i = 0; i < messageList.length(); i++) {
                     JSONObject obj = messageList.getJSONObject(i);
                     String message = obj.getString("message");
-                    messageListToReturn.add(message);
+                    JSONObject userObject = obj.getJSONObject("user");
+                    String userId = userObject.getString("user_id");
+                    messageListToReturn.add(new Pair<>(message, userId));
                 }
                 return messageListToReturn;
 
@@ -167,8 +170,8 @@ public class APIUsedForTesting {
     public static void main(String[] args) {
 
 
-        User testUser1 = new User("test1", "test1", "test1", "male");
-        User testUser2 = new User("test1", "test1", "test1", "male");
+        User testUser1 = new User("test1", "test1", "test1");
+        User testUser2 = new User("test1", "test1", "test1");
 
         Map<String, User> testMap = new HashMap<>();
         testMap.put("test1", testUser1);
@@ -181,7 +184,7 @@ public class APIUsedForTesting {
 
 
         APIUsedForTesting a = new APIUsedForTesting();
-        ArrayList<String> x = a.getMessageListFromNovTenth(channel);
+        ArrayList<Pair<String, String>> x = a.getMessageListFromNovTenth(channel);
 
         System.out.println(x);
 
