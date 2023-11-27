@@ -15,7 +15,7 @@ public class SendMessageViewModel extends ViewModel {
     private SendMessageState state = new SendMessageState();
 
 //    public SendMessageViewModel(){
-//        super("send message");
+//        gsuper("send message");
 //    }//这个不应该存在，必须用user init
 
     public SendMessageViewModel(User currentUser, ChatChannel channel, SendMessageState state){
