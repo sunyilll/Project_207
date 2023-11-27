@@ -37,7 +37,7 @@ public class User implements Student, Tutor{
         this.nickname = nickname;
         this.password = password;
     }
-
+    @Override
     public String getUserID() {
         return this.userid;
     }

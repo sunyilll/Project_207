@@ -19,4 +19,5 @@ public interface Tutor {
     public boolean setExpectedWage(Course course, Integer wage);
 
     public List<String> getPreferredModeOfTeaching();
+    public String getUserID();
 }

@@ -20,6 +20,6 @@ public interface Student {
     public boolean setExpectedPrice(Course course, Integer price);
 
     public List<String> preferredModeOfLearning();
-
+    public String getUserID();
 
 }
