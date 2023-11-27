@@ -8,8 +8,8 @@ public class SearchCourseController {
     public SearchCourseController(SearchCourseInputBoundary searchUseCaseInteractor){
         this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
-    public void execute(String coursecode, boolean searchForTutor){
-        SearchCourseInputData searchCourseInputData = new SearchCourseInputData(coursecode, searchForTutor);
+    public void execute(String coursecode, boolean searchForTutor, String userID){
+        SearchCourseInputData searchCourseInputData = new SearchCourseInputData(coursecode, searchForTutor, userID);
         searchUseCaseInteractor.execute(searchCourseInputData);
     }
 }

@@ -5,10 +5,11 @@ import java.util.List;
 public class MatchingAlgorithm {
     public MatchingAlgorithm(){};  // avoid initialization
 
-//    static List<Tutor> match(User user, List<Tutor> tutors){
-//        return null; //todo: implement me
-//    }
-    static List<Student> match(User user, List<Student> students){
-        return null; //todo: implement me
+    public static List<Tutor> matchTutor(User user, List<Tutor> tutors){
+        return tutors; //todo: implement me
     }
+    public static List<Student> matchStudent(User user, List<Student> students){
+        return students; //todo: implement me
+    }
+
 }

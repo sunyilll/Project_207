@@ -3,6 +3,9 @@ package main.java.app;
 import main.java.data_access.*;
 import main.java.entity.*;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import main.java.interface_adapter.search_course.SearchCourseViewModel;
+import main.java.interface_adapter.search_course_result.SearchCourseResultState;
+import main.java.interface_adapter.search_course_result.SearchCourseResultViewModel;
 import main.java.view.*;
 
 import main.java.interface_adapter.ViewManagerModel;
@@ -40,6 +43,8 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         ToSignupViewModel toSignupViewModel = new ToSignupViewModel();
+        SearchCourseViewModel searchCourseViewModel = new SearchCourseViewModel();
+        SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
@@ -50,16 +55,24 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        FileCourseDataAccessObject fileCourseDataAccessObject;
+        try {
+            fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(userDataAccessObject));
+        } catch (IOException e){throw new RuntimeException(e);}
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject);
         views.add(loginView, loginView.viewName);
+
+        SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject);
+        views.add(searchCourseView, searchCourseView.viewName);
 
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.setActiveView(searchCourseView.viewName);
 
         viewManagerModel.firePropertyChanged();
 
