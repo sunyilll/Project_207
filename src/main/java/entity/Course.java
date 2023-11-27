@@ -1,4 +1,5 @@
 package main.java.entity;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -6,8 +7,8 @@ public class Course {
     public String courseCode;
     public String courseName;
     // ChatChannel courseChannel;
-    List<Tutor> tutors;
-    List<Student> students;
+    List<Tutor> tutors = new ArrayList<>();
+    List<Student> students = new ArrayList<>();
 
     public Course(String courseCode, String courseName){
         this.courseCode = courseCode;

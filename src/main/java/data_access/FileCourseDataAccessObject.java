@@ -92,4 +92,9 @@ public class FileCourseDataAccessObject implements SearchCourseDataAccessInterfa
     public List<Student> getStudentOfCourse(String courseCode) {
         return courses.get(courseCode).getStudents();
     }
+
+    @Override
+    public boolean hasCourse(String couseCode) {
+        return (courses.containsKey(couseCode));
+    }
 }

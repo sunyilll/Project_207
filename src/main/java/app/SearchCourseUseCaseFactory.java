@@ -7,6 +7,7 @@ import main.java.interface_adapter.search_course.SearchCoursePresenter;
 import main.java.interface_adapter.search_course.SearchCourseState;
 import main.java.interface_adapter.search_course.SearchCourseViewModel;
 import main.java.interface_adapter.search_course_result.SearchCourseResultViewModel;
+import main.java.use_case.login.LoginUserDataAccessInterface;
 import main.java.use_case.search_course.SearchCourseDataAccessInterface;
 import main.java.use_case.search_course.SearchCourseInputBoundary;
 import main.java.use_case.search_course.SearchCourseInteractor;
@@ -22,9 +23,10 @@ public class SearchCourseUseCaseFactory {
             ViewManagerModel viewManagerModel,
             SearchCourseViewModel searchCourseViewModel,
             SearchCourseResultViewModel searchCourseResultViewModel,
-            SearchCourseDataAccessInterface searchCourseDAO){
+            SearchCourseDataAccessInterface searchCourseDAO,
+            LoginUserDataAccessInterface loginDAO){
         try {
-            SearchCourseController controller = createSearchUseCase(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, searchCourseDAO);
+            SearchCourseController controller = createSearchUseCase(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, searchCourseDAO, loginDAO);
             return new SearchCourseView(searchCourseViewModel, controller);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Fail to Create SearchCourseView in Factory. Idk WHY!");
@@ -36,9 +38,10 @@ public class SearchCourseUseCaseFactory {
             ViewManagerModel viewManagerModel,
             SearchCourseViewModel searchCourseViewModel,
             SearchCourseResultViewModel searchCourseResultViewModel,
-            SearchCourseDataAccessInterface searchCourseDAO) throws IOException {
+            SearchCourseDataAccessInterface searchCourseDAO,
+            LoginUserDataAccessInterface loginDAO) throws IOException {
         SearchCourseOutputBoundary searchCoursePresenter = new SearchCoursePresenter(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel);
-        SearchCourseInputBoundary searchCourseInteractor = new SearchCourseInteractor(searchCourseDAO, searchCoursePresenter);
+        SearchCourseInputBoundary searchCourseInteractor = new SearchCourseInteractor(searchCourseDAO, searchCoursePresenter, loginDAO);
         return new SearchCourseController(searchCourseInteractor);
 
     }

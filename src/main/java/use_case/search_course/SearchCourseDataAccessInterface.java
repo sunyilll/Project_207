@@ -7,4 +7,5 @@ import java.util.List;
 public interface SearchCourseDataAccessInterface {
     List<Tutor> getTutorOfCourse(String courseCode);
     List<Student> getStudentOfCourse(String courseCode);
+    boolean hasCourse(String couseCode);
 }

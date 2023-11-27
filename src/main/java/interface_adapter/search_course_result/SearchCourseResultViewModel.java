@@ -7,12 +7,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SearchCourseResultViewModel extends ViewModel{
-    private SearchCourseResultState state;
+    private SearchCourseResultState state = new SearchCourseResultState();
 
 
-    public SearchCourseResultViewModel(SearchCourseResultState state){
+    public SearchCourseResultViewModel(){
         super("search course result");
-        this.state = state;
     }
 
     public void setState(SearchCourseResultState state){this.state = state;}

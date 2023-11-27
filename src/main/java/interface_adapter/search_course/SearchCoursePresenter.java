@@ -21,9 +21,11 @@ public class SearchCoursePresenter implements SearchCourseOutputBoundary {
     @Override
     public void prepareSuccessView(SearchCourseOutputData users) {
         SearchCourseResultState resultState = searchCourseResultViewModel.getState();
-         // resultState.setUsersName(users.getUsersInfo()); // todo: implement me
+        resultState.setResultUsers(users.getUsersInfo());
+        resultState.setResultUserTags(users.getUsers_tags());
+        resultState.setCourseCode(users.getCourseCode());
+        System.out.println(users.getUsersInfo());
         searchCourseResultViewModel.firePropertyChanged();
-
         viewManagerModel.setActiveView(searchCourseResultViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
@@ -31,7 +33,7 @@ public class SearchCoursePresenter implements SearchCourseOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         SearchCourseState searchState = searchCourseViewModel.getState();
-        searchState.setCourseCodeError(error);
+        searchState.setError(error);
         searchCourseViewModel.firePropertyChanged();
     }
 }
