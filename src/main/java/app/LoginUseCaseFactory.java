@@ -7,6 +7,7 @@ import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.login.LoginController;
 import main.java.interface_adapter.login.LoginPresenter;
 import main.java.interface_adapter.login.LoginViewModel;
+import main.java.interface_adapter.search_course.SearchCourseViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 
 import main.java.interface_adapter.To_signup.ToSignupPresenter;
@@ -41,14 +42,15 @@ public class LoginUseCaseFactory {
             LoginViewModel loginViewModel,
             ToSignupViewModel toSignupViewModel,
             SignupViewModel signupViewModel,
+            SearchCourseViewModel searchCourseViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             SignupUserDataAccessInterface signupUserDataAccessInterface) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, toSignupViewModel, loginViewModel, userDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, toSignupViewModel, searchCourseViewModel,loginViewModel, userDataAccessObject);
             ToSignupController toSignupController = createUserToSignupUseCase(viewManagerModel, toSignupViewModel, signupViewModel,loginViewModel, signupUserDataAccessInterface);
 
-            return new LoginView(loginViewModel, toSignupViewModel, signupViewModel, viewManagerModel, loginController, toSignupController);
+            return new LoginView(loginViewModel, toSignupViewModel, signupViewModel, viewManagerModel, loginController, toSignupController, searchCourseViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -59,11 +61,12 @@ public class LoginUseCaseFactory {
     private static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             ToSignupViewModel toSignupViewModel,
+            SearchCourseViewModel searchCourseViewModel,
             LoginViewModel loginViewModel,
             LoginUserDataAccessInterface userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,toSignupViewModel,loginViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,toSignupViewModel,loginViewModel, searchCourseViewModel);
 
         UserFactory userFactory = new UserFactory() {
         };

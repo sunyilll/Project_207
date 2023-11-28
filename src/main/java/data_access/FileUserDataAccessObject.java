@@ -49,7 +49,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                         accounts.put(userid, user);
                 } else {
                     // Handle the error for rows that do not have enough columns
-                    System.err.println("Invalid row in CSV: " + row);
+//                    System.err.println("Invalid row in CSV: " + row);
                 }
                 }
             }
@@ -75,8 +75,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s",
-                        user.getUserID(), user.getNickname());
+                String line = String.format("%s,%s,%s",
+                        user.getUserID(), user.getNickname(), user.getPassword());
                 writer.write(line);
                 writer.newLine();
             }
