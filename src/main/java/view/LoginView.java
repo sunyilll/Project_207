@@ -6,6 +6,8 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.interface_adapter.signup.SignupState;
 import main.java.interface_adapter.To_signup.ToSignupState;
+import main.java.interface_adapter.search.SearchViewModel;
+
 import main.java.interface_adapter.To_signup.ToSignupViewModel;
 import main.java.interface_adapter.To_signup.ToSignupController;
 
@@ -30,6 +32,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginViewModel loginViewModel;
     private final ToSignupViewModel toSignupViewModel;
     private final SignupViewModel signupViewModel;
+    private final SearchViewModel searchViewModel;
+
 
     private final ViewManagerModel viewManagerModel;
 
@@ -51,10 +55,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginController loginController;
 
 
-    public LoginView(LoginViewModel loginViewModel, ToSignupViewModel toSignupViewModel, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, LoginController controller, ToSignupController toSignupController) {
+    public LoginView(LoginViewModel loginViewModel, ToSignupViewModel toSignupViewModel, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
+                     LoginController controller, ToSignupController toSignupController, SearchViewModel searchViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.toSignupController = toSignupController;
         this.toSignupViewModel = toSignupViewModel;
+        this.searchViewModel = searchViewModel;
         this.signupViewModel = signupViewModel;
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -78,6 +84,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        viewManagerModel.setActiveView(searchViewModel.getViewName());
+//                        viewManagerModel.firePropertyChanged();
+//                    }
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
