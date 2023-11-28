@@ -6,13 +6,11 @@ import main.java.entity.User;
 import main.java.interface_adapter.To_signup.ToSignupViewModel;
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.login.LoginViewModel;
+import main.java.interface_adapter.search.SearchState;
+import main.java.interface_adapter.search.SearchViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
-import main.java.view.FrameModel;
-import main.java.view.SignupView;
-import main.java.view.LoginView;
+import main.java.view.*;
 
-
-import main.java.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,6 +72,10 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         ToSignupViewModel toSignupViewModel = new ToSignupViewModel();
+
+        SearchState initialState = new SearchState();
+        SearchViewModel searchViewModel = new SearchViewModel(initialState);
+
 //        SendMessageDataAccessObject sendMessageDataAccessObject;
 //        try {
 //            sendMessageDataAccessObject = new SendMessageDataAccessObject(
@@ -103,8 +105,11 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchViewModel,userDataAccessObject, userDataAccessObject);
         views.add(loginView, loginView.viewName);
+
+//        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchViewModel,userDataAccessObject, userDataAccessObject);
+//        views.add(searchView, searchView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
