@@ -6,7 +6,7 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 import main.java.interface_adapter.signup.SignupState;
 import main.java.interface_adapter.To_signup.ToSignupState;
-import main.java.interface_adapter.search.SearchViewModel;
+import main.java.interface_adapter.search_course.SearchCourseViewModel;
 
 import main.java.interface_adapter.To_signup.ToSignupViewModel;
 import main.java.interface_adapter.To_signup.ToSignupController;
@@ -32,13 +32,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginViewModel loginViewModel;
     private final ToSignupViewModel toSignupViewModel;
     private final SignupViewModel signupViewModel;
-    private final SearchViewModel searchViewModel;
+    private final SearchCourseViewModel searchCourseViewModel;
 
 
     private final ViewManagerModel viewManagerModel;
-
-
-
 
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
@@ -56,11 +53,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
 
     public LoginView(LoginViewModel loginViewModel, ToSignupViewModel toSignupViewModel, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
-                     LoginController controller, ToSignupController toSignupController, SearchViewModel searchViewModel) {
+                     LoginController controller, ToSignupController toSignupController, SearchCourseViewModel searchCourseViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.toSignupController = toSignupController;
         this.toSignupViewModel = toSignupViewModel;
-        this.searchViewModel = searchViewModel;
+        this.searchCourseViewModel = searchCourseViewModel;
         this.signupViewModel = signupViewModel;
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
@@ -82,21 +79,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
+        logIn.addActionListener(
                 new ActionListener() {
-//                    public void actionPerformed(ActionEvent evt) {
-//                        viewManagerModel.setActiveView(searchViewModel.getViewName());
-//                        viewManagerModel.firePropertyChanged();
-//                    }
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
-
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
+                        validateAndLogin();
                     }
                 }
         );
@@ -108,15 +94,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         viewManagerModel.setActiveView(signupViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(tosignup)) {
-////                            ToSignupState currentState = ToSignupViewModel.getState();
-//
-//                            toSignupController.execute(
-//
-//                            );
-//                        }
-//                    }
 
                 }
         );
@@ -165,6 +142,27 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(passwordInfo);
         this.add(passwordErrorField);
         this.add(buttons);
+    }
+    private void executelogIn() {
+        LoginState currentState = loginViewModel.getState();
+
+        loginController.execute(
+                currentState.getUsername(),
+                currentState.getPassword());
+    }
+    private void validateAndLogin() {
+
+        // Check if any fields are empty
+        if (usernameInputField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,"'Username' can't be empty");
+            return; // Stop further processing
+        }
+
+        if (passwordInputField.getPassword().length == 0) { // getPassword returns a char array
+            JOptionPane.showMessageDialog(this,"'Password' can't be empty");
+            return; // Stop further processing
+        }
+        executelogIn();
     }
 
     /**
