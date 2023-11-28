@@ -1,9 +1,10 @@
 package main.java.interface_adapter.refresh_chat_page;
 
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.use_case.refresh_chat_page.RefreshChatPageOutputBoundary;
 import main.java.use_case.refresh_chat_page.RefreshChatPageOutputData;
 
-public class RefreshChatPagePresenter {
+public class RefreshChatPagePresenter implements RefreshChatPageOutputBoundary {
     private final RefreshChatPageViewModel refreshChatPageViewModel;
     private ViewManagerModel viewManagerModel;
     public RefreshChatPagePresenter(RefreshChatPageViewModel refreshChatPageViewModel, ViewManagerModel viewManagerModel) {
@@ -14,6 +15,7 @@ public class RefreshChatPagePresenter {
     public void prepareSuccessView(RefreshChatPageOutputData messageList) {
         RefreshChatPageState refreshChatPageState = refreshChatPageViewModel.getState();
         refreshChatPageState.setRefreshSuccessful(true);
+        refreshChatPageState.setMessageList(messageList.getMessageList());
         this.refreshChatPageViewModel.setState(refreshChatPageState);
         refreshChatPageViewModel.firePropertyChanged();
     }
