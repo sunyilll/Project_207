@@ -20,6 +20,15 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
+        if (signupInputData.getUsername().isEmpty()) {
+            userPresenter.prepareFailView("Username can't be empty.");
+        }
+        if (signupInputData.getNickname().isEmpty()) {
+            userPresenter.prepareFailView("Nickname can't be empty.");
+        }
+        if (signupInputData.getPassword().isEmpty()) {
+            userPresenter.prepareFailView("Password can't be empty.");
+        }
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
@@ -31,8 +40,6 @@ public class SignupInteractor implements SignupInputBoundary {
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getNickname(), now.toString(), false);
-            userPresenter.prepareSuccessView(signupOutputData);
-            System.out.println(111);
-        }
+            userPresenter.prepareSuccessView(signupOutputData);}
     }
 }

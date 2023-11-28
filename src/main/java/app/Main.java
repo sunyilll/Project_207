@@ -63,7 +63,7 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchCourseViewModel,userDataAccessObject, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject);
@@ -72,7 +72,7 @@ public class Main {
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 
-        viewManagerModel.setActiveView(searchCourseView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
 
         viewManagerModel.firePropertyChanged();
 

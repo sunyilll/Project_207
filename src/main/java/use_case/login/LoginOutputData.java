@@ -2,16 +2,15 @@ package main.java.use_case.login;
 
 public class LoginOutputData {
 
-    private final String username;
+    private final String userID;
     private boolean useCaseFailed;
 
-    public LoginOutputData(String username, boolean useCaseFailed) {
-        this.username = username;
+    public LoginOutputData(String userID, boolean useCaseFailed) {
+        this.userID = userID;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserID() {
+        return userID;
     }
-
 }
