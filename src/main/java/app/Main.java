@@ -82,23 +82,25 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject);
+                searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(searchCourseView, searchCourseView.viewName);
 
-        SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel);
+        SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
+                searchCourseResultViewModel, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(searchCourseResultView, searchCourseResultView.viewName);
       
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
-                goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject);
+                goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 
         // This is for testing purposes. Please delete this for final submission
-        HomeBar homeBar = HomeBarUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel,
-                goToChatListViewModel, goToChatListDataAccessObject);
-        views.add(homeBar, homeBar.viewName);
+//        HomeBar homeBar = HomeBarUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel,
+//                goToChatListViewModel, goToChatListDataAccessObject);
+//        views.add(homeBar, homeBar.viewName);
 
         // This is for testing purposes. Please change the View name to the one you want to test.
-        viewManagerModel.setActiveView(homeBar.viewName);
+//        viewManagerModel.setActiveView(homeBar.viewName);
+        viewManagerModel.setActiveView(searchCourseResultView.viewName);
 
         viewManagerModel.firePropertyChanged();
 

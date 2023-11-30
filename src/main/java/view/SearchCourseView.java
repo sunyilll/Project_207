@@ -1,8 +1,14 @@
 package main.java.view;
 
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListController;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import main.java.interface_adapter.go_to_search.GoToSearchController;
 import main.java.interface_adapter.search_course.SearchCourseViewModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,26 +20,33 @@ import main.java.interface_adapter.search_course.*;
 
 public class SearchCourseView extends JPanel implements PropertyChangeListener {
     private JPanel mainPanel;
-    private JPanel homePanel;
-    private JButton gosearchButton;
-    private JButton goprofileButton;
-    private JButton gomessageButton;
     private JPanel upPanel;
     private JLabel searchLabel;
     private JPanel midPanel;
     private JButton isStudentButton;
     private JButton isTutorButton;
     private JPanel searchPanel;
+    private JPanel homeBar;
     private JTextField searchField;
     private JButton searchButton;
     private final SearchCourseViewModel searchCourseViewModel;
     public String viewName;
 
-    public SearchCourseView(SearchCourseViewModel searchCourseViewModel, SearchCourseController searchCourseController){
+    public SearchCourseView(SearchCourseViewModel searchCourseViewModel,
+                            SearchCourseController searchCourseController,
+                            GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+                            GoToPersonalProfileController goToPersonalProfileController,
+                            GoToChatListViewModel goToChatListViewModel,
+                            GoToChatListController goToChatListController,
+                            GoToSearchController goToSearchController){
         this.searchCourseViewModel = searchCourseViewModel;
         this.searchCourseViewModel.addPropertyChangeListener(this);
-        this.searchCourseViewModel.firePropertyChanged();
-        this.add(mainPanel);
+
+        homeBar = new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController, goToChatListViewModel,
+                goToChatListController, goToSearchController);
+        this.setLayout(new BorderLayout());
+        this.add(homeBar, BorderLayout.SOUTH);
+        this.add(mainPanel, BorderLayout.PAGE_START);
         this.viewName = searchCourseViewModel.getViewName();
         searchField.addKeyListener(new KeyListener() {
             @Override

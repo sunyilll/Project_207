@@ -1,5 +1,9 @@
 package main.java.view;
 
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListController;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import main.java.interface_adapter.go_to_search.GoToSearchController;
 import main.java.interface_adapter.search_course_result.SearchCourseResultState;
 import main.java.interface_adapter.search_course_result.SearchCourseResultViewModel;
@@ -16,10 +20,7 @@ import java.util.Map;
 
 public class SearchCourseResultView extends JPanel{
     private JPanel mainPanel;
-    private JPanel homePanel;
-    private JButton searchButton;
-    private JButton profileButton;
-    private JButton messageButton;
+    private JPanel homeBar;
     private JPanel upPanel;
     private JScrollPane usersPane;
     private JButton backToSearch;
@@ -34,7 +35,17 @@ public class SearchCourseResultView extends JPanel{
     public String viewName;
 
     public SearchCourseResultView(SearchCourseResultViewModel searchCourseResultViewModel,
-                                  GoToSearchController goToSearchController){
+                                  GoToSearchController goToSearchController,
+                                  GoToChatListController goToChatListController,
+                                  GoToChatListViewModel goToChatListViewModel,
+                                  GoToPersonalProfileController goToPersonalProfileController,
+                                  GoToPersonalProfileViewModel goToPersonalProfileViewModel
+                                  ){
+        homeBar = new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController, goToChatListViewModel,
+                goToChatListController, goToSearchController);
+        this.setLayout(new BorderLayout());
+        this.add(homeBar, BorderLayout.SOUTH);
+        this.add(mainPanel, BorderLayout.PAGE_START);
         this.searchCourseResultViewModel = searchCourseResultViewModel;
         SearchCourseResultState s = searchCourseResultViewModel.getState();
         // todo: updateUserInfo(s.getResultUsers(), s.getResultUserTags());
@@ -60,26 +71,6 @@ public class SearchCourseResultView extends JPanel{
             }
         });
 
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                goToSearchController.execute();
-            }
-        });
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // todo: add GoToProfile Controller
-                System.out.println("click go to profile");
-            }
-        });
-        messageButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // todo: add GoToMessage Controller
-                System.out.println("click go to message page");
-            }
-        });
 
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +95,7 @@ public class SearchCourseResultView extends JPanel{
         // JLabel tagPanel = new JLabel();
         JPanel left = new JPanel();
         JLabel picture = new JLabel();
-        ImageIcon pictureIcon = new ImageIcon("src/main/java/view/homebarIcons/default_profilePhoto.png");
+        ImageIcon pictureIcon = new ImageIcon("src/main/java/view/other_icons/default_profilePhoto.png");
 
         UserListCellRenderer(){
             System.out.println("New !");
