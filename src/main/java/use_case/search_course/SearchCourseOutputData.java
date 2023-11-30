@@ -15,11 +15,11 @@ public class SearchCourseOutputData {
         this.courseCode = courseCode;
         for (User u: users){
             HashMap<String, String> userInfo = new HashMap<>();
-            // userInfo.put("name", u.getNickname());
-            // if (searchForTutors){userInfo.put("rating", String.valueOf(u.getTutorRating()));}
-            // else {userInfo.put("rating", String.valueOf(u.getStudentRating()));}
+            userInfo.put("name", u.getNickname());
+            if (searchForTutors){userInfo.put("rating", String.valueOf(u.getTutorRating()));}
+            else {userInfo.put("rating", String.valueOf(u.getStudentRating()));}
             //todo: add profile picture
-            // this.users_tags.put(u.getUserID(), u.getPersonalityTags());
+            this.users_tags.put(u.getUserID(), u.getPersonalityTags());
             this.users.put(u.getUserID(), userInfo);
         }
     }
