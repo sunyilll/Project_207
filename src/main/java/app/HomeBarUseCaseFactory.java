@@ -7,6 +7,7 @@ import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfilePresenter;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import main.java.interface_adapter.go_to_search.GoToSearchController;
 import main.java.use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import main.java.use_case.go_to_chat_list.GoToChatListInputBoundary;
 import main.java.use_case.go_to_chat_list.GoToChatListInteractor;
@@ -30,8 +31,8 @@ public class HomeBarUseCaseFactory {
     public static HomeBar create(
             ViewManagerModel viewManagerModel,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
-            GoToChatListViewModel goToChatListViewModel, GoToChatListDataAccessInterface goToChatListDataAccessObject
-            //TODO: add GoToSearchViewModel
+            GoToChatListViewModel goToChatListViewModel, GoToChatListDataAccessInterface goToChatListDataAccessObject,
+            GoToSearchController goToSearchController
             ) {
 
         try {
@@ -40,7 +41,7 @@ public class HomeBarUseCaseFactory {
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
             return new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController,
-                    goToChatListViewModel, goToChatListController);
+                    goToChatListViewModel, goToChatListController, goToSearchController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }

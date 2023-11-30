@@ -13,9 +13,8 @@ public class SearchCourseResultViewModel extends ViewModel{
     public SearchCourseResultViewModel(){
         super("search course result");
     }
-
     public void setState(SearchCourseResultState state){this.state = state;}
-    public SearchCourseResultState getState(){return state;}
+    public SearchCourseResultState getState(){return this.state;}
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     @Override

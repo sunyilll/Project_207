@@ -5,6 +5,7 @@ import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileState;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import main.java.interface_adapter.go_to_search.GoToSearchController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +30,8 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
     public PersonalProfileView(GoToPersonalProfileViewModel goToPersonalProfileViewModel,
                                GoToPersonalProfileController personalProfileController,
                                GoToChatListViewModel goToChatListViewModel,
-                               GoToChatListController goToChatListController) {
+                               GoToChatListController goToChatListController,
+                               GoToSearchController goToSearchController) {
         this.goToChatListViewModel = goToChatListViewModel;
         this.goToChatListViewModel.addPropertyChangeListener(this);
         this.goToChatListController = goToChatListController;
@@ -38,7 +40,7 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
         this.goToPersonalProfileController = personalProfileController;
 
         homeBar = new HomeBar(goToPersonalProfileViewModel, personalProfileController, goToChatListViewModel,
-                goToChatListController);
+                goToChatListController, goToSearchController);
 
         JLabel title = new JLabel(GoToPersonalProfileViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
