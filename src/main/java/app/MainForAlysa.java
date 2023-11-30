@@ -77,7 +77,8 @@ public class MainForAlysa {
         RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel(testUser1, channel, refreshTestState);
         RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
 
-        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel(testUser1, channels, goToChatListState);
+        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
+        goToChatListViewModel.setState(goToChatListState);
         GoToChatListDataAccessObject goToChatListDataAccessObject;
 
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();

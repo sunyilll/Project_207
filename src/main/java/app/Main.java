@@ -52,7 +52,7 @@ public class Main {
         goToPersonalProfileViewModel.getState().setUser(user);
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
-        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel(user,new ArrayList<>(), new GoToChatListState());
+        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
