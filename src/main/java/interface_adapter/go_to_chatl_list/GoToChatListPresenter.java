@@ -17,7 +17,10 @@ public class GoToChatListPresenter implements GoToChatListOutputBoundary {
         this.goToChatListViewModel.setState(GoToChatListState);
         goToChatListViewModel.firePropertyChanged();
 
+        viewManagerModel.setActiveView("chatList");
         viewManagerModel.firePropertyChanged();
+        System.out.println("I am at step 5");
+        System.out.println(viewManagerModel.getActiveView());
     }
 
     public void prepareFailView(String error) {

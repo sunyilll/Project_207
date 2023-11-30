@@ -1,10 +1,14 @@
 package main.java.app;
 
+import main.java.data_access.GoToChatListDataAccessObject;
 import main.java.data_access.RefreshChatPageDataAccessObject;
 import main.java.data_access.SendMessageDataAccessObject;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListState;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageState;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 import main.java.interface_adapter.send_message.SendMessageState;
@@ -13,6 +17,7 @@ import main.java.interface_adapter.send_message.SendMessageViewModel;
 import main.java.view.ChannelView.ChannelView;
 
 
+import main.java.view.ChatListView.ChatListView;
 import main.java.view.FrameModel;
 import main.java.view.ViewManager;
 
@@ -20,6 +25,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,9 +60,12 @@ public class MainForAlysa {
 
 
         ChatChannel channel = new ChatChannel(testMap, currentDateTime, "sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7");
+        ArrayList<ChatChannel> channels = new ArrayList<>();
+        channels.add(channel);
 
         SendMessageState testState = new SendMessageState(testUser1, channel);
         RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
+        GoToChatListState goToChatListState = new GoToChatListState(testUser1);
 //        SendMessageState testState = new SendMessageState();
         /*
          * 这里结束手动initialize一个currentuser和chatchannel
@@ -68,6 +77,11 @@ public class MainForAlysa {
         RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel(testUser1, channel, refreshTestState);
         RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
 
+        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel(testUser1, channels, goToChatListState);
+        GoToChatListDataAccessObject goToChatListDataAccessObject;
+
+        GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
+
         try {
             sendMessageDataAccessObject = new SendMessageDataAccessObject(
                     "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
@@ -75,11 +89,15 @@ public class MainForAlysa {
 
             );
             refreshChatPageDataAccessObject = new RefreshChatPageDataAccessObject();
+            goToChatListDataAccessObject = new GoToChatListDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject);
+        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(channelView, channelView.viewName);
+
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel);
+        views.add(chatListView, chatListView.viewName);
 
         viewManagerModel.setActiveView(channelView.viewName);
         viewManagerModel.firePropertyChanged();

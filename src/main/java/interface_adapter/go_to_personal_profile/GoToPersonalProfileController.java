@@ -11,6 +11,7 @@ public class GoToPersonalProfileController {
         this.goToPersonalProfileInteractor = goToPersonalProfileInteractor;
     }
 
+
     public void execute(User user) {
         GoToPersonalProfileInputData goToPersonalProfileInputData = new GoToPersonalProfileInputData(user);
         goToPersonalProfileInteractor.execute(goToPersonalProfileInputData);

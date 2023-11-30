@@ -32,4 +32,7 @@ public class ChatChannel {
     public String getChannelURL(){
         return channelURL;
     }
+    public Map<String, User> getMembers(){
+        return members;
+    }
 }

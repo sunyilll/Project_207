@@ -1,6 +1,9 @@
 package main.java.view.ChannelView;
 
 import kotlin.Pair;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListController;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListState;
+import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageController;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageState;
 import main.java.interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
@@ -26,18 +29,23 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
     private final SendMessageController sendMessageControllerw;
     private final RefreshChatPageViewModel refreshChatPageViewModel1;
     private final RefreshChatPageController refreshChatPageController1;
+    private final GoToChatListViewModel goToChatListViewModel1;
+    private final GoToChatListController goToChatListController1;
 
     private final JButton send;
+    private final JButton back;
     private final JTextField messageInputField = new JTextField(15);
     private final JButton refresh;
 
     private JPanel chatArea;
 
-    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController){
+    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController, GoToChatListViewModel goToChatListViewModel, GoToChatListController goToChatListController){
         this.sendMessageViewModelw = sendMessageViewModel;
         this.sendMessageControllerw = sendMessageController;
         this.refreshChatPageController1 = refreshChatPageController;
         this.refreshChatPageViewModel1 = refreshChatPageViewModel;
+        this.goToChatListController1 = goToChatListController;
+        this.goToChatListViewModel1 = goToChatListViewModel;
         this.send = new JButton("send");
         sendMessageViewModelw.addPropertyChangeListener(this);
         sendMessageViewModelw.firePropertyChanged();
@@ -53,9 +61,9 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
         JPanel functionPanel = new JPanel();
         functionPanel.setLayout(new BoxLayout(functionPanel, BoxLayout.X_AXIS));
         JButton backButton = new JButton("Back");
+        this.back = backButton;
         JButton refreshButton = new JButton("refresh");
         this.refresh = refreshButton;
-
 
 
         functionPanel.add(backButton, BorderLayout.WEST);
@@ -86,6 +94,21 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
         this.chatArea = wrapperPanel;
 
         this.add(chatArea, BorderLayout.NORTH);
+
+        back.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)){
+                            System.out.println("I am at step 1");
+                            GoToChatListState currState = goToChatListViewModel1.getState();
+                            goToChatListController1.execute(currState.getUser());
+
+                            System.out.println("I am at step 2");
+                        }
+                    }
+                }
+        );
 
 
         refresh.addActionListener(
