@@ -18,7 +18,7 @@ public class SearchCourseViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        //todo: add smth
+        support.firePropertyChange("state", null, this.state);
     }
 
     @Override

@@ -30,6 +30,7 @@ public class SearchCourseInteractor implements SearchCourseInputBoundary{
         User me = loginUserDataAccessObject.get(searchCourseInputData.getUserID());
         MatchingAlgorithm a = new MatchingAlgorithm();
         if (courserDataAccessObject.hasCourse(courseCode) == false){
+            System.out.println("NO SUCH COURSE");
             searchCoursePresenter.prepareFailView("No Such Course");
             return;
         }
