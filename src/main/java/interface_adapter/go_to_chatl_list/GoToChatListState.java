@@ -16,8 +16,9 @@ public class GoToChatListState {
         this.success = copy.success;
         this.user = copy.user;
     }
-    public GoToChatListState(User user){
+    public GoToChatListState(User user, ArrayList<ChatChannel> chatChannels){
         this.user = user;
+        this.chatChannels = chatChannels;
     }
     public GoToChatListState(){}
     public void setChatChannels(ArrayList<ChatChannel> chatChannels){

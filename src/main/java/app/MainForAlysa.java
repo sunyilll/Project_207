@@ -6,6 +6,8 @@ import main.java.data_access.SendMessageDataAccessObject;
 import main.java.entity.ChatChannel;
 import main.java.entity.User;
 import main.java.interface_adapter.ViewManagerModel;
+import main.java.interface_adapter.go_to_chat.GoToChannelState;
+import main.java.interface_adapter.go_to_chat.GoToChannelViewModel;
 import main.java.interface_adapter.go_to_chatl_list.GoToChatListState;
 import main.java.interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import main.java.interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
@@ -65,7 +67,8 @@ public class MainForAlysa {
 
         SendMessageState testState = new SendMessageState(testUser1, channel);
         RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
-        GoToChatListState goToChatListState = new GoToChatListState(testUser1);
+        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
+        GoToChannelState goToChannelState = new GoToChannelState(testUser1, channel);
 //        SendMessageState testState = new SendMessageState();
         /*
          * 这里结束手动initialize一个currentuser和chatchannel
@@ -77,8 +80,14 @@ public class MainForAlysa {
         RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel(testUser1, channel, refreshTestState);
         RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
 
-        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel(testUser1, channels, goToChatListState);
+        GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
+        goToChatListViewModel.setState(goToChatListState);
         GoToChatListDataAccessObject goToChatListDataAccessObject;
+
+        GoToChannelViewModel goToChannelViewModel = new GoToChannelViewModel();
+        goToChannelViewModel.setState(goToChannelState);
+
+
 
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
 
@@ -96,7 +105,7 @@ public class MainForAlysa {
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(channelView, channelView.viewName);
 
-        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel);
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, goToChannelViewModel);
         views.add(chatListView, chatListView.viewName);
 
         viewManagerModel.setActiveView(channelView.viewName);

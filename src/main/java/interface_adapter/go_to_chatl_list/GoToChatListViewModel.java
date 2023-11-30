@@ -13,13 +13,16 @@ public class GoToChatListViewModel extends ViewModel {
     private User currectUser;
     private ArrayList<ChatChannel> chatChannels;
     private GoToChatListState state = new GoToChatListState();
-
-    public GoToChatListViewModel(User user, ArrayList<ChatChannel> chatChannels, GoToChatListState state) {
+    public GoToChatListViewModel() {
         super("go to chat list");
-        this.currectUser = user;
-        this.chatChannels = chatChannels;
-        this.state = state;
     }
+
+//    public GoToChatListViewModel(User user, ArrayList<ChatChannel> chatChannels, GoToChatListState state) {
+//        super("go to chat list");
+//        this.currectUser = user;
+//        this.chatChannels = chatChannels;
+//        this.state = state;
+//    }
 
     public GoToChatListState getState() {
         return state;
@@ -33,6 +36,9 @@ public class GoToChatListViewModel extends ViewModel {
 
     public void setState(GoToChatListState goToChatListState) {
         this.state = goToChatListState;
+        this.currectUser = goToChatListState.getUser();
+        this.chatChannels = goToChatListState.getChatChannels();
+
     }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
