@@ -19,8 +19,10 @@ public class GoToChatListInteractor implements GoToChatListInputBoundary {
             ArrayList<ChatChannel> chatChannels = goToChatPageDataAccessObject.getAllChatChannels(user);
             GoToChatListOutputData goToChatListOutputData = new GoToChatListOutputData(chatChannels);
             goToChatListPresenter.prepareSuccessView(goToChatListOutputData);
+            System.out.println("I am at step 3");
         } catch (RuntimeException e) {
             goToChatListPresenter.prepareFailView(e.toString());
+            System.out.println("I am at step 4");
         }
     }
 
