@@ -22,10 +22,10 @@ import java.io.IOException;
 // FIXME: Delete me.
 // This class is for testing purposes only.
 
-public class HomeBarViewFactory {
+public class HomeBarUseCaseFactory {
 
     /* Prevent instantiation. */
-    private HomeBarViewFactory() {}
+    private HomeBarUseCaseFactory() {}
 
     public static HomeBar create(
             ViewManagerModel viewManagerModel,

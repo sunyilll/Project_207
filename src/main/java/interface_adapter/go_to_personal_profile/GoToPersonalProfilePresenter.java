@@ -5,7 +5,7 @@ import main.java.use_case.go_to_personal_profile.GoToPersonalProfileOutputData;
 
 public class GoToPersonalProfilePresenter implements GoToPersonalProfileOutputBoundary {
     private final GoToPersonalProfileViewModel viewModel;
-    private ViewManagerModel viewManager;
+    private final ViewManagerModel viewManager;
 
     public GoToPersonalProfilePresenter(GoToPersonalProfileViewModel viewModel, ViewManagerModel viewManager) {
         this.viewModel = viewModel;
