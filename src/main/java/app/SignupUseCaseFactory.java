@@ -1,6 +1,5 @@
 package main.java.app;
 
-import main.java.entity.User;
 import main.java.entity.UserFactory;
 import main.java.interface_adapter.*;
 import main.java.interface_adapter.login.LoginViewModel;
@@ -15,10 +14,8 @@ import main.java.view.SignupView;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class SignupUseCaseFactory {
-
     /**
      * Prevent instantiation.
      */
@@ -53,5 +50,3 @@ public class SignupUseCaseFactory {
         return new SignupController(userSignupInteractor);
     }
 }
-
-
