@@ -69,6 +69,9 @@ public class Main {
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject);
         views.add(searchCourseView, searchCourseView.viewName);
 
+        SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel);
+        views.add(searchCourseResultView, searchCourseResultView.viewName);
+
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 

@@ -26,12 +26,13 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
     private JPanel searchPanel;
     private JTextField searchField;
     private JButton searchButton;
-    SearchCourseViewModel searchCourseViewModel;
+    private final SearchCourseViewModel searchCourseViewModel;
     public String viewName;
 
     public SearchCourseView(SearchCourseViewModel searchCourseViewModel, SearchCourseController searchCourseController){
         this.searchCourseViewModel = searchCourseViewModel;
         this.searchCourseViewModel.addPropertyChangeListener(this);
+        this.searchCourseViewModel.firePropertyChanged();
         this.add(mainPanel);
         this.viewName = searchCourseViewModel.getViewName();
         searchField.addKeyListener(new KeyListener() {
@@ -91,8 +92,9 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         // todo: what to do when view model changed
         SearchCourseState state = (SearchCourseState) evt.getNewValue();
+        System.out.println("CHANGE MADE");
         if (state.getError() != null){
-            JOptionPane.showMessageDialog(this, state.getCourseCode());
+            JOptionPane.showMessageDialog(this, state.getError());
         } else {
             searchField.setText(state.getCourseCode());
             System.out.println("Property change in Search View");

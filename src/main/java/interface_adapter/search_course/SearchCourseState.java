@@ -2,7 +2,7 @@ package main.java.interface_adapter.search_course;
 
 public class SearchCourseState {
     private String userID;
-    private boolean searchForTutor;
+    private boolean searchForTutor = true;
     private String courseCode;
     private String error = null;
     public SearchCourseState(){}
