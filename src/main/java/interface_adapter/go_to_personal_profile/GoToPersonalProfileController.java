@@ -5,13 +5,13 @@ import main.java.use_case.go_to_personal_profile.GoToPersonalProfileInputBoundar
 import main.java.use_case.go_to_personal_profile.GoToPersonalProfileInputData;
 
 public class GoToPersonalProfileController {
-    final GoToPersonalProfileInputBoundary goToPersonalProfileInteractor;
+    private final GoToPersonalProfileInputBoundary goToPersonalProfileInteractor;
 
     public GoToPersonalProfileController(GoToPersonalProfileInputBoundary goToPersonalProfileInteractor) {
         this.goToPersonalProfileInteractor = goToPersonalProfileInteractor;
     }
 
-    public void excute(User user) {
+    public void execute(User user) {
         GoToPersonalProfileInputData goToPersonalProfileInputData = new GoToPersonalProfileInputData(user);
         goToPersonalProfileInteractor.execute(goToPersonalProfileInputData);
     }

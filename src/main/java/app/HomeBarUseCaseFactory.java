@@ -14,28 +14,32 @@ import main.java.use_case.go_to_chat_list.GoToChatListOutputBoundary;
 import main.java.use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import main.java.use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
 import main.java.use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
-import main.java.view.PersonalProfileView;
+import main.java.view.HomeBar;
 
 import javax.swing.*;
 import java.io.IOException;
 
-public class ToPersonalProfileUseCaseFactory {
+// FIXME: Delete me.
+// This class is for testing purposes only.
+
+public class HomeBarUseCaseFactory {
 
     /* Prevent instantiation. */
-    private ToPersonalProfileUseCaseFactory() {}
+    private HomeBarUseCaseFactory() {}
 
-    public static PersonalProfileView create(
+    public static HomeBar create(
             ViewManagerModel viewManagerModel,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
-            GoToChatListViewModel goToChatListViewModel,
-            GoToChatListDataAccessInterface goToChatListDataAccessObject) {
+            GoToChatListViewModel goToChatListViewModel, GoToChatListDataAccessInterface goToChatListDataAccessObject
+            //TODO: add GoToSearchViewModel
+            ) {
 
         try {
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
                     goToPersonalProfileViewModel);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
-            return new PersonalProfileView(goToPersonalProfileViewModel, goToPersonalProfileController,
+            return new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController,
                     goToChatListViewModel, goToChatListController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
