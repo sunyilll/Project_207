@@ -5,6 +5,7 @@ import main.java.entity.Student;
 import main.java.entity.Tutor;
 import main.java.entity.User;
 import main.java.interface_adapter.search_course.SearchCoursePresenter;
+import main.java.use_case.GetUserDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
 
 import java.util.ArrayList;
@@ -13,13 +14,13 @@ import java.util.List;
 public class SearchCourseInteractor implements SearchCourseInputBoundary{
     final SearchCourseDataAccessInterface courserDataAccessObject;
     final SearchCourseOutputBoundary searchCoursePresenter;
-    final LoginUserDataAccessInterface loginUserDataAccessObject;
+    final GetUserDataAccessInterface getUserDataAccessInterface;
     public SearchCourseInteractor(SearchCourseDataAccessInterface courserDataAccessObject,
                                   SearchCourseOutputBoundary searchCourseOutputBoundary,
-                                  LoginUserDataAccessInterface loginUserDataAccessInterface){
+                                  GetUserDataAccessInterface getUserDataAccessInterface){
         this.courserDataAccessObject = courserDataAccessObject;
         this.searchCoursePresenter = searchCourseOutputBoundary;
-        this.loginUserDataAccessObject = loginUserDataAccessInterface;
+        this.getUserDataAccessInterface = getUserDataAccessInterface;
     }
 
 
@@ -27,7 +28,7 @@ public class SearchCourseInteractor implements SearchCourseInputBoundary{
     public void execute(SearchCourseInputData searchCourseInputData) {
         String courseCode = searchCourseInputData.getCourseCode();
         boolean searchForTutor = searchCourseInputData.searchTutor();
-        User me = loginUserDataAccessObject.get(searchCourseInputData.getUserID());
+        User me = getUserDataAccessInterface.get(searchCourseInputData.getUserID());
         MatchingAlgorithm a = new MatchingAlgorithm();
         if (courserDataAccessObject.hasCourse(courseCode) == false){
             System.out.println("NO SUCH COURSE");

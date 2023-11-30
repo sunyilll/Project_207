@@ -2,6 +2,7 @@ package main.java.data_access;
 
 import main.java.entity.User;
 import main.java.entity.UserFactory;
+import main.java.use_case.GetUserDataAccessInterface;
 import main.java.use_case.login.LoginUserDataAccessInterface;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 
@@ -9,7 +10,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, GetUserDataAccessInterface {
 
     private final File csvFile;
 
