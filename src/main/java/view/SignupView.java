@@ -20,15 +20,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JTextField nicknameInputField = new JTextField(15);
-
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
 
     private final JButton signUp;
     private final JButton cancel;
-
-
     public SignupView(SignupController controller, SignupViewModel signupViewModel) {
 
         this.signupController = controller;
@@ -55,23 +52,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(cancel);
 
 
+
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(signUp)) {
-                            SignupState currentState = signupViewModel.getState();
-
-                            signupController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getNickname(),
-                                    currentState.getPassword(),
-                                    currentState.getRepeatPassword()
-                            );
-                        }
+                        validateAndSignup();
                     }
-                }
-        );
+                });
 
 
         usernameInputField.addKeyListener(
@@ -163,6 +151,38 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
+    }
+
+    private void executeSignup() {
+        SignupState currentState = signupViewModel.getState();
+
+        signupController.execute(
+                currentState.getUsername(),
+                currentState.getNickname(),
+                currentState.getPassword(),
+                currentState.getRepeatPassword());
+    }
+
+    private void validateAndSignup() {
+
+        // Check if any fields are empty
+        if (usernameInputField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,"'Username' can't be empty");
+            return; // Stop further processing
+        }
+
+        if (nicknameInputField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,"'Nickname' can't be empty");
+            return;
+        }
+
+        if (passwordInputField.getPassword().length == 0) { // getPassword returns a char array
+            JOptionPane.showMessageDialog(this,"'Password' can't be empty");
+            return; // Stop further processing
+        }
+
+        // If all validations pass, call the executeSignup method
+        executeSignup();
     }
 
     /**

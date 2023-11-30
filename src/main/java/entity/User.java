@@ -46,6 +46,10 @@ public class User implements Student, Tutor{
         return this.nickname;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
     public boolean setNickname(String nickname) {
         this.nickname = nickname;
         return true;
