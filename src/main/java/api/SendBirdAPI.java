@@ -170,7 +170,7 @@ public class SendBirdAPI {
 
         Request request = new Request.Builder()
                 .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels/" + channel.getChannelURL() + "/messages?channel_type=group_channels&channel_url="
-                        + channel.getChannelURL() + "&message_ts=" + unixTimestamp)
+                        + channel.getChannelURL() + "&message_ts=" + unixTimestamp+"&next_limit=200&reverse=true")
                 .get()
                 .addHeader("content-type", "application/json")
                 .addHeader("Api-Token", API_TOKEN)
@@ -185,6 +185,7 @@ public class SendBirdAPI {
                 throw new JSONException("Error Object is returned");
             } else {
                 JSONArray messageList =  responseBody.getJSONArray("messages");
+                System.out.println(messageList);
                 ArrayList<Pair<String, String>> messageListToReturn = new ArrayList<Pair<String, String>>();
                 for (int i = 0; i < messageList.length(); i++) {
                     JSONObject obj = messageList.getJSONObject(i);

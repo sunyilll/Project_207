@@ -147,6 +147,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
 
                             SendMessageState currentState = sendMessageViewModelw.getState();
                             System.out.println(currentState);
+                            System.out.println("I am trying to send message");
 
                             sendMessageControllerw.execute(
                                     currentState.getMessage(),
