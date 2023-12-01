@@ -9,7 +9,7 @@ import interface_adapter.search_course_result.SearchCourseResultViewModel;
 import view.*;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.To_signup.ToSignupViewModel;
+import interface_adapter.go_to_signup.ToSignupViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 

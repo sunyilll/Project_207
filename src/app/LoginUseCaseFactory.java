@@ -1,8 +1,8 @@
 package app;
 
 import entity.UserFactory;
-import interface_adapter.To_signup.ToSignupPresenter;
-import interface_adapter.To_signup.ToSignupViewModel;
+import interface_adapter.go_to_signup.ToSignupPresenter;
+import interface_adapter.go_to_signup.ToSignupViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -10,25 +10,21 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.search_course.SearchCourseViewModel;
 import interface_adapter.signup.SignupViewModel;
 
-import interface_adapter.To_signup.ToSignupController;
+import interface_adapter.go_to_signup.ToSignupController;
 
-import use_case.To_signup.ToSignupInputBoundary;
-import use_case.To_signup.ToSignupInteractor;
-import use_case.To_signup.ToSignupOutputBoundary;
+import use_case.go_to_signup.ToSignupInputBoundary;
+import use_case.go_to_signup.ToSignupInteractor;
+import use_case.go_to_signup.ToSignupOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
-
-
-
 import view.LoginView;
 
 import javax.swing.*;
 import java.io.IOException;
-
 
 public class LoginUseCaseFactory {
 

@@ -1,11 +1,11 @@
-package interface_adapter.To_signup;
+package interface_adapter.go_to_signup;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
-import use_case.To_signup.ToSignupOutputBoundary;
-import use_case.To_signup.ToSignupOutputData;
+import use_case.go_to_signup.ToSignupOutputBoundary;
+import use_case.go_to_signup.ToSignupOutputData;
 
 public class ToSignupPresenter implements ToSignupOutputBoundary {
 

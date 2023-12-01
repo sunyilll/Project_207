@@ -3,7 +3,7 @@ package interface_adapter.login;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_course.SearchCourseState;
 import interface_adapter.search_course.SearchCourseViewModel;
-import interface_adapter.To_signup.ToSignupViewModel;
+import interface_adapter.go_to_signup.ToSignupViewModel;
 
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
