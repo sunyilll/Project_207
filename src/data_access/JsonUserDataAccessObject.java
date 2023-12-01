@@ -2,13 +2,16 @@ package data_access;
 
 import entity.User;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONTokener;
+
 import use_case.GetUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
         GetUserDataAccessInterface {
@@ -19,19 +22,18 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.file_path = file_path;
 
         File file = new File(file_path);
-        if (file.length() == 0) {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
+            userFile = new JSONObject(content);
+        } catch (IOException e) {
             this.save();
-        } else {
-
-            InputStream inputStream = JsonUserDataAccessObject.class.getResourceAsStream(file_path);
-
-            JSONTokener tokener = new JSONTokener(inputStream);
-            userFile = new JSONObject(tokener);
         }
     }
 
     public static void main(String[] args) {
         JsonUserDataAccessObject jsonUserDataAccessObject = new JsonUserDataAccessObject("data/users.json");
+//        User testUser = new User("test", "test", "test");
+//        jsonUserDataAccessObject.save(testUser);
         System.out.println(jsonUserDataAccessObject.userFile);
     }
 
@@ -47,18 +49,25 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    // TODO: Refactor code so that we are searching for the user by ID instead of nickname
     @Override
-    public User get(String username) {
+    public User get(String userID) {
         return null;
     }
 
     @Override
-    public boolean existsByName(String identifier) {
-        return false;
+    public boolean existsByName(String userID) {
+        return userFile.has(userID);
     }
 
     @Override
     public void save(User user) {
+        JSONObject userJson = new JSONObject();
+        userJson.put("nickname", user.getNickname());
+        userJson.put("password", user.getPassword());
+        JSONArray courses_to_learn = new JSONArray();
 
+        userFile.put(user.getUserID(), userJson);
+        this.save();
     }
 }
