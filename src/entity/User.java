@@ -6,31 +6,29 @@ import java.util.ArrayList;
 
 public class User implements Student, Tutor{
 
-    private final String userid;
-    private String nickname;
+    public final String userid;
+    public String nickname;
     private String password;
     private String pronouns;
-    private Map<String, User> following;
-    private Map<String, User> follower;
     private List<String> personalityTag = new ArrayList<>();
     private String profileURL = null;
     private String description = null;
 
     // Variables for Tutor
-    public List<Integer> tutorRatings = new ArrayList<>();
-    public float tutorRating; // the average of all ratings
-    public Map<String, Course> coursesToTeach = new HashMap<>();
-    public List<String> tutorAvailability = new ArrayList<>();	// available hours
-    public Map<String, Integer> expectedWage = new HashMap<>();  // mapping of course to expected wage
-    public List<String> preferredModeOfTeaching = new ArrayList<>();
+    private List<Integer> tutorRatings = new ArrayList<>();
+    private float tutorRating; // the average of all ratings
+    private List<String> coursesToTeach = new ArrayList<>();
+    private String tutorAvailability;	// available hours
+    private Map<String, Integer> expectedWage = new HashMap<>();  // mapping of course to expected wage
+    private List<String> preferredModeOfTeaching = new ArrayList<>();
 
     // Variables for Student
-    public List<Integer> studentRatings = new ArrayList<>();
-    public float studentRating;
-    public Map<String, Course> coursesToLearn = new HashMap<>();
-    public Map<String, Integer> expectedPrice = new HashMap<>();
+    private List<Integer> studentRatings = new ArrayList<>();
+    private float studentRating;
+    private List<String> coursesToLearn = new ArrayList<>();
+    private Map<String, Integer> expectedPrice = new HashMap<>();
     // how much the user would like to pay for each course
-    public List<String> preferredModeOfLearning = new ArrayList<>();
+    private List<String> preferredModeOfLearning = new ArrayList<>();
 
     public User(String userid, String nickname, String password){
         this.userid = userid;
@@ -57,11 +55,6 @@ public class User implements Student, Tutor{
 
     public boolean checkPassword(String password) {
         return this.password.equals(password);
-    }
-
-    public boolean setPassword(String password) {
-        this.password = password;
-        return true;
     }
 
     public String getPronouns() {
@@ -91,38 +84,27 @@ public class User implements Student, Tutor{
         return true;
     }
 
-    public boolean isFollwing(User user) {
-        return this.following.containsKey(user.getUserID());
-    }
-
-    public boolean isFollowedBy(User user) {
-        return this.follower.containsKey(user.getUserID());
-    }
-
-    public boolean follow(User user) {
-        this.following.put(user.getUserID(), user);
-        user.follower.put(this.getUserID(), this);
-        // TODO check if following is allowed?
-        return true;
-    }
-
     // Tutor Methods
     // Courses to teach
-    public Map<String, Course> getCoursesToTeach(){
+    public List<String> getCoursesToTeach(){
         return this.coursesToTeach;
     }
 
-    public boolean addCourseToTeach(Course course){
-        this.coursesToTeach.put(course.courseCode, course);
+    public boolean addCourseToTeach(String courseCode){
+        this.coursesToTeach.add(courseCode);
         return true;
     }
 
-    public boolean deleteCourseToTeach(Course course){
-        this.coursesToTeach.remove(course.courseCode);
+    public boolean deleteCourseToTeach(String courseCode){
+        this.coursesToTeach.remove(courseCode);
         return true;
     }
 
-    public List<String> getTutorAvailability(){
+    public boolean setTutorAvailability(String availability){
+        this.tutorAvailability = availability;
+        return true;
+    }
+    public String getTutorAvailability(){
         return this.tutorAvailability;
     }
 
@@ -146,12 +128,12 @@ public class User implements Student, Tutor{
         return this.expectedWage;
     }
 
-    public Integer getExpectedWage(Course course){
-        return this.expectedWage.get(course.courseCode);
+    public Integer getExpectedWage(String courseCode){
+        return this.expectedWage.get(courseCode);
     }
 
-    public boolean setExpectedWage(Course course, Integer wage){
-        this.expectedWage.put(course.courseCode, wage);
+    public boolean setExpectedWage(String courseCode, Integer wage){
+        this.expectedWage.put(courseCode, wage);
         return true;
     }
 
@@ -159,19 +141,25 @@ public class User implements Student, Tutor{
         return this.preferredModeOfTeaching;
     }
 
-    // Student Methods
-    // Courses to learn
-    public Map<String, Course> getCoursesToLearn(){
-        return this.coursesToLearn;
-    }
-
-    public boolean addCourseToLearn(Course course){
-        this.coursesToLearn.put(course.courseCode, course);
+    @Override
+    public boolean setPreferredModeOfTeaching(String mode) {
+        preferredModeOfTeaching.add(mode);
         return true;
     }
 
-    public boolean deleteCourseToLearn(Course course){
-        this.coursesToLearn.remove(course.courseCode);
+    // Student Methods
+    // Courses to learn
+    public List<String> getCoursesToLearn(){
+        return this.coursesToLearn;
+    }
+
+    public boolean addCourseToLearn(String courseCode){
+        this.coursesToLearn.add(courseCode);
+        return true;
+    }
+
+    public boolean deleteCourseToLearn(String courseCode){
+        this.coursesToLearn.remove(courseCode);
         return true;
     }
 
@@ -194,16 +182,23 @@ public class User implements Student, Tutor{
     public Map<String, Integer> getExpectedPrice(){
         return this.expectedPrice;
     }
-    public Integer getExpectedPrice(Course course){
-        return this.expectedPrice.get(course.courseCode);
+    public Integer getExpectedPrice(String courseCode){
+        return this.expectedPrice.get(courseCode);
     }
-    public boolean setExpectedPrice(Course course, Integer price){
-        this.expectedPrice.put(course.courseCode, price);
+    public boolean setExpectedPrice(String courseCode, Integer price){
+        this.expectedPrice.put(courseCode, price);
         return true;
     }
 
-    public List<String> preferredModeOfLearning(){
-        return this.preferredModeOfLearning;
+    @Override
+    public List<String> getPreferredModeOfLearning() {
+        return preferredModeOfLearning;
+    }
+
+    @Override
+    public boolean setPreferredModeOfLearning(String mode) {
+        preferredModeOfLearning.add(mode);
+        return true;
     }
 
 }

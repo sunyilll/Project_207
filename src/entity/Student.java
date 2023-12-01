@@ -5,21 +5,20 @@ import java.util.Map;
 
 public interface Student {
 
-    public Map<String, Course> getCoursesToLearn();
-    public boolean addCourseToLearn(Course course);
+    public List<String> getCoursesToLearn();
+    public boolean addCourseToLearn(String courseCode);
 
-    public boolean deleteCourseToLearn(Course course);
+    public boolean deleteCourseToLearn(String courseCode);
 
     public float getStudentRating();
 
     public boolean updateStudentRating(Integer rating);
 
-
     public Map<String, Integer> getExpectedPrice();
-    public Integer getExpectedPrice(Course course);
-    public boolean setExpectedPrice(Course course, Integer price);
-
-    public List<String> preferredModeOfLearning();
+    public Integer getExpectedPrice(String courseCode);
+    public boolean setExpectedPrice(String courseCode, Integer price);
+    public List<String> getPreferredModeOfLearning();
+    public boolean setPreferredModeOfLearning(String mode);
     public String getUserID();
 
 }
