@@ -1,0 +1,87 @@
+package app;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.go_to_chatl_list.GoToChatListController;
+import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
+import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
+import interface_adapter.go_to_personal_profile.GoToPersonalProfilePresenter;
+import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import interface_adapter.go_to_search.GoToSearchController;
+import interface_adapter.go_to_search.GoToSearchPresenter;
+import interface_adapter.search_course.SearchCourseViewModel;
+import interface_adapter.search_course_result.SearchCourseResultViewModel;
+import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
+import use_case.go_to_chat_list.GoToChatListInputBoundary;
+import use_case.go_to_chat_list.GoToChatListInteractor;
+import use_case.go_to_chat_list.GoToChatListOutputBoundary;
+import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
+import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
+import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
+import use_case.go_to_search.GoToSearchInputBoundary;
+import use_case.go_to_search.GoToSearchInteractor;
+import view.SearchCourseResultView;
+
+import javax.swing.*;
+import java.io.IOException;
+
+public class SearchCourseResultUseCaseFactory {
+    private SearchCourseResultUseCaseFactory(){}
+    public static SearchCourseResultView create(
+            ViewManagerModel viewManagerModel,
+            SearchCourseViewModel searchCourseViewModel,
+            SearchCourseResultViewModel searchCourseResultViewModel,
+            GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToChatListViewModel goToChatListViewModel,
+            GoToChatListDataAccessInterface goToChatListDataAccessObject
+    ){
+        try{
+            GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
+            GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
+                    goToPersonalProfileViewModel);
+            GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
+                    goToChatListViewModel, goToChatListDataAccessObject);
+            return new SearchCourseResultView(searchCourseResultViewModel, goToSearchController, goToChatListController,
+                    goToChatListViewModel, goToPersonalProfileController, goToPersonalProfileViewModel);
+        } catch (IOException e){
+            JOptionPane.showMessageDialog(null, "Could not open user data file.");
+        }
+        return null;
+
+    }
+    private static GoToSearchController createGoToSearchUseCase(
+            ViewManagerModel viewManagerModel,
+            SearchCourseViewModel searchCourseViewModel
+    ){
+        GoToSearchPresenter presenter = new GoToSearchPresenter(searchCourseViewModel, viewManagerModel);
+        GoToSearchInputBoundary interactor = new GoToSearchInteractor(presenter);
+        return new GoToSearchController(interactor);
+    }
+
+    private static GoToPersonalProfileController createGoToPersonalProfileUseCase(
+            ViewManagerModel viewManagerModel,
+            GoToPersonalProfileViewModel goToPersonalProfileViewModel) throws IOException {
+
+        GoToPersonalProfileOutputBoundary personalProfilePresenter =
+                new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
+
+        GoToPersonalProfileInputBoundary personalProfileInteractor =
+                new GoToPersonalProfileInteractor(personalProfilePresenter);
+
+        return new GoToPersonalProfileController(personalProfileInteractor);
+    }
+
+    private static GoToChatListController createGoToChatListUseCase(
+            ViewManagerModel viewManagerModel,
+            GoToChatListViewModel goToChatListViewModel,
+            GoToChatListDataAccessInterface goToChatListDataAccessObject) throws IOException {
+
+        GoToChatListOutputBoundary goToChatListPresenter =
+                new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
+
+        GoToChatListInputBoundary goToChatListInteractor =
+                new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
+
+        return new GoToChatListController(goToChatListInteractor);
+    }
+}
