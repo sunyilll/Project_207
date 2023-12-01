@@ -1,4 +1,4 @@
-package main.java.use_case.To_signup;
+package main.java.use_case.to_signup;
 
 import main.java.entity.User;
 

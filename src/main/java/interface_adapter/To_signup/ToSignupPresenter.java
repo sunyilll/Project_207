@@ -4,10 +4,8 @@ import main.java.interface_adapter.ViewManagerModel;
 import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.signup.SignupState;
 import main.java.interface_adapter.signup.SignupViewModel;
-import main.java.use_case.To_signup.ToSignupOutputBoundary;
-import main.java.use_case.To_signup.ToSignupOutputData;
-import main.java.use_case.signup.SignupOutputBoundary;
-import main.java.use_case.signup.SignupOutputData;
+import main.java.use_case.to_signup.ToSignupOutputBoundary;
+import main.java.use_case.to_signup.ToSignupOutputData;
 
 public class ToSignupPresenter implements ToSignupOutputBoundary {
 
