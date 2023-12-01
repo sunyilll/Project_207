@@ -6,7 +6,6 @@ import main.java.use_case.login.LoginUserDataAccessInterface;
 import main.java.use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
@@ -58,7 +57,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     @Override
     public void save(User user) {
-        accounts.put(user.getNickname(), user);
+        accounts.put(user.getUserID(), user);
         this.save();
     }
 

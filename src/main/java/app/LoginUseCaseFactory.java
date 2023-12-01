@@ -10,13 +10,11 @@ import main.java.interface_adapter.login.LoginViewModel;
 import main.java.interface_adapter.search_course.SearchCourseViewModel;
 import main.java.interface_adapter.signup.SignupViewModel;
 
-import main.java.interface_adapter.To_signup.ToSignupPresenter;
-
 import main.java.interface_adapter.To_signup.ToSignupController;
 
-import main.java.use_case.To_signup.ToSignupInputBoundary;
-import main.java.use_case.To_signup.ToSignupInteractor;
-import main.java.use_case.To_signup.ToSignupOutputBoundary;
+import main.java.use_case.to_signup.ToSignupInputBoundary;
+import main.java.use_case.to_signup.ToSignupInteractor;
+import main.java.use_case.to_signup.ToSignupOutputBoundary;
 import main.java.use_case.login.LoginInputBoundary;
 import main.java.use_case.login.LoginInteractor;
 import main.java.use_case.login.LoginOutputBoundary;
