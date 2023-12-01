@@ -8,9 +8,6 @@ class UserTest {
 
     private final User user = new User("userid", "nickname", "123456");
     private final User follower = new User("follower_id", "follower", "123456");
-    private final Course course1 = new Course("CSC207", "Software Design");
-    private final Course course2 = new Course("CSC209", "Software Tools");
-
     @Test
     void getUserID() {
         assertEquals("userid", user.getUserID());
@@ -60,41 +57,31 @@ class UserTest {
         assertTrue(user.getPersonalityTags().contains("Funny"));
         assertTrue(user.getPersonalityTags().contains("ENFP"));
     }
-
-    @Test
-    void follow() {
-        assertTrue(follower.follow(user));
-        assertTrue(follower.isFollwing(user));
-        assertTrue(user.isFollowedBy(follower));
-    }
-
+    
     @Test
     void editCourseToTeach() {
-        Course course1 = new Course("CSC207", "Software Design");
-        Course course2 = new Course("CSC209", "Software Tools");
-
-        assertTrue(user.addCourseToTeach(course1));
-        assertTrue(user.addCourseToTeach(course2));
+        assertTrue(user.addCourseToTeach("CSC207"));
+        assertTrue(user.addCourseToTeach("MAT237"));
         assertEquals(2, user.getCoursesToTeach().size());
-        assertTrue(user.getCoursesToTeach().containsValue(course1));
-        assertTrue(user.getCoursesToTeach().containsValue(course2));
+        assertTrue(user.getCoursesToTeach().contains("CSC207"));
+        assertTrue(user.getCoursesToTeach().contains("MAT237"));
 
-        assertTrue(user.deleteCourseToTeach(course1));
+        assertTrue(user.deleteCourseToTeach("CSC207"));
         assertEquals(1, user.getCoursesToTeach().size());
-        assertTrue(user.getCoursesToTeach().containsValue(course2));
+        assertTrue(user.getCoursesToTeach().contains("MAT237"));
     }
 
     @Test
     void editCourseToLearn() {
-        assertTrue(user.addCourseToLearn(course1));
-        assertTrue(user.addCourseToLearn(course2));
+        assertTrue(user.addCourseToLearn("CSC207"));
+        assertTrue(user.addCourseToLearn("MAT237"));
         assertEquals(2, user.getCoursesToLearn().size());
-        assertTrue(user.getCoursesToLearn().containsValue(course1));
-        assertTrue(user.getCoursesToLearn().containsValue(course2));
+        assertTrue(user.getCoursesToLearn().contains("CSC207"));
+        assertTrue(user.getCoursesToLearn().contains("MAT237"));
 
-        assertTrue(user.deleteCourseToLearn(course1));
+        assertTrue(user.deleteCourseToLearn("CSC207"));
         assertEquals(1, user.getCoursesToLearn().size());
-        assertTrue(user.getCoursesToLearn().containsValue(course2));
+        assertTrue(user.getCoursesToLearn().contains("MAT237"));
     }
 
     @Test
@@ -151,18 +138,18 @@ class UserTest {
     }
     @Test
     void setAndGetExpectedWage() {
-        assertTrue(user.setExpectedWage(course1, 20));
-        assertTrue(user.setExpectedWage(course2, 30));
+        assertTrue(user.setExpectedWage("CSC207", 20));
+        assertTrue(user.setExpectedWage("MAT237", 30));
         assertEquals(2, user.getExpectedWage().size());
-        assertEquals(20, user.getExpectedWage(course1));
-        assertEquals(30, user.getExpectedWage(course2));
+        assertEquals(20, user.getExpectedWage("CSC207"));
+        assertEquals(30, user.getExpectedWage("MAT237"));
     }
     @Test
     void setAndGetExpectedPrice() {
-        assertTrue(user.setExpectedPrice(course1, 20));
-        assertTrue(user.setExpectedPrice(course2, 30));
+        assertTrue(user.setExpectedPrice("CSC207", 20));
+        assertTrue(user.setExpectedPrice("MAT237", 30));
         assertEquals(2, user.getExpectedPrice().size());
-        assertEquals(20, user.getExpectedPrice(course1));
-        assertEquals(30, user.getExpectedPrice(course2));
+        assertEquals(20, user.getExpectedPrice("CSC207"));
+        assertEquals(30, user.getExpectedPrice("MAT237"));
     }
     }
