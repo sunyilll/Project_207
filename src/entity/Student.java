@@ -14,12 +14,11 @@ public interface Student {
 
     public boolean updateStudentRating(Integer rating);
 
-
     public Map<String, Integer> getExpectedPrice();
     public Integer getExpectedPrice(Course course);
     public boolean setExpectedPrice(Course course, Integer price);
-
-    public List<String> preferredModeOfLearning();
+    public List<String> getPreferredModeOfLearning();
+    public boolean setPreferredModeOfLearning(String mode);
     public String getUserID();
 
 }

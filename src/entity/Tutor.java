@@ -9,7 +9,7 @@ public interface Tutor {
 
     public boolean deleteCourseToTeach(Course course);
 
-    public List<String> getTutorAvailability();  // return available hours
+    public String getTutorAvailability();  // return available hours
 
     public float getTutorRating();
     public boolean updateTutorRating(Integer rating);
@@ -19,5 +19,6 @@ public interface Tutor {
     public boolean setExpectedWage(Course course, Integer wage);
 
     public List<String> getPreferredModeOfTeaching();
+    public boolean setPreferredModeOfTeaching(String mode);
     public String getUserID();
 }

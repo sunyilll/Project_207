@@ -10,8 +10,8 @@ public class User implements Student, Tutor{
     private String nickname;
     private String password;
     private String pronouns;
-    private Map<String, User> following;
-    private Map<String, User> follower;
+    private Map<String, User> following = new HashMap<>();
+    private Map<String, User> follower = new HashMap<>();
     private List<String> personalityTag = new ArrayList<>();
     private String profileURL = null;
     private String description = null;
@@ -20,7 +20,7 @@ public class User implements Student, Tutor{
     public List<Integer> tutorRatings = new ArrayList<>();
     public float tutorRating; // the average of all ratings
     public Map<String, Course> coursesToTeach = new HashMap<>();
-    public List<String> tutorAvailability = new ArrayList<>();	// available hours
+    public String tutorAvailability;	// available hours
     public Map<String, Integer> expectedWage = new HashMap<>();  // mapping of course to expected wage
     public List<String> preferredModeOfTeaching = new ArrayList<>();
 
@@ -57,11 +57,6 @@ public class User implements Student, Tutor{
 
     public boolean checkPassword(String password) {
         return this.password.equals(password);
-    }
-
-    public boolean setPassword(String password) {
-        this.password = password;
-        return true;
     }
 
     public String getPronouns() {
@@ -122,7 +117,11 @@ public class User implements Student, Tutor{
         return true;
     }
 
-    public List<String> getTutorAvailability(){
+    public boolean setTutorAvailability(String availability){
+        this.tutorAvailability = availability;
+        return true;
+    }
+    public String getTutorAvailability(){
         return this.tutorAvailability;
     }
 
@@ -157,6 +156,12 @@ public class User implements Student, Tutor{
 
     public List<String> getPreferredModeOfTeaching(){
         return this.preferredModeOfTeaching;
+    }
+
+    @Override
+    public boolean setPreferredModeOfTeaching(String mode) {
+        preferredModeOfTeaching.add(mode);
+        return true;
     }
 
     // Student Methods
@@ -202,8 +207,15 @@ public class User implements Student, Tutor{
         return true;
     }
 
-    public List<String> preferredModeOfLearning(){
-        return this.preferredModeOfLearning;
+    @Override
+    public List<String> getPreferredModeOfLearning() {
+        return preferredModeOfLearning;
+    }
+
+    @Override
+    public boolean setPreferredModeOfLearning(String mode) {
+        preferredModeOfLearning.add(mode);
+        return true;
     }
 
 }
