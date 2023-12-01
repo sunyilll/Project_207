@@ -6,8 +6,8 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.search_course.SearchCourseViewModel;
 
-import interface_adapter.To_signup.ToSignupViewModel;
-import interface_adapter.To_signup.ToSignupController;
+import interface_adapter.go_to_signup.ToSignupViewModel;
+import interface_adapter.go_to_signup.ToSignupController;
 
 
 import interface_adapter.ViewManagerModel;

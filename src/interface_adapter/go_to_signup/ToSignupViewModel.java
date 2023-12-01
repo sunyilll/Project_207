@@ -1,4 +1,4 @@
-package interface_adapter.To_signup;
+package interface_adapter.go_to_signup;
 
 public class ToSignupViewModel {
     public static final String TOSIGNUP_BUTTON_LABEL = "To sign up";

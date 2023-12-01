@@ -58,7 +58,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     @Override
     public void save(User user) {
-        accounts.put(user.getNickname(), user);
+        accounts.put(user.getUserID(), user);
         this.save();
     }
 

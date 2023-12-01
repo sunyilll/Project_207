@@ -1,4 +1,4 @@
-package use_case.To_signup;
+package use_case.go_to_signup;
 
 public class ToSignupOutputData {
     private final String username;
