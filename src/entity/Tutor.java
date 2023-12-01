@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface Tutor {
-    public Map<String, Course> getCoursesToTeach();
-    public boolean addCourseToTeach(Course course);
+    public List<String> getCoursesToTeach();
+    public boolean addCourseToTeach(String courseCode);
 
-    public boolean deleteCourseToTeach(Course course);
+    public boolean deleteCourseToTeach(String courseCode);
 
     public String getTutorAvailability();  // return available hours
 
@@ -15,8 +15,8 @@ public interface Tutor {
     public boolean updateTutorRating(Integer rating);
 
     public Map<String, Integer> getExpectedWage();
-    public Integer getExpectedWage(Course course);
-    public boolean setExpectedWage(Course course, Integer wage);
+    public Integer getExpectedWage(String courseCode);
+    public boolean setExpectedWage(String courseCode, Integer wage);
 
     public List<String> getPreferredModeOfTeaching();
     public boolean setPreferredModeOfTeaching(String mode);
