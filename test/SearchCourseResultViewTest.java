@@ -1,8 +1,8 @@
-import main.java.interface_adapter.search_course_result.SearchCourseResultState;
-import main.java.interface_adapter.search_course_result.SearchCourseResultViewModel;
-import main.java.view.FrameModel;
-import main.java.view.SearchCourseResultView;
-import main.java.view.SearchCourseView;
+import interface_adapter.search_course_result.SearchCourseResultState;
+import interface_adapter.search_course_result.SearchCourseResultViewModel;
+import view.FrameModel;
+import view.SearchCourseResultView;
+import view.SearchCourseView;
 import org.junit.Before;
 import org.junit.Test;
 
