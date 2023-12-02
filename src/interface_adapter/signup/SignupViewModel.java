@@ -40,7 +40,7 @@ public class SignupViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public static SignupState getState() {
+    public SignupState getState() {
         return state;
     }
 }

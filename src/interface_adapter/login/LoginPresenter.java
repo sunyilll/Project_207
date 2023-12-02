@@ -29,7 +29,10 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the search view.
+        LoginState loginState = loginViewModel.getState();
         SearchCourseState searchState = searchCourseViewModel.getState();
+        loginState.setLoginSuccessful(true);
+
         searchState.setUserID(response.getUserID());
         searchCourseViewModel.setState(searchState);
 
@@ -41,7 +44,9 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
+        loginState.setLoginSuccessful(false);
         loginState.setUsernameError(error);
+        loginState.setPasswordError(error);
         loginViewModel.firePropertyChanged();
     }
 }
