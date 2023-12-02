@@ -91,6 +91,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
         wrapperPanel.add(scrollPane);
         chatListPanel = wrapperPanel;
 
+        this.setLayout(new BorderLayout());
         this.add(chatListPanel, BorderLayout.NORTH);
         this.add(homeBar, BorderLayout.SOUTH);
     }

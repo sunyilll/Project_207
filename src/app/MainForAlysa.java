@@ -52,7 +52,7 @@ public class MainForAlysa {
          * 这里手动initialize一个currentuser和chatchannel, state
          * */
         User testUser1 = new User("test1", "test1", "test1");
-        User testUser2 = new User("test1", "test1", "test1");
+        User testUser2 = new User("test2", "test2", "test2");
 
         Map<String, User> testMap = new HashMap<>();
         testMap.put("test1", testUser1);
