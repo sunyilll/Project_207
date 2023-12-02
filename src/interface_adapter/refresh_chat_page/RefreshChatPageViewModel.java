@@ -1,8 +1,6 @@
 package interface_adapter.refresh_chat_page;
 
 
-import entity.ChatChannel;
-import entity.User;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -10,17 +8,12 @@ import java.beans.PropertyChangeSupport;
 
 public class RefreshChatPageViewModel extends ViewModel{
     public static final String TITLE_LABEL = "Refresh";
-    private User currentUser = null;
-    private ChatChannel channel = null;
 
     private RefreshChatPageState state = new RefreshChatPageState();
-
-    public RefreshChatPageViewModel(User currentUser, ChatChannel channel, RefreshChatPageState state) {
+    public RefreshChatPageViewModel() {
         super("refresh chat page");
-        this.channel = channel;
-        this.currentUser = currentUser;
-        this.state = state;
     }
+
     public void setState(RefreshChatPageState state){
         this.state = state;
     }

@@ -35,8 +35,6 @@ import java.util.Map;
 public class MainForAlysa {
     public static void main(String[] args) {
 
-//         FrameModel application = new FrameModel("Send Message example");
-//        application.setVisible(true);
 
         JFrame application = new FrameModel("Tutoring APP");
 
@@ -78,7 +76,8 @@ public class MainForAlysa {
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel(testUser1, channel, testState);
         SendMessageDataAccessObject sendMessageDataAccessObject;
 
-        RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel(testUser1, channel, refreshTestState);
+        RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel();
+        refreshChatPageViewModel.setState(refreshTestState);
         RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
 
         GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
@@ -111,10 +110,9 @@ public class MainForAlysa {
         ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, goToChannelViewModel, searchCourseViewModel);
         views.add(chatListView, chatListView.viewName);
 
-        viewManagerModel.setActiveView(channelView.viewName);
+        viewManagerModel.setActiveView(chatListView.viewName);
         viewManagerModel.firePropertyChanged();
 
-//        application.pack();
         application.setVisible(true);
 
     }
