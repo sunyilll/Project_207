@@ -3,6 +3,7 @@ package interface_adapter.search_course;
 public class SearchCourseState {
     private String userID;
     private boolean searchForTutor = true;
+    private boolean isSearchTypeSelected = false;
     private String courseCode;
     private String error = null;
     public SearchCourseState(){}
@@ -11,6 +12,8 @@ public class SearchCourseState {
     public void setUserID(String userID){this.userID =userID;}
 
     public void setError(String courseCodeError){this.error = courseCodeError;}
+    public void setSearchTypeSelected(boolean bool){this.isSearchTypeSelected = bool;}
+    public boolean getSearchTypeSelected(){return this.isSearchTypeSelected;}
     public String getError(){return this.error;}
     public String getCourseCode(){return this.courseCode;}
     public boolean getSearchForTutor(){return this.searchForTutor;}

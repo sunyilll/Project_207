@@ -72,8 +72,9 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 SearchCourseState s = searchCourseViewModel.getState();
                 s.setSearchForTutor(false);
+                s.setSearchTypeSelected(true);
                 searchCourseViewModel.setState(s);
-                isStudentButton.setEnabled(false);  //todo: should add a reset button?
+                isStudentButton.setEnabled(false);
             }
         });
         isStudentButton.addActionListener(new ActionListener() {
@@ -81,6 +82,7 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 SearchCourseState s = searchCourseViewModel.getState();
                 s.setSearchForTutor(true);
+                s.setSearchTypeSelected(true);
                 searchCourseViewModel.setState(s);
                 isTutorButton.setEnabled(false);
             }
@@ -105,12 +107,14 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         // todo: what to do when view model changed
         SearchCourseState state = (SearchCourseState) evt.getNewValue();
-        System.out.println("CHANGE MADE");
+        if (!state.getSearchTypeSelected()){
+            isTutorButton.setEnabled(true);
+            isStudentButton.setEnabled(true);
+        }
         if (state.getError() != null){
             JOptionPane.showMessageDialog(this, state.getError());
         } else {
             searchField.setText(state.getCourseCode());
-            System.out.println("Property change in Search View");
         }
     }
 }
