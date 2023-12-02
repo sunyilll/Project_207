@@ -200,5 +200,5 @@ public class User implements Student, Tutor{
         preferredModeOfLearning.add(mode);
         return true;
     }
-
+    public String getProfileURL(){return this.profileURL;}
 }

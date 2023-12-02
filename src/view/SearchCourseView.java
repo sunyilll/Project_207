@@ -29,6 +29,7 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
     private JPanel homeBar;
     private JTextField searchField;
     private JButton searchButton;
+    private JLabel hintText;
     private final SearchCourseViewModel searchCourseViewModel;
     public String viewName;
 
@@ -91,7 +92,8 @@ public class SearchCourseView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SearchCourseState s = searchCourseViewModel.getState();
-                searchCourseController.execute(s.getCourseCode(), s.getSearchForTutor(), s.getUserID());
+                if (!s.getSearchTypeSelected()){JOptionPane.showMessageDialog(SearchCourseView.this, "Please select search type");}
+                else {searchCourseController.execute(s.getCourseCode(), s.getSearchForTutor(), s.getUserID());}
             }
         });
 

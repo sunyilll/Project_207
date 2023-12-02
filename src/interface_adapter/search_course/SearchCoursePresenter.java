@@ -23,7 +23,9 @@ public class SearchCoursePresenter implements SearchCourseOutputBoundary {
         SearchCourseResultState resultState = searchCourseResultViewModel.getState();
         resultState.setResultUsers(users.getUsersInfo());
         resultState.setResultUserTags(users.getUsers_tags());
+        resultState.setSortedIds(users.getSortedUserIds());
         resultState.setCourseCode(users.getCourseCode());
+        resultState.setSearchForTutor(users.getSearchForTutor());
         System.out.println(users.getUsersInfo());
         searchCourseResultViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(searchCourseResultViewModel.getViewName());

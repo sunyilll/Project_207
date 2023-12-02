@@ -5,6 +5,7 @@ import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
+import interface_adapter.search_course.SearchCourseState;
 import interface_adapter.search_course_result.SearchCourseResultState;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
 
@@ -13,12 +14,14 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchCourseResultView extends JPanel{
+public class SearchCourseResultView extends JPanel implements PropertyChangeListener {
     private JPanel mainPanel;
     private JPanel homeBar;
     private JPanel upPanel;
@@ -47,6 +50,7 @@ public class SearchCourseResultView extends JPanel{
         this.add(homeBar, BorderLayout.SOUTH);
         this.add(mainPanel, BorderLayout.PAGE_START);
         this.searchCourseResultViewModel = searchCourseResultViewModel;
+        this.searchCourseResultViewModel.addPropertyChangeListener(this);
         SearchCourseResultState s = searchCourseResultViewModel.getState();
         // todo: updateUserInfo(s.getResultUsers(), s.getResultUserTags());
         this.viewName = searchCourseResultViewModel.getViewName();
@@ -54,14 +58,6 @@ public class SearchCourseResultView extends JPanel{
         ListCellRenderer renderer = new UserListCellRenderer();
         listUsers.setCellRenderer(renderer);
 
-        if (s.getSearchForTutor()){
-            addCourseToProfile.setText("Add this Course To Learn");
-            resultLabel.setText(s.getNumbersResults() + " Tutors for\n" + s.getCourseCode());
-        }
-        else {
-            addCourseToProfile.setText("Add this Course To Tutor");
-            resultLabel.setText(s.getNumbersResults() + " Students for\n" + s.getCourseCode());
-        }
         this.add(mainPanel);
         courseCode.setText(searchCourseResultViewModel.getState().getCourseCode());
         backToSearch.addActionListener(new ActionListener() {
@@ -79,15 +75,16 @@ public class SearchCourseResultView extends JPanel{
             }});
 
     }
-    public void updateUserInfo(Map<String, Map<String, String>> resultUsers, Map<String, List<String>> resultUserTags){
+    public void updateJListUsers(List<String> sortedIds, Map<String, Map<String, String>> resultUsers, Map<String, List<String>> resultUserTags){
         //todo: initListView();
         DefaultListModel<UserInfo> model = new DefaultListModel<UserInfo>();
-        for (String id: resultUsers.keySet()){
+        for (String id: sortedIds){
             UserInfo userInfo = new UserInfo(resultUsers.get(id), resultUserTags.get(id));
             model.addElement(userInfo);
         }
         listUsers.setModel(model);
     }
+
     private class UserListCellRenderer implements ListCellRenderer {
         JPanel main = new JPanel();
         JPanel right = new JPanel();
@@ -173,14 +170,37 @@ public class SearchCourseResultView extends JPanel{
         f.setVisible(true);
     }
 
+    public void propertyChange(PropertyChangeEvent evt) {
+        // todo: what to do when view model changed
+        SearchCourseResultState state = (SearchCourseResultState) evt.getNewValue();
+        if (state.getError() != null){
+            JOptionPane.showMessageDialog(this, state.getError());
+        } else {
+            updateJListUsers(state.getSortedIds(), state.getResultUsers(), state.getResultUserTags());
+            if (state.getSearchForTutor()){
+                addCourseToProfile.setText("Add this Course To Learn");
+                resultLabel.setText(state.getNumbersResults() + " Tutors for\n" + state.getCourseCode());
+            }
+            else {
+                addCourseToProfile.setText("Add this Course To Tutor");
+                resultLabel.setText(state.getNumbersResults() + " Students for\n" + state.getCourseCode());
+            }
+            System.out.println("New Change to ViewModel of SearchCourseResultViw");
+        }
+    }
+
     private class UserInfo{
         String name;
         String rating;
+        String profileURL = "";
         List<String> tags;
 
         UserInfo(Map<String, String> infos, List<String> tags){
             this.name = infos.get("name");
             this.rating = infos.get("rating");
+            if (infos.get("profileURL") != null){
+                this.profileURL = infos.get("profileURL");
+            }
             this.tags = tags;
         }
     }

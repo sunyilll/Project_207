@@ -95,7 +95,7 @@ public class Main {
 
         // This is for testing purposes. Please change the View name to the one you want to test.
 //        viewManagerModel.setActiveView(homeBar.viewName);
-        viewManagerModel.setActiveView(searchCourseResultView.viewName);
+        viewManagerModel.setActiveView(searchCourseView.viewName);
 
         viewManagerModel.firePropertyChanged();
 
