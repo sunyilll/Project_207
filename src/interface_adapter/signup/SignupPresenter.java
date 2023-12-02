@@ -24,10 +24,12 @@ public class SignupPresenter implements SignupOutputBoundary {
     public void prepareSuccessView(SignupOutputData response) {
 //         On success, switch to the login view.
         LoginState loginState = loginViewModel.getState();
+        SignupState signupState = signupViewModel.getState();
+        signupState.setSignupSuccessful(true);
         loginState.setUsername(response.getUsername());
         this.loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
 
+        loginViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
@@ -35,7 +37,9 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         SignupState signupState = signupViewModel.getState();
+        signupState.setSignupSuccessful(false);
         signupState.setUsernameError(error);
+        signupState.setRepeatPassword(error);
         signupViewModel.firePropertyChanged();
     }
 }
