@@ -15,6 +15,7 @@ public class GoToPersonalProfilePresenter implements GoToPersonalProfileOutputBo
     public void prepareSuccessView(GoToPersonalProfileOutputData response) {
         GoToPersonalProfileState state = viewModel.getState();
         state.setUser(response.getUser());
+        state.setGoToPersonalProfileSuccess(true);
         this.viewModel.setState(state);
         viewModel.firePropertyChanged();
 
@@ -24,6 +25,10 @@ public class GoToPersonalProfilePresenter implements GoToPersonalProfileOutputBo
 
     @Override
     public void prepareFailView(String error) {
+        System.out.println("entered fail view prepare");
+        GoToPersonalProfileState state = viewModel.getState();
+        state.setGoToPersonalProfileSuccess(false);
+        this.viewModel.setState(state);
         // TODO: implement this
     }
 }

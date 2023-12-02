@@ -4,6 +4,7 @@ import entity.User;
 
 public class GoToPersonalProfileState {
     private User user;
+    private boolean goToPersonalProfileSuccess = false;
 
     public GoToPersonalProfileState(GoToPersonalProfileState copy) {
         this.user = copy.getUser();
@@ -16,5 +17,11 @@ public class GoToPersonalProfileState {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    public boolean isGoToPersonalProfileSuccess() {
+        return goToPersonalProfileSuccess;
+    }
+    public void setGoToPersonalProfileSuccess(boolean goToPersonalProfileSuccess) {
+        this.goToPersonalProfileSuccess = goToPersonalProfileSuccess;
     }
 }
