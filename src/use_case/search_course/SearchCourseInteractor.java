@@ -1,13 +1,12 @@
 package use_case.search_course;
 
-import entity.MatchingAlgorithm;
+import algorithmn.MatchStudentAlgorithm;
+import algorithmn.MatchTutorAlgorithm;
 import entity.Student;
 import entity.Tutor;
 import entity.User;
 import use_case.GetUserDataAccessInterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,12 +14,18 @@ public class SearchCourseInteractor implements SearchCourseInputBoundary{
     final SearchCourseDataAccessInterface courserDataAccessObject;
     final SearchCourseOutputBoundary searchCoursePresenter;
     final GetUserDataAccessInterface getUserDataAccessInterface;
+    final MatchTutorAlgorithm matchTutorAlgorithm;
+    final MatchStudentAlgorithm matchStudentAlgorithm;
     public SearchCourseInteractor(SearchCourseDataAccessInterface courserDataAccessObject,
                                   SearchCourseOutputBoundary searchCourseOutputBoundary,
-                                  GetUserDataAccessInterface getUserDataAccessInterface){
+                                  GetUserDataAccessInterface getUserDataAccessInterface,
+                                  MatchTutorAlgorithm matchTutorAlgorithm,
+                                  MatchStudentAlgorithm matchStudentAlgorithm){
         this.courserDataAccessObject = courserDataAccessObject;
         this.searchCoursePresenter = searchCourseOutputBoundary;
         this.getUserDataAccessInterface = getUserDataAccessInterface;
+        this.matchStudentAlgorithm = matchStudentAlgorithm;
+        this.matchTutorAlgorithm = matchTutorAlgorithm;
     }
 
 
@@ -35,12 +40,12 @@ public class SearchCourseInteractor implements SearchCourseInputBoundary{
         }
         if (searchForTutor == true){
             List<Tutor> candidates = courserDataAccessObject.getTutorOfCourse(courseCode);
-            List<Map.Entry<User, Float>> sortedCandidates = MatchingAlgorithm.matchTutor(me, candidates);
+            List<Map.Entry<User, Float>> sortedCandidates = matchTutorAlgorithm.matchTutor(me, candidates);
             SearchCourseOutputData tutors = new SearchCourseOutputData(sortedCandidates, searchForTutor, courseCode);
             searchCoursePresenter.prepareSuccessView(tutors);
         } else if (searchForTutor == false) {
             List<Student> candidates = courserDataAccessObject.getStudentOfCourse(courseCode);
-            List<Map.Entry<User, Float>> sortedCandidates = MatchingAlgorithm.matchStudent(me, candidates);
+            List<Map.Entry<User, Float>> sortedCandidates = matchStudentAlgorithm.matchStudent(me, candidates);
             SearchCourseOutputData students = new SearchCourseOutputData(sortedCandidates, searchForTutor, courseCode);
             searchCoursePresenter.prepareSuccessView(students);
         } else {
