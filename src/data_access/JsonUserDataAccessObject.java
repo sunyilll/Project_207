@@ -65,7 +65,23 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         JSONObject userJson = new JSONObject();
         userJson.put("nickname", user.getNickname());
         userJson.put("password", user.getPassword());
-        JSONArray courses_to_learn = new JSONArray();
+        userJson.put("pronouns", user.getPronouns());
+        userJson.put("description", user.getDescription());
+        JSONArray personalityTags = new JSONArray(user.getPersonalityTags());
+        userJson.put("personality_tags", personalityTags);
+        JSONArray coursesToLearn = new JSONArray(user.getCoursesToLearn());
+        userJson.put("courses_to_learn", coursesToLearn);
+        JSONArray coursesToTeach = new JSONArray(user.getCoursesToTeach());
+        userJson.put("courses_to_teach", coursesToTeach);
+        JSONArray studentRatings = new JSONArray(user.getStudentRatings());
+        userJson.put("student_ratings", studentRatings);
+        JSONArray tutorRatings = new JSONArray(user.getTutorRatings());
+        userJson.put("tutor_ratings", tutorRatings);
+        JSONArray modeOfLearning = new JSONArray(user.getPreferredModeOfLearning());
+        userJson.put("mode_of_learning", modeOfLearning);
+        JSONArray modeOfTeaching = new JSONArray(user.getPreferredModeOfTeaching());
+        userJson.put("mode_of_teaching", modeOfTeaching);
+
 
         userFile.put(user.getUserID(), userJson);
         this.save();

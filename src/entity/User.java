@@ -113,6 +113,10 @@ public class User implements Student, Tutor{
         return this.tutorRating;
     }
 
+    public List<Integer> getTutorRatings(){
+        return this.tutorRatings;
+    }
+
     public boolean updateTutorRating(Integer rating){
         // check if rating is valid: 0<= rating <= 5
         if (rating < 0 || rating > 5) {
@@ -166,6 +170,10 @@ public class User implements Student, Tutor{
     // Student rating
     public float getStudentRating(){
         return this.studentRating;
+    }
+
+    public List<Integer> getStudentRatings(){
+        return this.studentRatings;
     }
 
     public boolean updateStudentRating(Integer rating){
