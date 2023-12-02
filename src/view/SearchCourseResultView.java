@@ -67,6 +67,12 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
             }
         });
 
+        addCourseToProfile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // todo: add add_course_to_learn controller
+            }
+        });
 
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -88,11 +94,9 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
     private class UserListCellRenderer implements ListCellRenderer {
         JPanel main = new JPanel();
         JPanel right = new JPanel();
-        // PictureView picture = new PictureView();
-        // JLabel tagPanel = new JLabel();
         JPanel left = new JPanel();
         JLabel picture = new JLabel();
-        ImageIcon pictureIcon = new ImageIcon("src/view/other_icons/default_profilePhoto.png");
+        ImageIcon pictureIcon;
 
         UserListCellRenderer(){
             System.out.println("New !");
@@ -107,6 +111,7 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
             left = new JPanel();
             left.setPreferredSize(new Dimension(100, main.getPreferredSize().height));
             left.setMaximumSize(new Dimension(100, main.getPreferredSize().height));
+            pictureIcon = new ImageIcon(userInfo.profileURL);
             Image image = pictureIcon.getImage();
             int scaledSize = (int) Math.floor(0.7* left.getPreferredSize().width);
             Image scaledImage = image.getScaledInstance( scaledSize, scaledSize, java.awt.Image.SCALE_SMOOTH);
@@ -171,7 +176,6 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        // todo: what to do when view model changed
         SearchCourseResultState state = (SearchCourseResultState) evt.getNewValue();
         if (state.getError() != null){
             JOptionPane.showMessageDialog(this, state.getError());
@@ -192,7 +196,7 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
     private class UserInfo{
         String name;
         String rating;
-        String profileURL = "";
+        String profileURL = "src/view/other_icons/default_profilePhoto.png";  // default profile picture
         List<String> tags;
 
         UserInfo(Map<String, String> infos, List<String> tags){
