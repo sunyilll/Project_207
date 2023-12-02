@@ -52,7 +52,7 @@ public class ChatListUsesCaseFactory {
             return new ChatListView(goToChatListViewModel, goToChatListController,
                     goToChannelViewModel, goToChannelController,
                     goToPersonalProfileViewModel, goToPersonalProfileController,
-                    goToSearchController);
+                    goToSearchController, viewManagerModel);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
