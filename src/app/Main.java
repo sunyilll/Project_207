@@ -2,20 +2,33 @@ package app;
 
 import data_access.*;
 import entity.*;
+import interface_adapter.go_to_channel.GoToChannelState;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
+import interface_adapter.go_to_chatl_list.GoToChatListState;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import interface_adapter.refresh_chat_page.RefreshChatPageState;
+import interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 import interface_adapter.search_course.SearchCourseViewModel;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
+import interface_adapter.send_message.SendMessageState;
+import interface_adapter.send_message.SendMessageViewModel;
 import view.*;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.go_to_signup.ToSignupViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
+import view.ChannelView.ChannelView;
+import view.ChatListView.ChatListView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Main {
@@ -39,7 +52,20 @@ public class Main {
 
         // This is a temporary solution to the problem of not having a user to pass to the home bar.
         // FIXME: Will be removed.
-        User user = new User("heyyyy", "ARandomUser", "1234556");
+        User testUser1 = new User("test1", "test1", "test1");
+        User testUser2 = new User("test2", "test2", "test2");
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Map<String, User> testMap = new HashMap<>();
+        testMap.put("test1", testUser1);
+        testMap.put("test2", testUser2);
+        ChatChannel channel = new ChatChannel(testMap, currentDateTime, "sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7");
+        ArrayList<ChatChannel> channels = new ArrayList<>();
+        channels.add(channel);
+
+        SendMessageState testState = new SendMessageState(testUser1, channel);
+        RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
+        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
+        GoToChannelState goToChannelState = new GoToChannelState(testUser1, channel);
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -47,10 +73,32 @@ public class Main {
         SearchCourseViewModel searchCourseViewModel = new SearchCourseViewModel();
         SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
-        goToPersonalProfileViewModel.getState().setUser(user);
+        goToPersonalProfileViewModel.getState().setUser(testUser1);
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
+        SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
+        sendMessageViewModel.setState(testState);
+        SendMessageDataAccessObject sendMessageDataAccessObject;
+
+        RefreshChatPageViewModel refreshChatPageViewModel = new RefreshChatPageViewModel();
+        refreshChatPageViewModel.setState(refreshTestState);
+        RefreshChatPageDataAccessObject refreshChatPageDataAccessObject;
+
         GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
+        goToChatListViewModel.setState(goToChatListState);
+        GoToChatListDataAccessObject goToChatListDataAccessObject;
+
+        GoToChannelViewModel goToChannelViewModel = new GoToChannelViewModel();
+        goToChannelViewModel.setState(goToChannelState);
+
+
+        sendMessageDataAccessObject = new SendMessageDataAccessObject(
+                "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
+                "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5"
+
+        );
+        refreshChatPageDataAccessObject = new RefreshChatPageDataAccessObject();
+        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
 
 
         FileUserDataAccessObject userDataAccessObject;
@@ -60,8 +108,8 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        GoToChatListDataAccessObject goToChatListDataAccessObject;
-        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+//        GoToChatListDataAccessObject goToChatListDataAccessObject;
+//        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
 
 
         FileCourseDataAccessObject fileCourseDataAccessObject;
@@ -87,6 +135,14 @@ public class Main {
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
                 goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
+
+
+
+        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
+        views.add(channelView, channelView.viewName);
+
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, goToChannelViewModel, searchCourseViewModel);
+        views.add(chatListView, chatListView.viewName);
 
         // This is for testing purposes. Please delete this for final submission
 //        HomeBar homeBar = HomeBarUseCaseFactory.create(viewManagerModel, goToPersonalProfileViewModel,

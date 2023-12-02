@@ -62,6 +62,8 @@ public class HomeBar extends JPanel implements PropertyChangeListener, ActionLis
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(messageButton)) {
                     GoToChatListState currState = goToChatListViewModel1.getState();
+                    System.out.println(currState);
+                    System.out.println(currState.getUser().getUserID());
                     goToChatListController1.execute(currState.getUser());
 
                     System.out.println("Chat list button pressed");
