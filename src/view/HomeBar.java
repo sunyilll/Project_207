@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.go_to_chatl_list.GoToChatListController;
+import interface_adapter.go_to_chatl_list.GoToChatListState;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileState;
@@ -21,8 +22,8 @@ import java.beans.PropertyChangeListener;
 
 public class HomeBar extends JPanel implements PropertyChangeListener, ActionListener {
     public String viewName = "HomeBarView";
-    private final GoToChatListViewModel goToChatListViewModel;
-    private final GoToChatListController goToChatListController;
+    private final GoToChatListViewModel goToChatListViewModel1;
+    private final GoToChatListController goToChatListController1;
     private final GoToPersonalProfileViewModel goToPersonalProfileViewModel;
     private final GoToPersonalProfileController goToPersonalProfileController;
 
@@ -32,9 +33,9 @@ public class HomeBar extends JPanel implements PropertyChangeListener, ActionLis
                    GoToChatListController goToChatListController,
                    GoToSearchController goToSearchController) {
 
-        this.goToChatListViewModel = goToChatListViewModel;
-        this.goToChatListViewModel.addPropertyChangeListener(this);
-        this.goToChatListController = goToChatListController;
+        this.goToChatListViewModel1 = goToChatListViewModel;
+        this.goToChatListViewModel1.addPropertyChangeListener(this);
+        this.goToChatListController1 = goToChatListController;
         this.goToPersonalProfileViewModel = goToPersonalProfileViewModel;
         this.goToPersonalProfileViewModel.addPropertyChangeListener(this);
         this.goToPersonalProfileController = personalProfileController;
@@ -56,13 +57,12 @@ public class HomeBar extends JPanel implements PropertyChangeListener, ActionLis
 //        this.setLayout(new BorderLayout());
 //        this.add(homeBar, BorderLayout.SOUTH);
 
-        messageButton.addActionListener(new ActionListener() {
+        messageButton.addActionListener(
+                new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(messageButton)) {
-
-                    // FIXME: Fix the call to GoToChatListCourse Controller
-//                    GoToChatListState currentState = goToChatListViewModel.getState();
-//                    goToChatListController.execute(currentUser.getUser());
+                    GoToChatListState currState = goToChatListViewModel1.getState();
+                    goToChatListController1.execute(currState.getUser());
 
                     System.out.println("Chat list button pressed");
                 }
