@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class RefreshChatPageDataAccessObject implements RefreshChatPageDataAccessInterface {
 
-    public RefreshChatPageDataAccessObject() throws IOException {
+    public RefreshChatPageDataAccessObject() {
     }
 
     @Override

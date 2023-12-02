@@ -2,8 +2,8 @@ package view.ChatListView;
 
 import entity.ChatChannel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.go_to_chat.GoToChannelController;
-import interface_adapter.go_to_chat.GoToChannelViewModel;
+import interface_adapter.go_to_channel.GoToChannelController;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;

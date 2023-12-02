@@ -61,11 +61,8 @@ public class Main {
             throw new RuntimeException(e);
         }
         GoToChatListDataAccessObject goToChatListDataAccessObject;
-        try {
-            goToChatListDataAccessObject = new GoToChatListDataAccessObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+
 
         FileCourseDataAccessObject fileCourseDataAccessObject;
         try {

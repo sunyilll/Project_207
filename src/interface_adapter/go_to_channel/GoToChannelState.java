@@ -1,4 +1,4 @@
-package interface_adapter.go_to_chat;
+package interface_adapter.go_to_channel;
 
 import entity.ChatChannel;
 import entity.User;

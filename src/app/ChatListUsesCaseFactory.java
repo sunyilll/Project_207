@@ -1,9 +1,9 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.go_to_chat.GoToChannelController;
-import interface_adapter.go_to_chat.GoToChannelPresenter;
-import interface_adapter.go_to_chat.GoToChannelViewModel;
+import interface_adapter.go_to_channel.GoToChannelController;
+import interface_adapter.go_to_channel.GoToChannelPresenter;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
@@ -13,9 +13,9 @@ import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
 import interface_adapter.go_to_search.GoToSearchPresenter;
 import interface_adapter.search_course.SearchCourseViewModel;
-import use_case.go_to_chat.GoToChannelInputBoundary;
-import use_case.go_to_chat.GoToChannelInteractor;
-import use_case.go_to_chat.GoToChannelOutputBoundary;
+import use_case.go_to_channel.GoToChannelInputBoundary;
+import use_case.go_to_channel.GoToChannelInteractor;
+import use_case.go_to_channel.GoToChannelOutputBoundary;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInteractor;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;

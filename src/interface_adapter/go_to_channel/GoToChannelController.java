@@ -1,9 +1,9 @@
-package interface_adapter.go_to_chat;
+package interface_adapter.go_to_channel;
 
 import entity.ChatChannel;
 import entity.User;
-import use_case.go_to_chat.GoToChannelInputBoundary;
-import use_case.go_to_chat.GoToChannelInputData;
+import use_case.go_to_channel.GoToChannelInputBoundary;
+import use_case.go_to_channel.GoToChannelInputData;
 
 public class GoToChannelController {
     final GoToChannelInputBoundary goToChatInputUseCaseInteractor;

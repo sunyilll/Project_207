@@ -3,9 +3,9 @@ package view.ChatListView;
 import entity.ChatChannel;
 import entity.User;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.go_to_chat.GoToChannelController;
-import interface_adapter.go_to_chat.GoToChannelState;
-import interface_adapter.go_to_chat.GoToChannelViewModel;
+import interface_adapter.go_to_channel.GoToChannelController;
+import interface_adapter.go_to_channel.GoToChannelState;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
 
 import javax.swing.*;
 import java.awt.*;

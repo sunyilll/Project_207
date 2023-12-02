@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GoToChatListDataAccessObject implements GoToChatListDataAccessInterface {
-    public GoToChatListDataAccessObject() throws IOException {
+    public GoToChatListDataAccessObject(){
     }
 
     @Override
@@ -18,7 +18,11 @@ public class GoToChatListDataAccessObject implements GoToChatListDataAccessInter
                 "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5",
                 "0ecfef313ab2989479b70e30e3ee37a1d105b770");
         try {
-            return sendBirdAPIObject.getAllChatChannels(user.getUserID());
+            ArrayList<ChatChannel> channels = sendBirdAPIObject.getAllChatChannels(user.getUserID());
+            if (channels == null || channels.isEmpty()) {
+                throw new RuntimeException("Failed to get all chat channels");
+            }
+            return channels;
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

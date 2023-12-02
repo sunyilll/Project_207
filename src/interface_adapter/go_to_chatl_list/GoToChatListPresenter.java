@@ -26,6 +26,8 @@ public class GoToChatListPresenter implements GoToChatListOutputBoundary {
     public void prepareFailView(String error) {
         GoToChatListState GoToChatListState = goToChatListViewModel.getState();
         GoToChatListState.setErrorMessage(error);
+        GoToChatListState.setSuccess(false);
+        this.goToChatListViewModel.setState(GoToChatListState);
         goToChatListViewModel.firePropertyChanged();
     }
 }
