@@ -82,7 +82,6 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         JSONArray modeOfTeaching = new JSONArray(user.getPreferredModeOfTeaching());
         userJson.put("mode_of_teaching", modeOfTeaching);
 
-
         userFile.put(user.getUserID(), userJson);
         this.save();
     }
