@@ -11,6 +11,8 @@ public class SignupState {
     private String genderError = null;
     private String repeatPassword = "";
     private String repeatPasswordError = null;
+    private boolean signupSuccessful = false;
+
 
     public SignupState(SignupState copy) {
         username = copy.username;
@@ -23,6 +25,7 @@ public class SignupState {
         genderError = copy.genderError;
         repeatPassword = copy.repeatPassword;
         repeatPasswordError = copy.repeatPasswordError;
+        signupSuccessful = copy.signupSuccessful;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -31,13 +34,6 @@ public class SignupState {
 
     public String getUsername() {
         return username;
-    }
-    public String getGender() {
-        return null;
-    }
-
-    public String getGenderError() {
-        return genderError;
     }
 
     public String getUsernameError() {
@@ -100,13 +96,19 @@ public class SignupState {
         this.repeatPasswordError = repeatPasswordError;
     }
 
+    public boolean isSignupSuccessful() {
+        return this.signupSuccessful;
+    }
+    public void setSignupSuccessful(boolean signupSuccessful) {
+        this.signupSuccessful = signupSuccessful;
+    }
+
     @Override
     public String toString() {
         return "SignupState{" +
-                "username='" + username + '\'' +
-                "nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", repeatPassword='" + repeatPassword + '\'' +
-                '}';
+                "username='" + username + "', " +
+                "nickname='" + nickname + "', " +
+                "password='" + password + "', " +
+                "repeatPassword='" + repeatPassword + "'}";
     }
 }

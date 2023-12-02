@@ -9,4 +9,7 @@ public class ToSignupViewModel {
         return state;
     }
 
+    public void setState(ToSignupState expectedState) {
+        this.state = expectedState;
+    }
 }
