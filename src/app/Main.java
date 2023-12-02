@@ -1,5 +1,9 @@
 package app;
 
+import algorithmn.MatchByStudentRating;
+import algorithmn.MatchByTutorRating;
+import algorithmn.MatchStudentAlgorithm;
+import algorithmn.MatchTutorAlgorithm;
 import data_access.*;
 import entity.*;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
@@ -68,6 +72,8 @@ public class Main {
         try {
             fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(userDataAccessObject));
         } catch (IOException e){throw new RuntimeException(e);}
+        MatchTutorAlgorithm matchTutorAlgorithm = new MatchByTutorRating();
+        MatchStudentAlgorithm matchStudentAlgorithm = new MatchByStudentRating();
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
                 userDataAccessObject);
@@ -77,7 +83,7 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject);
+                searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
