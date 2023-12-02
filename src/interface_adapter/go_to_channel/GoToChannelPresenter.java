@@ -1,8 +1,8 @@
-package interface_adapter.go_to_chat;
+package interface_adapter.go_to_channel;
 
 import interface_adapter.ViewManagerModel;
-import use_case.go_to_chat.GoToChannelOutputBoundary;
-import use_case.go_to_chat.GoToChannelOutputData;
+import use_case.go_to_channel.GoToChannelOutputBoundary;
+import use_case.go_to_channel.GoToChannelOutputData;
 
 public class GoToChannelPresenter implements GoToChannelOutputBoundary {
     private final GoToChannelViewModel goToChannelViewModel;
@@ -23,7 +23,10 @@ public class GoToChannelPresenter implements GoToChannelOutputBoundary {
     }
     public void prepareFailView(String error) {
         GoToChannelState goToChannelState = goToChannelViewModel.getState();
+        goToChannelState.setSuccess(false);
         goToChannelState.setErrorMessage(error);
+        goToChannelViewModel.setState(goToChannelState);
+        System.out.println(goToChannelState.getSuccess());
         goToChannelViewModel.firePropertyChanged();
     }
 }

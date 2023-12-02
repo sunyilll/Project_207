@@ -27,6 +27,7 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
 
     public void prepareFailView(String error) {
         SendMessageState sendMessageState = sendMessageViewModel.getState();
+        sendMessageState.setMessageSentSuccessful(false);
         sendMessageState.setErrorMessage(error);
         sendMessageViewModel.firePropertyChanged();
 

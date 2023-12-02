@@ -11,7 +11,7 @@ public class SendMessageDataAccessObject implements SendMessageDataAccessInterfa
     private String applicationID;
 
 
-    public SendMessageDataAccessObject(String apiURL, String applicationID) throws IOException{
+    public SendMessageDataAccessObject(String apiURL, String applicationID){
         this.apiURL = apiURL;
         this.applicationID = applicationID;
 

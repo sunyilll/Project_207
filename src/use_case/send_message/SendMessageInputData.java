@@ -13,15 +13,15 @@ public class SendMessageInputData {
         this.channel = channel;
     }
 
-    String getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    String getUserId() {
+    public String getUserId() {
         return user_id;
     }
 
-    ChatChannel getChannel() {
+    public ChatChannel getChannel() {
         return channel;
     }
 }

@@ -1,12 +1,12 @@
-package use_case.go_to_chat;
+package use_case.go_to_channel;
 
 import entity.ChatChannel;
 import entity.User;
 
-public class GoToChannelOutputData {
-    private final User currentUser;
-    private final ChatChannel currentChannel;
-    public GoToChannelOutputData(User currentUser, ChatChannel currentChannel){
+public class GoToChannelInputData {
+    final private User currentUser;
+    final private ChatChannel currentChannel;
+    public GoToChannelInputData(User currentUser, ChatChannel currentChannel){
         this.currentUser = currentUser;
         this.currentChannel = currentChannel;
     }
