@@ -20,6 +20,7 @@ import java.util.Map;
 public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
         GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface {
     String file_path;
+    String current_userid;
     JSONObject userFile = new JSONObject();
     Map<String, User> users = new HashMap<>();
 
@@ -155,6 +156,11 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
     }
 
     @Override
+    public void saveCurrentUser(String userid) {
+        this.current_userid = userid;
+    }
+
+    @Override
     public boolean existsById(String userid) {
         return userFile.has(userid);
     }
@@ -208,5 +214,14 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
 
         userFile.put(user.getUserID(), userJson);
         this.save();
+    }
+
+    @Override
+    public User getCurrentUser() {
+        if (current_userid != null) {
+            return this.get(current_userid);
+        } else {
+            return null;
+        }
     }
 }
