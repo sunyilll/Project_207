@@ -2,23 +2,21 @@ package use_case.signup;
 
 public class SignupInputData {
 
-    final private String username;
+    final private String userid;
     final private String password;
     final private String nickname;
 
-
-
     final private String repeatPassword;
 
-    public SignupInputData(String username, String nickname, String password, String repeatPassword) {
-        this.username = username;
+    public SignupInputData(String userid, String nickname, String password, String repeatPassword) {
+        this.userid = userid;
         this.password = password;
         this.nickname = nickname;
         this.repeatPassword = repeatPassword;
     }
 
-    String getUsername() {
-        return username;
+    String getUserID() {
+        return userid;
     }
 
     String getPassword() {

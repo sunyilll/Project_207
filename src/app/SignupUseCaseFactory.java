@@ -1,6 +1,6 @@
 package app;
 
-import entity.UserFactory;
+import entity.UserBuilder;
 import interface_adapter.*;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
@@ -41,11 +41,11 @@ public class SignupUseCaseFactory {
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-        UserFactory userFactory = new UserFactory() {
+        UserBuilder userBuilder = new UserBuilder() {
         };
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+                userDataAccessObject, signupOutputBoundary, userBuilder);
 
         return new SignupController(userSignupInteractor);
     }
