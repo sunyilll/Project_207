@@ -32,9 +32,20 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     public static void main(String[] args) {
         JsonUserDataAccessObject jsonUserDataAccessObject = new JsonUserDataAccessObject("data/users.json");
-//        User testUser = new User("test", "test", "test");
-//        jsonUserDataAccessObject.save(testUser);
-        System.out.println(jsonUserDataAccessObject.userFile);
+        // User testUser = new User("test", "test", "test");
+        // jsonUserDataAccessObject.save(testUser);
+        System.out.println(jsonUserDataAccessObject.existsByName("test"));
+    }
+
+    // TODO: Refactor code so that we are searching for the user by ID instead of nickname
+    @Override
+    public User get(String userID) {
+        return null;
+    }
+
+    @Override
+    public boolean existsByName(String userID) {
+        return userFile.has(userID);
     }
 
     public void save() {
@@ -49,17 +60,6 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
-    // TODO: Refactor code so that we are searching for the user by ID instead of nickname
-    @Override
-    public User get(String userID) {
-        return null;
-    }
-
-    @Override
-    public boolean existsByName(String userID) {
-        return userFile.has(userID);
-    }
-
     @Override
     public void save(User user) {
         JSONObject userJson = new JSONObject();
@@ -67,6 +67,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         userJson.put("password", user.getPassword());
         userJson.put("pronouns", user.getPronouns());
         userJson.put("description", user.getDescription());
+        userJson.put("tutor availability", user.getTutorAvailability());
         JSONArray personalityTags = new JSONArray(user.getPersonalityTags());
         userJson.put("personality_tags", personalityTags);
         JSONArray coursesToLearn = new JSONArray(user.getCoursesToLearn());
@@ -81,6 +82,18 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
         userJson.put("mode_of_learning", modeOfLearning);
         JSONArray modeOfTeaching = new JSONArray(user.getPreferredModeOfTeaching());
         userJson.put("mode_of_teaching", modeOfTeaching);
+        // store user.expectedWage as a JSONObject
+        JSONObject expectedWage = new JSONObject();
+        for (String course : user.getExpectedWage().keySet()) {
+            expectedWage.put(course, user.getExpectedWage().get(course));
+        }
+        userJson.put("expected_wage", expectedWage);
+        // store user.expectedPrice as a JSONObject
+        JSONObject expectedPrice = new JSONObject();
+        for (String course : user.getExpectedPrice().keySet()) {
+            expectedPrice.put(course, user.getExpectedPrice().get(course));
+        }
+        userJson.put("expected_price", expectedPrice);
 
         userFile.put(user.getUserID(), userJson);
         this.save();
