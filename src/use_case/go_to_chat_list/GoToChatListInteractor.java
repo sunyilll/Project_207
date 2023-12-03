@@ -13,11 +13,10 @@ public class GoToChatListInteractor implements GoToChatListInputBoundary {
         this.goToChatListPresenter = goToChatListPresenter;
     }
     @Override
-    public void execute(GoToChatListInputData goToChatListInputData) {
-        User user = goToChatListInputData.getUser();
+    public void execute() {
         try {
-            ArrayList<ChatChannel> chatChannels = goToChatPageDataAccessObject.getAllChatChannels(user);
-            GoToChatListOutputData goToChatListOutputData = new GoToChatListOutputData(chatChannels);
+            ArrayList<ChatChannel> chatChannels = goToChatPageDataAccessObject.getAllChatChannels();
+            GoToChatListOutputData goToChatListOutputData = new GoToChatListOutputData(chatChannels, goToChatPageDataAccessObject.getCurrentUser());
             goToChatListPresenter.prepareSuccessView(goToChatListOutputData);
             System.out.println("I am at step 3");
         } catch (RuntimeException e) {

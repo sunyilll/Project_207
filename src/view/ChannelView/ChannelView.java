@@ -105,7 +105,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                             String previousView = viewManagerModel1.popPreviousView();
                             if (previousView.equals("chatList")) {
                                 GoToChatListState currState = goToChatListViewModel1.getState();
-                                goToChatListController1.execute(currState.getUser());
+                                goToChatListController1.execute();
                                 viewManagerModel1.addPreviousView("channel");
                             }
                         }

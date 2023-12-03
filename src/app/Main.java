@@ -68,8 +68,9 @@ public class Main {
 
         SendMessageState testState = new SendMessageState(testUser1, channel);
         RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
-        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
+//        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
         GoToChannelState goToChannelState = new GoToChannelState(testUser1, channel);
+        GoToChatListState goToChatListState = new GoToChatListState();
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -89,7 +90,7 @@ public class Main {
 
         GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
         goToChatListViewModel.setState(goToChatListState);
-        GoToChatListDataAccessObject goToChatListDataAccessObject;
+//        GoToChatListDataAccessObject goToChatListDataAccessObject;
 
         GoToChannelViewModel goToChannelViewModel = new GoToChannelViewModel();
         goToChannelViewModel.setState(goToChannelState);
@@ -101,7 +102,7 @@ public class Main {
 
         );
         refreshChatPageDataAccessObject = new RefreshChatPageDataAccessObject();
-        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+//        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
 
         JsonUserDataAccessObject jsonUserDataAccessObject;
         jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
@@ -119,22 +120,22 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView = SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, jsonCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+                searchCourseResultViewModel, jsonCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
 
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
+                searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject);
         views.add(searchCourseResultView, searchCourseResultView.viewName);
       
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
-                goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
+                goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 
-        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
+        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject);
         views.add(channelView, channelView.viewName);
 
-        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChannelViewModel, searchCourseViewModel);
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChannelViewModel, searchCourseViewModel);
         views.add(chatListView, chatListView.viewName);
 
         // This is for testing purposes. Please delete this for final submission

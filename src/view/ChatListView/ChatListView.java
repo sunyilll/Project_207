@@ -5,6 +5,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.go_to_channel.GoToChannelController;
 import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
+import interface_adapter.go_to_chatl_list.GoToChatListState;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
@@ -71,16 +72,20 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
         JPanel channelListPanel = new JPanel();
         channelListPanel.setLayout(new BoxLayout(channelListPanel, BoxLayout.Y_AXIS));
         ArrayList<ChatChannel> channels = goToChatListViewModel1.getState().getChatChannels();
-        System.out.println("channels size: " + channels.size());
-
-        for (int i = 0; i < channels.size(); i++) {
-            JPanel innerPanel = new ChannelPanel(channels.get(i), goToChatListViewModel1.getState().getUser(), goToChannelViewModel1, goToChannelController1, viewManagerModel1);
-            innerPanel.setPreferredSize(new Dimension(350, 50));
-            innerPanel.setBackground(Color.LIGHT_GRAY);
-            innerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            channelListPanel.add(innerPanel);
-            System.out.println("channel added");
+//        System.out.println("channels size: " + channels.size());
+        if (channels != null) {
+            for (int i = 0; i < channels.size(); i++) {
+                JPanel innerPanel = new ChannelPanel(channels.get(i), goToChatListViewModel1.getState().getUser(), goToChannelViewModel1, goToChannelController1, viewManagerModel1);
+                innerPanel.setPreferredSize(new Dimension(350, 50));
+                innerPanel.setBackground(Color.LIGHT_GRAY);
+                innerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                channelListPanel.add(innerPanel);
+                System.out.println("channel added");
+            }
+        } else {
+            System.out.println("channels is null");
         }
+
 
         JScrollPane scrollPane = new JScrollPane(channelListPanel);
         //Hi copilot, say something
@@ -96,6 +101,35 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
         this.add(homeBar, BorderLayout.SOUTH);
     }
 
+    public void setChatListPanel(ArrayList<ChatChannel> channels) {
+        if (chatListPanel != null) {
+            chatListPanel.removeAll();
+        }
+
+        JPanel channelListPanel = new JPanel();
+        channelListPanel.setLayout(new BoxLayout(channelListPanel, BoxLayout.Y_AXIS));
+        if (channels != null) {
+            System.out.println("channels size: " + channels.size());
+            for (int i = 0; i < channels.size(); i++) {
+                JPanel innerPanel = new ChannelPanel(channels.get(i), goToChatListViewModel1.getState().getUser(), goToChannelViewModel1, goToChannelController1, viewManagerModel1);
+                innerPanel.setPreferredSize(new Dimension(350, 50));
+                innerPanel.setBackground(Color.LIGHT_GRAY);
+                innerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                channelListPanel.add(innerPanel);
+                System.out.println("channel added");
+            }
+            JScrollPane scrollPane = new JScrollPane(channelListPanel);
+            //Hi copilot, say something
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            this.chatListPanel.add(scrollPane);
+            chatListPanel.revalidate();
+            chatListPanel.repaint();
+
+        } else {
+            System.out.println("channels is null");
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -104,7 +138,14 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
+        if (evt.getPropertyName().equals("chatList")) {
+            GoToChatListState currState = (GoToChatListState) evt.getNewValue();
+            goToChatListViewModel1.setState(currState);
+            System.out.println(currState);
 
+            setChatListPanel(currState.getChatChannels());
+        }
     }
 
 }

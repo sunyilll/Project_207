@@ -25,7 +25,7 @@ public class GoToChatListViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("chatList", null, this.state);
     }
 
     @Override

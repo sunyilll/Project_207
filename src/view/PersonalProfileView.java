@@ -97,7 +97,7 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
         if (evt.getPropertyName().equals("personal profile")) {
             GoToPersonalProfileState state = (GoToPersonalProfileState) evt.getNewValue();
             goToPersonalProfileViewModel.setState(state);
-            nickName.setText(goToPersonalProfileViewModel.nicknameText);
+//            nickName.setText(goToPersonalProfileViewModel.nicknameText);
             descriptionText.setText(goToPersonalProfileViewModel.descriptionText);
         }
     }
