@@ -21,8 +21,4 @@ public class GoToSearchPresenter implements GoToSearchOutputBoundary {
         viewManager.firePropertyChanged();
     }
 
-    @Override
-    public void prepareFailView(String error) {
-        //todo: implement me
-    }
 }

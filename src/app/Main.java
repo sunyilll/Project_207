@@ -106,12 +106,8 @@ public class Main {
         JsonUserDataAccessObject jsonUserDataAccessObject;
         jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
-
-        FileCourseDataAccessObject fileCourseDataAccessObject;
-        try {
-            fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(jsonUserDataAccessObject));
-        } catch (IOException e){throw new RuntimeException(e);}
-
+        JsonCourseDataAccessObject jsonCourseDataAccessObject;
+        jsonCourseDataAccessObject = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(jsonUserDataAccessObject));
         MatchTutorAlgorithm matchTutorAlgorithm = new MatchByTutorRating();
         MatchStudentAlgorithm matchStudentAlgorithm = new MatchByStudentRating();
 
@@ -122,8 +118,9 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchCourseViewModel,jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, fileCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+        SearchCourseView searchCourseView = SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
+                searchCourseResultViewModel, jsonCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,

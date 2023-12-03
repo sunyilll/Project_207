@@ -65,6 +65,14 @@ public class User implements Student, Tutor{
         this.pronouns = pronouns;
         return true;
     }
+    public boolean setPreferredModeOfLearning(String mode) {
+        preferredModeOfLearning.add(mode);
+        return true;
+    }
+    public boolean setPreferredModeOfTeaching(String mode) {
+        preferredModeOfTeaching.add(mode);
+        return true;
+    }
 
     public String getDescription() {
         return this.description;
