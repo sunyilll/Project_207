@@ -154,4 +154,13 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         }
     }
 
+    public void deleteTutor(User user, String courseCode){
+        System.out.println(user.getNickname()+ "is deleted");
+        //todo: implement
+    }
+    public void deleteStudent(User user, String courseCode){
+        System.out.println(user.getNickname()+ "is deleted");
+        //todo: implement
+    }
+
 }
