@@ -9,7 +9,7 @@ public class User implements Student, Tutor{
     public final String userid;
     public String nickname;
     private String password;
-    private String pronouns;
+    private String pronouns = null;
     private List<String> personalityTag = new ArrayList<>();
     private String profileURL = null;
     private String description = null;
