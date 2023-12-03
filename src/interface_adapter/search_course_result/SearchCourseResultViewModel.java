@@ -22,6 +22,6 @@ public class SearchCourseResultViewModel extends ViewModel{
     }
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("search course result", null, this.state);
     }
 }

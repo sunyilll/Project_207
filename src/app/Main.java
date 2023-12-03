@@ -107,12 +107,8 @@ public class Main {
         JsonUserDataAccessObject jsonUserDataAccessObject;
         jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
-
-        FileCourseDataAccessObject fileCourseDataAccessObject;
-        try {
-            fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(jsonUserDataAccessObject));
-        } catch (IOException e){throw new RuntimeException(e);}
-
+        JsonCourseDataAccessObject jsonCourseDataAccessObject;
+        jsonCourseDataAccessObject = new JsonCourseDataAccessObject("./courses.csv", new CourseFactory(jsonUserDataAccessObject));
         MatchTutorAlgorithm matchTutorAlgorithm = new MatchByTutorRating();
         MatchStudentAlgorithm matchStudentAlgorithm = new MatchByStudentRating();
 
@@ -124,7 +120,7 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, fileCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+                searchCourseResultViewModel, jsonCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,

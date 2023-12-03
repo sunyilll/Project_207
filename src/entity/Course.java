@@ -23,4 +23,5 @@ public class Course {
     public String getCourseCode(){return courseCode;}
     public List<Tutor> getTutors(){return tutors;}
     public List<Student> getStudents(){return students;}
+    public String getCourseName() {return courseName;}
 }
