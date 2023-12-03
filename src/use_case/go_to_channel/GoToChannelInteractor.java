@@ -1,4 +1,4 @@
-package use_case.go_to_chat;
+package use_case.go_to_channel;
 
 import entity.ChatChannel;
 import entity.User;
@@ -15,12 +15,8 @@ public class GoToChannelInteractor implements GoToChannelInputBoundary{
     public void execute(GoToChannelInputData goToChannelInputData) {
         User currentUser = goToChannelInputData.getCurrentUser();
         ChatChannel currentChannel = goToChannelInputData.getCurrentChannel();
-        try {
-            GoToChannelOutputData goToChannelOutputData = new GoToChannelOutputData(currentUser, currentChannel);
-            goToChannelPresenter.prepareSuccessView(goToChannelOutputData);
-        } catch (RuntimeException e) {
-            goToChannelPresenter.prepareFailView(e.toString());
+        GoToChannelOutputData goToChannelOutputData = new GoToChannelOutputData(currentUser, currentChannel);
+        goToChannelPresenter.prepareSuccessView(goToChannelOutputData);
 
-        }
     }
 }

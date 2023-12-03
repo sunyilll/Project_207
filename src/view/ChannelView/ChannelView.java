@@ -1,5 +1,6 @@
 package view.ChannelView;
 
+import interface_adapter.ViewManagerModel;
 import kotlin.Pair;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListState;
@@ -30,6 +31,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
     private final RefreshChatPageController refreshChatPageController1;
     private final GoToChatListViewModel goToChatListViewModel1;
     private final GoToChatListController goToChatListController1;
+    private final ViewManagerModel viewManagerModel1;
 
     private final JButton send;
     private final JButton back;
@@ -38,13 +40,14 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
 
     private JPanel chatArea;
 
-    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController, GoToChatListViewModel goToChatListViewModel, GoToChatListController goToChatListController){
+    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController, GoToChatListViewModel goToChatListViewModel, GoToChatListController goToChatListController, ViewManagerModel viewManagerModel) {
         this.sendMessageViewModelw = sendMessageViewModel;
         this.sendMessageControllerw = sendMessageController;
         this.refreshChatPageController1 = refreshChatPageController;
         this.refreshChatPageViewModel1 = refreshChatPageViewModel;
         this.goToChatListController1 = goToChatListController;
         this.goToChatListViewModel1 = goToChatListViewModel;
+        this.viewManagerModel1 = viewManagerModel;
         this.send = new JButton("send");
         sendMessageViewModelw.addPropertyChangeListener(this);
         sendMessageViewModelw.firePropertyChanged();
@@ -99,11 +102,12 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)){
-                            System.out.println("I am at step 1");
-                            GoToChatListState currState = goToChatListViewModel1.getState();
-                            goToChatListController1.execute(currState.getUser());
-
-                            System.out.println("I am at step 2");
+                            String previousView = viewManagerModel1.popPreviousView();
+                            if (previousView.equals("chatList")) {
+                                GoToChatListState currState = goToChatListViewModel1.getState();
+                                goToChatListController1.execute(currState.getUser());
+                                viewManagerModel1.addPreviousView("channel");
+                            }
                         }
                     }
                 }

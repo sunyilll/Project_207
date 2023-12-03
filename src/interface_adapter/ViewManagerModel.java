@@ -1,10 +1,13 @@
 package interface_adapter;
 
+import data_structure.ArrayListStack;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ViewManagerModel {
     private String activeViewName;
+    private ArrayListStack allPreviousViewNames = new ArrayListStack();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -24,5 +27,11 @@ public class ViewManagerModel {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+    }
+    public String popPreviousView() {
+        return (String) allPreviousViewNames.pop();
+    }
+    public void addPreviousView(String viewName) {
+        allPreviousViewNames.push(viewName);
     }
 }

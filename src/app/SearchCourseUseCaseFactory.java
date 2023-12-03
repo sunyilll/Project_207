@@ -1,5 +1,7 @@
 package app;
 
+import algorithmn.MatchStudentAlgorithm;
+import algorithmn.MatchTutorAlgorithm;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
@@ -42,14 +44,17 @@ public class SearchCourseUseCaseFactory {
             GetUserDataAccessInterface getUserDAO,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
             GoToChatListViewModel goToChatListViewModel,
-            GoToChatListDataAccessInterface goToChatListDataAccessObject){
+            GoToChatListDataAccessInterface goToChatListDataAccessObject,
+            MatchTutorAlgorithm matchTutorAlgorithm,
+            MatchStudentAlgorithm matchStudentAlgorithm){
         try {
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
                     goToPersonalProfileViewModel);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
-            SearchCourseController searchController = createSearchUseCase(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, searchCourseDAO, getUserDAO);
+            SearchCourseController searchController = createSearchUseCase(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, searchCourseDAO,
+                    getUserDAO, matchTutorAlgorithm, matchStudentAlgorithm);
             return new SearchCourseView(searchCourseViewModel, searchController,
                     goToPersonalProfileViewModel, goToPersonalProfileController, goToChatListViewModel, goToChatListController, goToSearchController);
         } catch (IOException e){
@@ -63,9 +68,13 @@ public class SearchCourseUseCaseFactory {
             SearchCourseViewModel searchCourseViewModel,
             SearchCourseResultViewModel searchCourseResultViewModel,
             SearchCourseDataAccessInterface searchCourseDAO,
-            GetUserDataAccessInterface getUserDAO) throws IOException {
+            GetUserDataAccessInterface getUserDAO,
+            MatchTutorAlgorithm matchTutorAlgorithm,
+            MatchStudentAlgorithm matchStudentAlgorithm
+    ) throws IOException {
         SearchCourseOutputBoundary searchCoursePresenter = new SearchCoursePresenter(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel);
-        SearchCourseInputBoundary searchCourseInteractor = new SearchCourseInteractor(searchCourseDAO, searchCoursePresenter, getUserDAO);
+        SearchCourseInputBoundary searchCourseInteractor = new SearchCourseInteractor(searchCourseDAO, searchCoursePresenter,
+                getUserDAO, matchTutorAlgorithm, matchStudentAlgorithm);
         return new SearchCourseController(searchCourseInteractor);
     }
 

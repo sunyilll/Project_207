@@ -2,9 +2,10 @@ package view.ChatListView;
 
 import entity.ChatChannel;
 import entity.User;
-import interface_adapter.go_to_chat.GoToChannelController;
-import interface_adapter.go_to_chat.GoToChannelState;
-import interface_adapter.go_to_chat.GoToChannelViewModel;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.go_to_channel.GoToChannelController;
+import interface_adapter.go_to_channel.GoToChannelState;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +21,17 @@ public class ChannelPanel extends JPanel implements ActionListener, PropertyChan
     User otherUser;
     GoToChannelViewModel viewModel;
     GoToChannelController controller;
+    ViewManagerModel viewManagerModel1;
     JButton enterChatButton;
-    ChannelPanel(ChatChannel channel1, User user, GoToChannelViewModel viewModel1, GoToChannelController controller1){
+    ChannelPanel(ChatChannel channel1, User user, GoToChannelViewModel viewModel1, GoToChannelController controller1, ViewManagerModel viewManagerModel){
         this.channel = channel1;
         this.currUser = user;
         this.controller = controller1;
         this.viewModel = viewModel1;
+        this.viewManagerModel1 = viewManagerModel;
 
         // Assuming there are always exactly two entries in the map
-        User user1 = channel.getMembers().get(user.getUserID());
+//        User user1 = channel.getMembers().get(user.getUserID());
 
 // Get all keys in the map
         Set<String> keys = channel.getMembers().keySet();
@@ -57,6 +60,8 @@ public class ChannelPanel extends JPanel implements ActionListener, PropertyChan
 //                            controller.execute(currUser, channel);
 //                            System.out.println(otherKey);
                             controller.execute(goToChannelState.getCurrentUser(),goToChannelState.getCurrentChannel());
+                            viewManagerModel1.addPreviousView("chatList");
+
                         }
                     }
                 }

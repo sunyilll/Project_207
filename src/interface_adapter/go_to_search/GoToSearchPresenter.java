@@ -15,7 +15,8 @@ public class GoToSearchPresenter implements GoToSearchOutputBoundary {
     @Override
     public void prepareSuccessView() {
         SearchCourseState s = viewModel.getState();
-        //todo: 改变s，加入search not selected，更改两个buttons的setdisable
+        s.setSearchTypeSelected(false);
+        viewModel.firePropertyChanged();
         viewManager.setActiveView(viewModel.getViewName());
         viewManager.firePropertyChanged();
     }

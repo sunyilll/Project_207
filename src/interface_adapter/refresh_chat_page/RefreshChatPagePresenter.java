@@ -21,6 +21,7 @@ public class RefreshChatPagePresenter implements RefreshChatPageOutputBoundary {
     }
     public void prepareFailView(String error) {
         RefreshChatPageState refreshChatPageState = refreshChatPageViewModel.getState();
+        refreshChatPageState.setRefreshSuccessful(false);
         refreshChatPageState.setErrorMessage(error);
         refreshChatPageViewModel.firePropertyChanged();
     }

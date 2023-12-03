@@ -44,7 +44,7 @@ public class ChannelUseCasesFactory {
             RefreshChatPageController refreshChatPageController = createRefreshUseCase(viewManagerModel, refreshChatPageViewModel, refreshChatPageDataAccessObject);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject);
 
-            return new ChannelView(sendMessageViewModel, sendMessageController, refreshChatPageViewModel, refreshChatPageController, goToChatListViewModel, goToChatListController);
+            return new ChannelView(sendMessageViewModel, sendMessageController, refreshChatPageViewModel, refreshChatPageController, goToChatListViewModel, goToChatListController, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not send message");
         }
