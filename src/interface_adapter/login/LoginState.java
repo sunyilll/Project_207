@@ -5,20 +5,18 @@ public class LoginState {
     private String usernameError = null;
     private String password = "";
     private String passwordError = null;
-
+    private boolean loginSuccessful = false;
     public LoginState(LoginState copy) {
         username = copy.username;
         usernameError = copy.usernameError;
         password = copy.password;
         passwordError = copy.passwordError;
+        loginSuccessful = copy.loginSuccessful;
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public LoginState() {}
-
     public String getUsername() {
-        return username;
-    }
+        return username;}
 
     public String getUsernameError() {
         return usernameError;
@@ -46,5 +44,13 @@ public class LoginState {
 
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
+    }
+
+    public boolean isLoginSuccessful() {
+        return loginSuccessful;
+    }
+
+    public void setLoginSuccessful(boolean loginSuccessful) {
+        this.loginSuccessful = loginSuccessful;
     }
 }

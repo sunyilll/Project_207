@@ -26,7 +26,7 @@ public class ToSignupPresenter implements ToSignupOutputBoundary {
 
     @Override
     public void prepareSuccessView(ToSignupOutputData response) {
-        SignupState signupState = SignupViewModel.getState();
+        SignupState signupState = signupViewModel.getState();
         signupState.setUsername(response.getUsername());
         this.signupViewModel.setState(signupState);
         this.signupViewModel.firePropertyChanged();
