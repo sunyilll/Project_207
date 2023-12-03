@@ -1,6 +1,7 @@
 package use_case.go_to_chat_list;
 
 import data_access.GoToChatListDataAccessObject;
+import data_access.JsonUserDataAccessObject;
 import entity.ChatChannel;
 import entity.User;
 import interface_adapter.ViewManagerModel;
@@ -26,10 +27,8 @@ class GoToChatListInteractorTest {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
     private final GoToChatListState testState = new GoToChatListState(testUser1, new ArrayList<>());
-    private final GoToChatListInputData testInputData = new GoToChatListInputData(testUser1);
-    private final GoToChatListInputData badTestInputData = new GoToChatListInputData(testUser2);
-    private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>());
-    private final GoToChatListDataAccessObject goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+    private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>(), testUser1);
+    private final GoToChatListDataAccessInterface goToChatListDataAccessObject = new JsonUserDataAccessObject()
 
 
     @Test
