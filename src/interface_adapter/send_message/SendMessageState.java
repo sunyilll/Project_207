@@ -78,6 +78,6 @@ public class SendMessageState {
     public String toString() {
         return "SendMessageState{" +
                 "messageSentSuccessful=" + messageSentSuccessful +
-                ", errorMessage='" + errorMessage +"\"";
+                ", errorMessage='" + errorMessage + "'}";
     }
 }
