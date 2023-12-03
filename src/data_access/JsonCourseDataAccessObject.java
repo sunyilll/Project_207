@@ -4,6 +4,7 @@ import entity.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.add_course_to_profile.AddCourseToProfileDataAccessInterface;
 import use_case.search_course.SearchCourseDataAccessInterface;
 
 import java.io.*;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterface {
+public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterface, AddCourseToProfileDataAccessInterface {
     String file_path;
     final CourseFactory courseFactory;
     JSONObject courseFile = new JSONObject();
@@ -73,10 +74,15 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
     }
 
     public static void main(String[] args) {
-        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(new JsonUserDataAccessObject("./users.json")));
+        JsonUserDataAccessObject juser = new JsonUserDataAccessObject("./users.json");
+        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(juser));
         j.save(new Course("csc411", "Learning"));
-        j.addTutor(new User("fsdfs", "OL", "123"), "csc411");
-        j.addStudent(new User("ddd", "OL", "123"), "csc411");
+        User user1 = new User("fsdfs", "OL", "123");
+        User user2 = new User("ddd", "XX", "123");
+        juser.save(user1);
+        juser.save(user2);
+        j.addTutor(user1, "csc411");
+        j.addStudent(user2, "csc411");
         System.out.println(j.hasCourse("csc411"));
     }
 
