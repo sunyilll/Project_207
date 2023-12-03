@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class GoToPersonalProfileViewModel extends ViewModel {
     private GoToPersonalProfileState state = new GoToPersonalProfileState();
-    public static final String TITLE_LABEL = "My Profile View";
+
     public static final String DESCRIPTION_LABEL = "About Me";
     public static final String PERSONALITY_TAGS_LABEL = "Personality Tags";
     public static final String COURSES_TO_TEACH_LABEL = "Courses to Teach";
@@ -57,6 +57,9 @@ public class GoToPersonalProfileViewModel extends ViewModel {
 
     public void setState(GoToPersonalProfileState state) {
         this.state = state;
+        if (state.getUser() == null) {
+            return;
+        }
         nicknameText = state.getUser().getNickname();
         descriptionText = state.getUser().getDescription();
         pronounsText = state.getUser().getPronouns();

@@ -1,6 +1,5 @@
 package interface_adapter.go_to_personal_profile;
 
-import entity.User;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputData;
 
@@ -12,8 +11,8 @@ public class GoToPersonalProfileController {
     }
 
 
-    public void execute(User user) {
-        GoToPersonalProfileInputData goToPersonalProfileInputData = new GoToPersonalProfileInputData(user);
+    public void execute(String userid) {
+        GoToPersonalProfileInputData goToPersonalProfileInputData = new GoToPersonalProfileInputData(userid);
         goToPersonalProfileInteractor.execute(goToPersonalProfileInputData);
     }
 }

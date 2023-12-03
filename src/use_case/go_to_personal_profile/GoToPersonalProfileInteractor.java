@@ -1,10 +1,14 @@
 package use_case.go_to_personal_profile;
 
+import entity.User;
+
 public class GoToPersonalProfileInteractor implements GoToPersonalProfileInputBoundary {
     final private GoToPersonalProfileOutputBoundary presenter;
+    final private GoToPersonalProfileDataAccessInterface dataAccessObject;
 
-    public GoToPersonalProfileInteractor(GoToPersonalProfileOutputBoundary presenter) {
+    public GoToPersonalProfileInteractor(GoToPersonalProfileOutputBoundary presenter, GoToPersonalProfileDataAccessInterface dataAccessObject) {
         this.presenter = presenter;
+        this.dataAccessObject = dataAccessObject;
     }
     @Override
     public void execute(GoToPersonalProfileInputData inputData) {
@@ -12,7 +16,8 @@ public class GoToPersonalProfileInteractor implements GoToPersonalProfileInputBo
             presenter.prepareFailView("You are not logged in");
             return;
         }
-        GoToPersonalProfileOutputData outputData = new GoToPersonalProfileOutputData(inputData.getUser());
+        User user = dataAccessObject.get(inputData.getUserId());
+        GoToPersonalProfileOutputData outputData = new GoToPersonalProfileOutputData(user);
         presenter.prepareSuccessView(outputData);
     }
 }

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoToPersonalProfileInputDataTest {
-    private final User testUser1 = new User("test1", "test1", "test1");
-    private final GoToPersonalProfileInputData testInputData = new GoToPersonalProfileInputData(testUser1);
+    private final User testUser1 = new User("test1id", "test1name", "test1pswd");
+    private final GoToPersonalProfileInputData testInputData = new GoToPersonalProfileInputData("test1id");
 
 //    @Test
 //    void isUserLoggedIn() {
@@ -15,6 +15,6 @@ class GoToPersonalProfileInputDataTest {
 
     @Test
     void getUser() {
-        assertEquals(testUser1, testInputData.getUser());
+        assertEquals("test1id", testInputData.getUserId());
     }
 }

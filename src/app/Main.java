@@ -77,7 +77,6 @@ public class Main {
         SearchCourseViewModel searchCourseViewModel = new SearchCourseViewModel();
         SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
-        goToPersonalProfileViewModel.getState().setUser(testUser1);
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
@@ -134,8 +133,6 @@ public class Main {
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
                 goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
-
-
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(channelView, channelView.viewName);

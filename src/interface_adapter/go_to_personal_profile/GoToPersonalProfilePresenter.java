@@ -1,4 +1,5 @@
 package interface_adapter.go_to_personal_profile;
+
 import interface_adapter.ViewManagerModel;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputData;

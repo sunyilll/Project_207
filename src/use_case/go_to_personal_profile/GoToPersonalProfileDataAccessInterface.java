@@ -1,7 +1,7 @@
-package use_case;
+package use_case.go_to_personal_profile;
 
 import entity.User;
 
-public interface GetUserDataAccessInterface {
+public interface GoToPersonalProfileDataAccessInterface {
     User get(String userid);
 }
