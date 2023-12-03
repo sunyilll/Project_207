@@ -1,20 +1,21 @@
 package entity;
+import data_access.JsonUserDataAccessObject;
 
-import data_access.FileUserDataAccessObject;
+import java.util.List;
 
 public class CourseFactory {
-    private final FileUserDataAccessObject fileUserDataAccessObject;
-    public CourseFactory(FileUserDataAccessObject fileUserDataAccessObject){
-        this.fileUserDataAccessObject = fileUserDataAccessObject;
+    private final JsonUserDataAccessObject jsonUserDataAccessObject;
+    public CourseFactory(JsonUserDataAccessObject jsonUserDataAccessObject){
+        this.jsonUserDataAccessObject = jsonUserDataAccessObject;
     }
-    public Course create(String courseCode, String[] tutorids, String[] studentids){
+    public Course create(String courseCode, List<String> tutorids, List<String> studentids){
         Course c = new Course(courseCode, "CourseNameNotImplemented");
         for (String id: tutorids){
-            User u = fileUserDataAccessObject.get(id);
+            User u = jsonUserDataAccessObject.get(id);
             c.addTutor(u);
         }
         for (String id: studentids){
-            User u = fileUserDataAccessObject.get(id);
+            User u = jsonUserDataAccessObject.get(id);
             c.addStudent(u);
         }
         return c;
