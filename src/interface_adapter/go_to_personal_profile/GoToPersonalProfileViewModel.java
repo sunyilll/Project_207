@@ -57,16 +57,16 @@ public class GoToPersonalProfileViewModel extends ViewModel {
 
     public void setState(GoToPersonalProfileState state) {
         this.state = state;
-        if (state.getUser() == null) {
+        if (state.getUserid() == null) {
             return;
         }
-        nicknameText = state.getUser().getNickname();
-        descriptionText = state.getUser().getDescription();
-        pronounsText = state.getUser().getPronouns();
-        personalityTagsText = state.getUser().getPersonalityTags().toString();
-        coursesToTeachText = state.getUser().getCoursesToTeach().toString();
-        tutorRatingText = String.valueOf(state.getUser().getTutorRating());
-        coursesToLearnText = state.getUser().getCoursesToLearn().toString();
-        studentRatingText = String.valueOf(state.getUser().getStudentRating());
+        nicknameText = state.getNickname();
+        descriptionText = state.getDescription();
+        pronounsText = state.getPronouns();
+        personalityTagsText = state.getPersonalityTags().toString();
+        coursesToTeachText = state.getCoursesToTeach().toString();
+        tutorRatingText = String.valueOf(state.getTutorRating());
+        coursesToLearnText = state.getCoursesToLearn().toString();
+        studentRatingText = String.valueOf(state.getStudentRating());
     }
 }

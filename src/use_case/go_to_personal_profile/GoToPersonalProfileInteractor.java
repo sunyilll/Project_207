@@ -11,13 +11,14 @@ public class GoToPersonalProfileInteractor implements GoToPersonalProfileInputBo
         this.dataAccessObject = dataAccessObject;
     }
     @Override
-    public void execute(GoToPersonalProfileInputData inputData) {
-        if (! inputData.isUserLoggedIn()) {
-            presenter.prepareFailView("You are not logged in");
+    public void execute() {
+        User user = dataAccessObject.getCurrentUser();
+        if (user == null) {
+            presenter.prepareFailView("User not logged in.");
             return;
+        } else {
+            GoToPersonalProfileOutputData outputData = new GoToPersonalProfileOutputData(user);
+            presenter.prepareSuccessView(outputData);
         }
-        User user = dataAccessObject.get(inputData.getUserId());
-        GoToPersonalProfileOutputData outputData = new GoToPersonalProfileOutputData(user);
-        presenter.prepareSuccessView(outputData);
     }
 }

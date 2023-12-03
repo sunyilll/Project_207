@@ -22,7 +22,6 @@ public class GoToPersonalProfileState {
     private List<String> coursesToLearn = new ArrayList<>();
     private Map<String, Integer> expectedPrice = new HashMap<>();
     private List<String> preferredModeOfLearning = new ArrayList<>();
-    private boolean goToPersonalProfileSuccess = false; // TODO: What is this?
 
     public GoToPersonalProfileState(GoToPersonalProfileState copy) {
         this.userid = copy.userid;
@@ -39,7 +38,6 @@ public class GoToPersonalProfileState {
         this.coursesToLearn = copy.coursesToLearn;
         this.expectedPrice = copy.expectedPrice;
         this.preferredModeOfLearning = copy.preferredModeOfLearning;
-        this.goToPersonalProfileSuccess = copy.goToPersonalProfileSuccess;
     }
     public GoToPersonalProfileState() {}
 
@@ -121,12 +119,12 @@ public class GoToPersonalProfileState {
     public void setCoursesToLearn(List<String> coursesToLearn) {
         this.coursesToLearn = coursesToLearn;
     }
+    public void setExpectedPrice(Map<String, Integer> expectedPrice) {
+        this.expectedPrice = expectedPrice;
+    }
+    public void setPreferredModeOfLearning(List<String> preferredModeOfLearning) {
+        this.preferredModeOfLearning = preferredModeOfLearning;
+    }
 
     // TODO: Remove these
-    public boolean isGoToPersonalProfileSuccess() {
-        return goToPersonalProfileSuccess;
-    }
-    public void setGoToPersonalProfileSuccess(boolean goToPersonalProfileSuccess) {
-        this.goToPersonalProfileSuccess = goToPersonalProfileSuccess;
-    }
 }
