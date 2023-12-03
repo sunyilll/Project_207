@@ -1,15 +1,13 @@
 package interface_adapter;
 
-import data_structure.ViewNameStack;
+import data_structure.ArrayListStack;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewManagerModel {
     private String activeViewName;
-    private ViewNameStack allPreviousViewNames = new ViewNameStack();
+    private ArrayListStack allPreviousViewNames = new ArrayListStack();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

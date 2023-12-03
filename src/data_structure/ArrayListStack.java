@@ -2,9 +2,9 @@ package data_structure;
 
 import java.util.ArrayList;
 
-public class ViewNameStack implements Stack{
+public class ArrayListStack implements Stack{
     ArrayList<String> stack;
-    public ViewNameStack() {
+    public ArrayListStack() {
         this.stack = new ArrayList<String>();
     }
     @Override
