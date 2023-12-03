@@ -1,5 +1,4 @@
 package entity;
-import data_access.JsonUserDataAccessObject;
 import use_case.GetUserDataAccessInterface;
 
 import java.util.List;
