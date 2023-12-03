@@ -6,8 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ViewManagerModel {
+
     private String activeViewName;
-    private ArrayListStack allPreviousViewNames = new ArrayListStack();
+    private List<String> allPreviousViewNames = new ArrayList<>();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
