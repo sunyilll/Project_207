@@ -104,34 +104,27 @@ public class Main {
         refreshChatPageDataAccessObject = new RefreshChatPageDataAccessObject();
         goToChatListDataAccessObject = new GoToChatListDataAccessObject();
 
-
-        FileUserDataAccessObject userDataAccessObject;
-        try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserBuilder() {
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        GoToChatListDataAccessObject goToChatListDataAccessObject;
-//        goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+        JsonUserDataAccessObject jsonUserDataAccessObject;
+        jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
 
         FileCourseDataAccessObject fileCourseDataAccessObject;
         try {
-            fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(userDataAccessObject));
+            fileCourseDataAccessObject = new FileCourseDataAccessObject("./courses.csv", new CourseFactory(jsonUserDataAccessObject));
         } catch (IOException e){throw new RuntimeException(e);}
+
         MatchTutorAlgorithm matchTutorAlgorithm = new MatchByTutorRating();
         MatchStudentAlgorithm matchStudentAlgorithm = new MatchByStudentRating();
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
-                userDataAccessObject);
+                jsonUserDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchCourseViewModel,userDataAccessObject, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchCourseViewModel,jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, fileCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+                searchCourseResultViewModel, fileCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,

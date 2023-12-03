@@ -1,20 +1,20 @@
 package entity;
 
-import data_access.FileUserDataAccessObject;
+import data_access.JsonUserDataAccessObject;
 
 public class CourseFactory {
-    private final FileUserDataAccessObject fileUserDataAccessObject;
-    public CourseFactory(FileUserDataAccessObject fileUserDataAccessObject){
-        this.fileUserDataAccessObject = fileUserDataAccessObject;
+    private final JsonUserDataAccessObject userDataAccessObject;
+    public CourseFactory(JsonUserDataAccessObject userDataAccessObject){
+        this.userDataAccessObject = userDataAccessObject;
     }
     public Course create(String courseCode, String[] tutorids, String[] studentids){
         Course c = new Course(courseCode, "CourseNameNotImplemented");
         for (String id: tutorids){
-            User u = fileUserDataAccessObject.get(id);
+            User u = userDataAccessObject.get(id);
             c.addTutor(u);
         }
         for (String id: studentids){
-            User u = fileUserDataAccessObject.get(id);
+            User u = userDataAccessObject.get(id);
             c.addStudent(u);
         }
         return c;
