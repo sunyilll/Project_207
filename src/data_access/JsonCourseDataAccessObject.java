@@ -1,9 +1,6 @@
 package data_access;
 
-import entity.Course;
-import entity.CourseFactory;
-import entity.Student;
-import entity.Tutor;
+import entity.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +38,9 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         JSONObject jObject = new JSONObject();
         jObject.put("courseCode", c.getCourseCode());
         jObject.put("courseName", c.getCourseName());
-        JSONArray tutors = new JSONArray(c.getTutors());
+        JSONArray tutors = new JSONArray(c.getTutorsIds());
         jObject.put("tutors", tutors);
-        JSONArray students = new JSONArray(c.getStudents());
+        JSONArray students = new JSONArray(c.getStudentsIds());
         jObject.put("students", students);
         courseFile.put(c.getCourseCode(), jObject);
         this.save();
@@ -76,8 +73,10 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
     }
 
     public static void main(String[] args) {
-        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("data/course.json", new CourseFactory(new JsonUserDataAccessObject("data/users.json")));
-        // j.save(new Course("csc411", "Learning"));
+        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(new JsonUserDataAccessObject("./users.json")));
+        j.save(new Course("csc411", "Learning"));
+        j.addTutor(new User("fsdfs", "OL", "123"), "csc411");
+        j.addStudent(new User("ddd", "OL", "123"), "csc411");
         System.out.println(j.hasCourse("csc411"));
     }
 
@@ -110,6 +109,48 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
             return true;
         } else {
             return courseFile.has(courseCode);
+        }
+    }
+
+    public void addStudent(User user, String courseCode){
+        if (hasCourse(courseCode)){
+            if (courses.containsKey(courseCode)){
+                Course c = courses.get(courseCode);
+                c.addStudent(user);
+                this.save(c);
+            } else {  // in courses.json but not courses
+                JSONObject j = courseFile.getJSONObject(courseCode);
+                loadToCourses(j);
+                Course c = courses.get(courseCode);
+                c.addStudent(user);
+                this.save(c);
+            }
+        } else { //initalize course
+            List<String> s = new ArrayList<>();
+            s.add(user.getUserID());
+            Course newCourse = courseFactory.create(courseCode, new ArrayList<>(), s);
+            courses.put(courseCode, newCourse);
+        }
+    }
+
+    public void addTutor(User user, String courseCode) {
+        if (hasCourse(courseCode)) {
+            if (courses.containsKey(courseCode)) {
+                Course c = courses.get(courseCode);
+                c.addTutor(user);
+                this.save(c);
+            } else {  // in courses.json but not courses
+                JSONObject j = courseFile.getJSONObject(courseCode);
+                loadToCourses(j);
+                Course c = courses.get(courseCode);
+                c.addTutor(user);
+                this.save(c);
+            }
+        } else { //initalize course
+            List<String> s = new ArrayList<>();
+            s.add(user.getUserID());
+            Course newCourse = courseFactory.create(courseCode, s, new ArrayList<>());
+            courses.put(courseCode, newCourse);
         }
     }
 
