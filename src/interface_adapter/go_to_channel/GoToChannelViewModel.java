@@ -21,7 +21,7 @@ public class GoToChannelViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("channel", null, this.state);
     }
 
     @Override

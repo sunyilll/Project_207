@@ -66,12 +66,13 @@ public class Main {
         ArrayList<ChatChannel> channels = new ArrayList<>();
         channels.add(channel);
 
-        SendMessageState testState = new SendMessageState(testUser1, channel);
+//        SendMessageState testState = new SendMessageState(testUser1, channel);
         RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
 //        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
 //        GoToChannelState goToChannelState = new GoToChannelState(testUser1, channel);
         GoToChatListState goToChatListState = new GoToChatListState();
         GoToChannelState goToChannelState = new GoToChannelState();
+        SendMessageState testState = new SendMessageState();
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -133,7 +134,7 @@ public class Main {
                 goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
 
-        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject);
+        ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, goToChannelViewModel);
         views.add(channelView, channelView.viewName);
 
         ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChannelViewModel, searchCourseViewModel);
