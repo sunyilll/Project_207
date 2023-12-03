@@ -1,6 +1,6 @@
 package app;
 
-import entity.UserFactory;
+import entity.UserBuilder;
 import interface_adapter.go_to_signup.ToSignupPresenter;
 import interface_adapter.go_to_signup.ToSignupViewModel;
 import interface_adapter.ViewManagerModel;
@@ -62,9 +62,6 @@ public class LoginUseCaseFactory {
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,toSignupViewModel,loginViewModel, searchCourseViewModel);
 
-        UserFactory userFactory = new UserFactory() {
-        };
-
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -74,9 +71,6 @@ public class LoginUseCaseFactory {
 
         // Notice how we pass this method's parameters to the Presenter.
         ToSignupOutputBoundary toSignupOutputBoundary = new ToSignupPresenter(viewManagerModel, toSignupViewModel, signupViewModel, loginViewModel );
-
-        UserFactory userFactory = new UserFactory() {
-        };
 
         ToSignupInputBoundary userToSignupInteractor = new ToSignupInteractor();
 

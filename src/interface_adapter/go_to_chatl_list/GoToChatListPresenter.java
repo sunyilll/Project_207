@@ -14,6 +14,9 @@ public class GoToChatListPresenter implements GoToChatListOutputBoundary {
     public void prepareSuccessView(GoToChatListOutputData goToChatListOutputData) {
         GoToChatListState GoToChatListState = goToChatListViewModel.getState();
         GoToChatListState.setSuccess(true);
+        GoToChatListState.setChatChannels(goToChatListOutputData.getChatChannels());
+        GoToChatListState.setUser(goToChatListOutputData.getUser());
+
         this.goToChatListViewModel.setState(GoToChatListState);
         goToChatListViewModel.firePropertyChanged();
 

@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class GoToPersonalProfileViewModel extends ViewModel {
     private GoToPersonalProfileState state = new GoToPersonalProfileState();
-    public static final String TITLE_LABEL = "My Profile View";
+
     public static final String DESCRIPTION_LABEL = "About Me";
     public static final String PERSONALITY_TAGS_LABEL = "Personality Tags";
     public static final String COURSES_TO_TEACH_LABEL = "Courses to Teach";
@@ -43,7 +43,7 @@ public class GoToPersonalProfileViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("personal profile", null, this.state);
     }
 
     @Override
@@ -57,13 +57,16 @@ public class GoToPersonalProfileViewModel extends ViewModel {
 
     public void setState(GoToPersonalProfileState state) {
         this.state = state;
-        nicknameText = state.getUser().getNickname();
-        descriptionText = state.getUser().getDescription();
-        pronounsText = state.getUser().getPronouns();
-        personalityTagsText = state.getUser().getPersonalityTags().toString();
-        coursesToTeachText = state.getUser().getCoursesToTeach().toString();
-        tutorRatingText = String.valueOf(state.getUser().getTutorRating());
-        coursesToLearnText = state.getUser().getCoursesToLearn().toString();
-        studentRatingText = String.valueOf(state.getUser().getStudentRating());
+        if (state.getUserid() == null) {
+            return;
+        }
+        nicknameText = state.getNickname();
+        descriptionText = state.getDescription();
+        pronounsText = state.getPronouns();
+        personalityTagsText = state.getPersonalityTags().toString();
+        coursesToTeachText = state.getCoursesToTeach().toString();
+        tutorRatingText = String.valueOf(state.getTutorRating());
+        coursesToLearnText = state.getCoursesToLearn().toString();
+        studentRatingText = String.valueOf(state.getStudentRating());
     }
 }

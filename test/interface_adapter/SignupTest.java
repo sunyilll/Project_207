@@ -1,7 +1,7 @@
 package interface_adapter;
 
 import entity.User;
-import entity.UserFactory;
+import entity.UserBuilder;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -27,7 +27,7 @@ class SignupTest {
     private ViewManagerModel viewManagerModel;
     private LoginViewModel loginViewModel;
     private SignupUserDataAccessInterface userDataAccessObject;
-    private UserFactory userFactory;
+    private UserBuilder userBuilder;
     private SignupState signupState;
     private boolean propertyChanged;
 
@@ -42,10 +42,10 @@ class SignupTest {
         propertyChanged = true;
 
         userDataAccessObject = new MockSignupUserDataAccess();
-        userFactory = new UserFactory();
+        userBuilder = new UserBuilder();
 
         signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
-        SignupInputBoundary userSignupUseCaseInteractor = new SignupInteractor(userDataAccessObject, signupPresenter, userFactory);
+        SignupInputBoundary userSignupUseCaseInteractor = new SignupInteractor(userDataAccessObject, signupPresenter, userBuilder);
 
         signupController = new SignupController(userSignupUseCaseInteractor);
 
@@ -179,7 +179,7 @@ class SignupTest {
         private Map<String, User> users = new HashMap<>();
 
         @Override
-        public boolean existsByName(String identifier) {
+        public boolean existsById(String identifier) {
             // This method should return true if the identifier matches an existing user.
             return false;
         }
@@ -187,10 +187,6 @@ class SignupTest {
         @Override
         public void save(User user) {
             users.put(user.getUserID(), user);
-        }
-
-        public boolean existsByUsername(String username) {
-            return users.containsKey(username);
         }
     }
 

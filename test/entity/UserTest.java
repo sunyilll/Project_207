@@ -121,8 +121,8 @@ class UserTest {
 
     @Test
     void editPreferredModeOfTeaching() {
-        assertTrue(user.setPreferredModeOfTeaching("Online"));
-        assertTrue(user.setPreferredModeOfTeaching("In Person"));
+        assertTrue(user.addPreferredModeOfTeaching("Online"));
+        assertTrue(user.addPreferredModeOfTeaching("In Person"));
         assertEquals(2, user.getPreferredModeOfTeaching().size());
         assertTrue(user.getPreferredModeOfTeaching().contains("Online"));
         assertTrue(user.getPreferredModeOfTeaching().contains("In Person"));
@@ -130,8 +130,8 @@ class UserTest {
 
     @Test
     void editPreferredModeOfLearning() {
-        assertTrue(user.setPreferredModeOfLearning("Online"));
-        assertTrue(user.setPreferredModeOfLearning("In Person"));
+        assertTrue(user.addPreferredModeOfLearning("Online"));
+        assertTrue(user.addPreferredModeOfLearning("In Person"));
         assertEquals(2, user.getPreferredModeOfLearning().size());
         assertTrue(user.getPreferredModeOfLearning().contains("Online"));
         assertTrue(user.getPreferredModeOfLearning().contains("In Person"));

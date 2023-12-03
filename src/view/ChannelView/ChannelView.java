@@ -1,6 +1,9 @@
 package view.ChannelView;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.go_to_channel.GoToChannelController;
+import interface_adapter.go_to_channel.GoToChannelState;
+import interface_adapter.go_to_channel.GoToChannelViewModel;
 import kotlin.Pair;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListState;
@@ -25,8 +28,9 @@ import java.util.ArrayList;
 public class ChannelView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "channel";
     private final SendMessageViewModel sendMessageViewModelw;
-
     private final SendMessageController sendMessageControllerw;
+    private final GoToChannelViewModel goToChannelViewModel1;
+    private final GoToChannelController goToChannelController1;
     private final RefreshChatPageViewModel refreshChatPageViewModel1;
     private final RefreshChatPageController refreshChatPageController1;
     private final GoToChatListViewModel goToChatListViewModel1;
@@ -40,7 +44,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
 
     private JPanel chatArea;
 
-    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController, GoToChatListViewModel goToChatListViewModel, GoToChatListController goToChatListController, ViewManagerModel viewManagerModel) {
+    public ChannelView(SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController, RefreshChatPageViewModel refreshChatPageViewModel, RefreshChatPageController refreshChatPageController, GoToChatListViewModel goToChatListViewModel, GoToChatListController goToChatListController, ViewManagerModel viewManagerModel, GoToChannelViewModel goToChannelViewModel, GoToChannelController goToChannelController) {
         this.sendMessageViewModelw = sendMessageViewModel;
         this.sendMessageControllerw = sendMessageController;
         this.refreshChatPageController1 = refreshChatPageController;
@@ -48,6 +52,8 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
         this.goToChatListController1 = goToChatListController;
         this.goToChatListViewModel1 = goToChatListViewModel;
         this.viewManagerModel1 = viewManagerModel;
+        this.goToChannelViewModel1 = goToChannelViewModel;
+        this.goToChannelController1 = goToChannelController;
         this.send = new JButton("send");
         sendMessageViewModelw.addPropertyChangeListener(this);
         sendMessageViewModelw.firePropertyChanged();
@@ -105,7 +111,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                             String previousView = viewManagerModel1.popPreviousView();
                             if (previousView.equals("chatList")) {
                                 GoToChatListState currState = goToChatListViewModel1.getState();
-                                goToChatListController1.execute(currState.getUser());
+                                goToChatListController1.execute();
                                 viewManagerModel1.addPreviousView("channel");
                             }
                         }
@@ -119,6 +125,13 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(refresh)){
+                            GoToChannelState goToChannelState = goToChannelViewModel1.getState();
+                            RefreshChatPageState refreshChatPageState = refreshChatPageViewModel1.getState();
+                            refreshChatPageState.setChannel(goToChannelState.getCurrentChannel());
+                            refreshChatPageState.setUser_id(goToChannelState.getCurrentUser().getUserID());
+                            refreshChatPageViewModel1.setState(refreshChatPageState);
+
+
                             RefreshChatPageState currState = refreshChatPageViewModel1.getState();
                             System.out.println(currState);
 
@@ -148,9 +161,15 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)){
 
+
+                            GoToChannelState goToChannelState = goToChannelViewModel1.getState();
+                            SendMessageState sendMessageState = sendMessageViewModelw.getState();
+                            sendMessageState.setChannel(goToChannelState.getCurrentChannel());
+                            sendMessageState.setUser_id(goToChannelState.getCurrentUser().getUserID());
+                            sendMessageViewModelw.setState(sendMessageState);
+
                             SendMessageState currentState = sendMessageViewModelw.getState();
-                            System.out.println(currentState);
-                            System.out.println("I am trying to send message");
+
 
                             sendMessageControllerw.execute(
                                     currentState.getMessage(),
@@ -212,6 +231,20 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
 
     public void actionPerformed(ActionEvent evt){}
     public void propertyChange(PropertyChangeEvent evt){  // called when view model firePropertyChange()
+        System.out.println("channel view property change");
+        if (evt.getPropertyName().equals("channel")) {
+            System.out.println("channel changed");
+            System.out.println(evt.getPropertyName());
+            GoToChannelState goToChannelState = (GoToChannelState) evt.getNewValue();
+            SendMessageState sendMessageState = sendMessageViewModelw.getState();
+            sendMessageState.setChannel(goToChannelState.getCurrentChannel());
+            sendMessageState.setUser_id(goToChannelState.getCurrentUser().getUserID());
+            sendMessageViewModelw.setState(sendMessageState);
+
+            sendMessageViewModelw.firePropertyChanged();
+
+        }
+
         SendMessageState sendMessageState = (SendMessageState) evt.getNewValue();
         if(sendMessageState.getErrorMessage() != null) {
             JOptionPane.showMessageDialog(this, sendMessageState.getErrorMessage());

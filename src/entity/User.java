@@ -9,7 +9,7 @@ public class User implements Student, Tutor{
     public final String userid;
     public String nickname;
     private String password;
-    private String pronouns;
+    private String pronouns = null;
     private List<String> personalityTag = new ArrayList<>();
     private String profileURL = null;
     private String description = null;
@@ -121,6 +121,10 @@ public class User implements Student, Tutor{
         return this.tutorRating;
     }
 
+    public List<Integer> getTutorRatings(){
+        return this.tutorRatings;
+    }
+
     public boolean updateTutorRating(Integer rating){
         // check if rating is valid: 0<= rating <= 5
         if (rating < 0 || rating > 5) {
@@ -150,7 +154,7 @@ public class User implements Student, Tutor{
     }
 
     @Override
-    public boolean setPreferredModeOfTeaching(String mode) {
+    public boolean addPreferredModeOfTeaching(String mode) {
         preferredModeOfTeaching.add(mode);
         return true;
     }
@@ -174,6 +178,10 @@ public class User implements Student, Tutor{
     // Student rating
     public float getStudentRating(){
         return this.studentRating;
+    }
+
+    public List<Integer> getStudentRatings(){
+        return this.studentRatings;
     }
 
     public boolean updateStudentRating(Integer rating){
@@ -204,7 +212,7 @@ public class User implements Student, Tutor{
     }
 
     @Override
-    public boolean setPreferredModeOfLearning(String mode) {
+    public boolean addPreferredModeOfLearning(String mode) {
         preferredModeOfLearning.add(mode);
         return true;
     }

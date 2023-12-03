@@ -6,5 +6,6 @@ import entity.User;
 import java.util.ArrayList;
 
 public interface GoToChatListDataAccessInterface {
-    ArrayList<ChatChannel> getAllChatChannels(User user) throws RuntimeException;
+    ArrayList<ChatChannel> getAllChatChannels() throws RuntimeException;
+    User getCurrentUser();
 }
