@@ -5,7 +5,8 @@ import java.util.Map;
 
 public class UserBuilder {
     User user;
-    public UserBuilder(String userID, String nickname, String password)
+    public UserBuilder() {}
+    public void create(String userID, String nickname, String password)
     {
         user = new User(userID, nickname, password);
     }
@@ -21,39 +22,31 @@ public class UserBuilder {
     public void setTutorAvailability(String tutorAvailability) {
         user.setTutorAvailability(tutorAvailability);
     }
-    public void addPersonalityTag(List<String> personalityTag) {
-        for (String tag : personalityTag) {
-            user.addPersonalityTag(tag);
-        }
+    public void addPersonalityTag(String personalityTag) {
+        user.addPersonalityTag(personalityTag);
     }
-    public void addCoursesToLearn(List<String> coursesToLearn) {
-        for (String course : coursesToLearn) {
-            user.addCourseToTeach(course);
-        }
+    public void addCoursesToLearn(String course) {
+        user.addCourseToLearn(course);
     }
-    public void addCoursesToTeach(List<String> coursesToTeach) {
-        for (String course : coursesToTeach) {
-            user.addCourseToTeach(course);
-        }
+    public void addCoursesToTeach(String course) {
+        user.addCourseToTeach(course);
     }
-    public void addPreferredModeOfLearning(List<String> preferredModeOfLearning) {
-        for (String mode : preferredModeOfLearning) {
-            user.addPreferredModeOfLearning(mode);
-        }
+    public void addPreferredModeOfLearning(String modeOfLearning) {
+        user.addPreferredModeOfLearning(modeOfLearning);
     }
-    public void addPreferredModeOfTeaching(List<String> preferredModeOfTeaching) {
-        for (String mode : preferredModeOfTeaching) {
-            user.addPreferredModeOfTeaching(mode);
-        }
+    public void addPreferredModeOfTeaching(String modeOfTeaching) {
+        user.addPreferredModeOfTeaching(modeOfTeaching);
     }
-    public void setExpectedWage(Map<String, Integer> expectedWage) {
-        for (String course : expectedWage.keySet()) {
-            user.setExpectedWage(course, expectedWage.get(course));
-        }
+    public void addStudentRating(int rating) {
+        user.updateStudentRating(rating);
     }
-    public void setExpectedPrice(Map<String, Integer> expectedPrice) {
-        for (String course : expectedPrice.keySet()) {
-            user.setExpectedPrice(course, expectedPrice.get(course));
-        }
+    public void addTutorRating(int rating) {
+        user.updateTutorRating(rating);
+    }
+    public void setExpectedWage(String course, int expectedWage) {
+        user.setExpectedWage(course, expectedWage);
+    }
+    public void setExpectedPrice(String course, int expectedPrice) {
+        user.setExpectedPrice(course, expectedPrice);
     }
 }
