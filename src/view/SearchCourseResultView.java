@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.add_course_to_profile.AddCourseToProfileController;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
@@ -42,7 +43,8 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
                                   GoToChatListController goToChatListController,
                                   GoToChatListViewModel goToChatListViewModel,
                                   GoToPersonalProfileController goToPersonalProfileController,
-                                  GoToPersonalProfileViewModel goToPersonalProfileViewModel
+                                  GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+                                  AddCourseToProfileController addCourseToProfileController
                                   ){
         homeBar = new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController, goToChatListViewModel,
                 goToChatListController, goToSearchController);
@@ -70,7 +72,14 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
         addCourseToProfile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // todo: add add_course_to_learn controller
+                SearchCourseResultState s = searchCourseResultViewModel.getState();
+                String courseCode = s.getCourseCode();
+                if (s.getSearchForTutor()){
+                    addCourseToProfileController.execute(false, courseCode);
+                } else {
+                    addCourseToProfileController.execute(true, courseCode);
+                }
+
             }
         });
 
@@ -189,7 +198,7 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
                 addCourseToProfile.setText("Add this Course To Tutor");
                 resultLabel.setText(state.getNumbersResults() + " Students for\n" + state.getCourseCode());
             }
-            System.out.println("New Change to ViewModel of SearchCourseResultViw");
+            if (state.getCourseAddedToProfile()){JOptionPane.showMessageDialog(this, "Course Added Successfully");}
         }
     }
 

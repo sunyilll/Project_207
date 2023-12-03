@@ -16,7 +16,7 @@ public class User implements Student, Tutor{
 
     // Variables for Tutor
     private List<Integer> tutorRatings = new ArrayList<>();
-    private float tutorRating; // the average of all ratings
+    private float tutorRating = 0; // the average of all ratings
     private List<String> coursesToTeach = new ArrayList<>();
     private String tutorAvailability;	// available hours
     private Map<String, Integer> expectedWage = new HashMap<>();  // mapping of course to expected wage
@@ -24,7 +24,7 @@ public class User implements Student, Tutor{
 
     // Variables for Student
     private List<Integer> studentRatings = new ArrayList<>();
-    private float studentRating;
+    private float studentRating = 0;
     private List<String> coursesToLearn = new ArrayList<>();
     private Map<String, Integer> expectedPrice = new HashMap<>();
     // how much the user would like to pay for each course

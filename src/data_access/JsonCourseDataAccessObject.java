@@ -1,12 +1,10 @@
 package data_access;
 
-import entity.Course;
-import entity.CourseFactory;
-import entity.Student;
-import entity.Tutor;
+import entity.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.add_course_to_profile.AddCourseToProfileDataAccessInterface;
 import use_case.search_course.SearchCourseDataAccessInterface;
 
 import java.io.*;
@@ -17,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterface {
+public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterface, AddCourseToProfileDataAccessInterface {
     String file_path;
     final CourseFactory courseFactory;
     JSONObject courseFile = new JSONObject();
@@ -41,9 +39,9 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         JSONObject jObject = new JSONObject();
         jObject.put("courseCode", c.getCourseCode());
         jObject.put("courseName", c.getCourseName());
-        JSONArray tutors = new JSONArray(c.getTutors());
+        JSONArray tutors = new JSONArray(c.getTutorsIds());
         jObject.put("tutors", tutors);
-        JSONArray students = new JSONArray(c.getStudents());
+        JSONArray students = new JSONArray(c.getStudentsIds());
         jObject.put("students", students);
         courseFile.put(c.getCourseCode(), jObject);
         this.save();
@@ -76,8 +74,15 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
     }
 
     public static void main(String[] args) {
-        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("data/course.json", new CourseFactory(new JsonUserDataAccessObject("data/users.json")));
-        // j.save(new Course("csc411", "Learning"));
+        JsonUserDataAccessObject juser = new JsonUserDataAccessObject("./users.json");
+        JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(juser));
+        j.save(new Course("csc411", "Learning"));
+        User user1 = new User("fsdfs", "OL", "123");
+        User user2 = new User("ddd", "XX", "123");
+        juser.save(user1);
+        juser.save(user2);
+        j.addTutor(user1, "csc411");
+        j.addStudent(user2, "csc411");
         System.out.println(j.hasCourse("csc411"));
     }
 
@@ -111,6 +116,57 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         } else {
             return courseFile.has(courseCode);
         }
+    }
+
+    public void addStudent(User user, String courseCode){
+        if (hasCourse(courseCode)){
+            if (courses.containsKey(courseCode)){
+                Course c = courses.get(courseCode);
+                c.addStudent(user);
+                this.save(c);
+            } else {  // in courses.json but not courses
+                JSONObject j = courseFile.getJSONObject(courseCode);
+                loadToCourses(j);
+                Course c = courses.get(courseCode);
+                c.addStudent(user);
+                this.save(c);
+            }
+        } else { //initalize course
+            List<String> s = new ArrayList<>();
+            s.add(user.getUserID());
+            Course newCourse = courseFactory.create(courseCode, new ArrayList<>(), s);
+            courses.put(courseCode, newCourse);
+        }
+    }
+
+    public void addTutor(User user, String courseCode) {
+        if (hasCourse(courseCode)) {
+            if (courses.containsKey(courseCode)) {
+                Course c = courses.get(courseCode);
+                c.addTutor(user);
+                this.save(c);
+            } else {  // in courses.json but not courses
+                JSONObject j = courseFile.getJSONObject(courseCode);
+                loadToCourses(j);
+                Course c = courses.get(courseCode);
+                c.addTutor(user);
+                this.save(c);
+            }
+        } else { //initalize course
+            List<String> s = new ArrayList<>();
+            s.add(user.getUserID());
+            Course newCourse = courseFactory.create(courseCode, s, new ArrayList<>());
+            courses.put(courseCode, newCourse);
+        }
+    }
+
+    public void deleteTutor(User user, String courseCode){
+        System.out.println(user.getNickname()+ "is deleted");
+        //todo: implement
+    }
+    public void deleteStudent(User user, String courseCode){
+        System.out.println(user.getNickname()+ "is deleted");
+        //todo: implement
     }
 
 }
