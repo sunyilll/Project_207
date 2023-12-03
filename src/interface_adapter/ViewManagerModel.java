@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewManagerModel {
-    private String activeViewName;
+    public boolean propertyChangedFired;
+    String activeViewName;
     private List<String> allPreviousViewNames = new ArrayList<>();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
