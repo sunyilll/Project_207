@@ -138,14 +138,10 @@ public class LoginTest {
             users.put(user.getUserID(), user);
         }
 
-        public boolean existsByName(String username) {
+        public boolean existsById(String username) {
             return users.containsKey(username);
         }
 
-        @Override
-        public void save(User user) {
-
-        }
         public User get(String username) {
             return users.get(username);
         }

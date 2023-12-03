@@ -1,13 +1,13 @@
 package interface_adapter;
 
+import data_structure.ArrayListStack;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewManagerModel {
-    public boolean propertyChangedFired;
-    String activeViewName;
+
+    private String activeViewName;
     private List<String> allPreviousViewNames = new ArrayList<>();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -30,14 +30,9 @@ public class ViewManagerModel {
         support.addPropertyChangeListener(listener);
     }
     public String popPreviousView() {
-        if (allPreviousViewNames.size() > 0) {
-            String prevView = allPreviousViewNames.get(allPreviousViewNames.size() - 1);
-            allPreviousViewNames.remove(allPreviousViewNames.size() - 1);
-            return prevView;
-        }
-        return null;
+        return (String) allPreviousViewNames.pop();
     }
     public void addPreviousView(String viewName) {
-        allPreviousViewNames.add(viewName);
+        allPreviousViewNames.push(viewName);
     }
 }

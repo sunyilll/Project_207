@@ -21,14 +21,6 @@ public class ChatChannel {
         return this.chatHistory;
     }
 
-    public void addUser(User user){
-        this.members.put(user.getUserID(), user);
-    }
-
-    public void removeUser(User user){
-        this.members.remove(user.getUserID());
-    }
-
     public String getChannelURL(){
         return channelURL;
     }
