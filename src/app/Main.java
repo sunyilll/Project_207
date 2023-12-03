@@ -55,7 +55,7 @@ public class Main {
 
         FileUserDataAccessObject userDataAccessObject;
         try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserFactory() {
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserBuilder() {
             });
         } catch (IOException e) {
             throw new RuntimeException(e);

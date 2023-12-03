@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.User;
-import entity.UserFactory;
+import entity.UserBuilder;
 import use_case.GetUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -17,11 +17,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     private final Map<String, User> accounts = new HashMap<>();
 
-    private UserFactory userFactory;
+    private UserBuilder userBuilder;
     private List<String> usersDeleted = new ArrayList<>();
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
-        this.userFactory = userFactory;
+    public FileUserDataAccessObject(String csvPath, UserBuilder userBuilder) throws IOException {
+        this.userBuilder = userBuilder;
 
         csvFile = new File(csvPath);
         headers.put("userid", 0);
@@ -45,7 +45,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                         String userid = String.valueOf(col[headers.get("userid")]);
                         String nickname = String.valueOf(col[headers.get("nickname")]);
                         String password = String.valueOf(col[headers.get("password")]);
-                        User user = userFactory.create(userid, nickname, password);
+                        userBuilder.create(userid, nickname, password);
+                        User user = userBuilder.getUser();
                         accounts.put(userid, user);
                 } else {
                     // Handle the error for rows that do not have enough columns
