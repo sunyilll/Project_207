@@ -7,17 +7,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import use_case.GetUserDataAccessInterface;
+import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        GetUserDataAccessInterface {
+        GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface {
     String file_path;
     JSONObject userFile = new JSONObject();
+    Map<String, User> users = new HashMap<>();
 
     public JsonUserDataAccessObject(String file_path) {
         this.file_path = file_path;
@@ -43,7 +47,10 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
     // TODO: Refactor code so that we are searching for the user by ID instead of nickname
     @Override
     public User get(String userid) {
-        if (!existsById(userid)) {
+        // if user is in users, return user
+        if (users.containsKey(userid)) {
+            return users.get(userid);
+        } else if (!existsById(userid)) {
             return null;
         } else {
             UserBuilder userBuilder = new UserBuilder();
@@ -142,6 +149,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
             } catch (Exception e) {
                 // do nothing
             }
+            users.put(userid, userBuilder.getUser());
             return userBuilder.getUser();
         }
     }
