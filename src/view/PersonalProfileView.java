@@ -97,9 +97,11 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        GoToPersonalProfileState state = (GoToPersonalProfileState) evt.getNewValue();
-        goToPersonalProfileViewModel.setState(state);
-        nickName.setText(goToPersonalProfileViewModel.nicknameText);
-        descriptionText.setText(goToPersonalProfileViewModel.descriptionText);
+        if (evt.getPropertyName().equals("personal profile")) {
+            GoToPersonalProfileState state = (GoToPersonalProfileState) evt.getNewValue();
+            goToPersonalProfileViewModel.setState(state);
+            nickName.setText(goToPersonalProfileViewModel.nicknameText);
+            descriptionText.setText(goToPersonalProfileViewModel.descriptionText);
+        }
     }
 }

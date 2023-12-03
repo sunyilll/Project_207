@@ -13,7 +13,7 @@ public class GoToPersonalProfileInputData {
         return User != null;
     }
 
-    User getUser() {
+    public User getUser() {
         return User;
     }
 }

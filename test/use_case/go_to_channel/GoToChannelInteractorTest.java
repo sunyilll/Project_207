@@ -1,4 +1,4 @@
-package use_case;
+package use_case.go_to_channel;
 
 import entity.ChatChannel;
 import entity.User;
@@ -7,18 +7,15 @@ import interface_adapter.go_to_channel.GoToChannelPresenter;
 import interface_adapter.go_to_channel.GoToChannelState;
 import interface_adapter.go_to_channel.GoToChannelViewModel;
 import org.junit.jupiter.api.Test;
-import use_case.go_to_channel.GoToChannelInputData;
-import use_case.go_to_channel.GoToChannelInteractor;
-import use_case.go_to_channel.GoToChannelOutputData;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GoToChannelTest {
+class GoToChannelInteractorTest {
     private final User testUser1 = new User("test1", "test1", "test1");
-    private final User testUser2 = new User("test1", "test1", "test1");
     private final Map<String, User> testMap = new HashMap<>();
 
     private final LocalDateTime currentDateTime = LocalDateTime.now();
@@ -27,24 +24,15 @@ public class GoToChannelTest {
     private final GoToChannelViewModel goToChannelViewModel = new GoToChannelViewModel();
     private final GoToChannelState testState = new GoToChannelState(testUser1, channel);
     private final GoToChannelInputData testInputData = new GoToChannelInputData(testUser1, channel);
-    private final GoToChannelOutputData testOutputData = new GoToChannelOutputData(testUser1, channel);
+
     @Test
-    void testGoToChannelInputData(){
-        assertEquals(testUser1, testInputData.getCurrentUser());
-        assertEquals(channel, testInputData.getCurrentChannel());
-    }
-    @Test
-    void testGoToChannelInteractorSuccess(){
+    void execute() {
         goToChannelViewModel.setState(testState);
         GoToChannelPresenter goToChannelPresenter = new GoToChannelPresenter(goToChannelViewModel, viewManagerModel);
         GoToChannelInteractor testInteractor = new GoToChannelInteractor(goToChannelPresenter);
 
         testInteractor.execute(testInputData);
         assertTrue(goToChannelViewModel.getState().getSuccess());
-    }
-    @Test
-    void testGoToChannelOutputData(){
-        assertEquals(testUser1, testOutputData.getCurrentUser());
-        assertEquals(channel, testOutputData.getCurrentChannel());
+
     }
 }

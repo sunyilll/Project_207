@@ -18,7 +18,7 @@ public interface Student {
     public Integer getExpectedPrice(String courseCode);
     public boolean setExpectedPrice(String courseCode, Integer price);
     public List<String> getPreferredModeOfLearning();
-    public boolean setPreferredModeOfLearning(String mode);
+    public boolean addPreferredModeOfLearning(String mode);
     public String getUserID();
 
 }
