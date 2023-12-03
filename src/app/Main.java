@@ -67,12 +67,13 @@ public class Main {
         channels.add(channel);
 
 //        SendMessageState testState = new SendMessageState(testUser1, channel);
-        RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
+//        RefreshChatPageState refreshTestState = new RefreshChatPageState(testUser1, channel);
 //        GoToChatListState goToChatListState = new GoToChatListState(testUser1, channels);
 //        GoToChannelState goToChannelState = new GoToChannelState(testUser1, channel);
         GoToChatListState goToChatListState = new GoToChatListState();
         GoToChannelState goToChannelState = new GoToChannelState();
         SendMessageState testState = new SendMessageState();
+        RefreshChatPageState refreshTestState = new RefreshChatPageState();
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
