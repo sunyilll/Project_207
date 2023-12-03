@@ -14,6 +14,10 @@ public class GoToChannelPresenter implements GoToChannelOutputBoundary {
     public void prepareSuccessView(GoToChannelOutputData goToChannelOutputData) {
         GoToChannelState goToChannelState = goToChannelViewModel.getState();
         goToChannelState.setSuccess(true);
+        goToChannelState.setCurrentChannel(goToChannelOutputData.getCurrentChannel());
+        goToChannelState.setCurrentUser(goToChannelOutputData.getCurrentUser());
+        System.out.println(goToChannelState.getCurrentUser().getUserID());
+
         this.goToChannelViewModel.setState(goToChannelState);
         goToChannelViewModel.firePropertyChanged();
 

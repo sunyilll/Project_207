@@ -59,7 +59,7 @@ public class ChannelPanel extends JPanel implements ActionListener, PropertyChan
                             GoToChannelState goToChannelState = viewModel.getState();
 //                            controller.execute(currUser, channel);
 //                            System.out.println(otherKey);
-                            controller.execute(goToChannelState.getCurrentUser(),goToChannelState.getCurrentChannel());
+                            controller.execute(currUser,channel);
                             viewManagerModel1.addPreviousView("chatList");
 
                         }
