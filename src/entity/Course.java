@@ -23,5 +23,15 @@ public class Course {
     public String getCourseCode(){return courseCode;}
     public List<Tutor> getTutors(){return tutors;}
     public List<Student> getStudents(){return students;}
+    public List<String> getTutorsIds(){
+        List<String> lst = new ArrayList<>();
+        for (Tutor t: tutors){lst.add(t.getUserID());}
+        return lst;
+    }
+    public List<String> getStudentsIds(){
+        List<String> lst = new ArrayList<>();
+        for (Student s: students){lst.add(s.getUserID());}
+        return lst;
+    }
     public String getCourseName() {return courseName;}
 }
