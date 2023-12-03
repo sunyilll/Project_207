@@ -1,8 +1,5 @@
 package entity;
 
-import java.util.List;
-import java.util.Map;
-
 public class UserBuilder {
     User user;
     public UserBuilder() {}
