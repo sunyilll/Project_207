@@ -1,6 +1,8 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_course_to_profile.AddCourseToProfileController;
+import interface_adapter.add_course_to_profile.AddCourseToProfilePresenter;
 import interface_adapter.go_to_chatl_list.GoToChatListController;
 import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
 import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
@@ -11,6 +13,11 @@ import interface_adapter.go_to_search.GoToSearchController;
 import interface_adapter.go_to_search.GoToSearchPresenter;
 import interface_adapter.search_course.SearchCourseViewModel;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
+import use_case.GetUserDataAccessInterface;
+import use_case.add_course_to_profile.AddCourseToProfileDataAccessInterface;
+import use_case.add_course_to_profile.AddCourseToProfileInputBoundary;
+import use_case.add_course_to_profile.AddCourseToProfileInteractor;
+import use_case.add_course_to_profile.AddCourseToProfileOutputBoundary;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInputBoundary;
 import use_case.go_to_chat_list.GoToChatListInteractor;
@@ -35,7 +42,9 @@ public class SearchCourseResultUseCaseFactory {
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
             GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
             GoToChatListViewModel goToChatListViewModel,
-            GoToChatListDataAccessInterface goToChatListDataAccessObject
+            GoToChatListDataAccessInterface goToChatListDataAccessObject,
+            AddCourseToProfileDataAccessInterface addCourseToProfileDAI,
+            GetUserDataAccessInterface getUserDAI
     ){
         try{
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
@@ -43,8 +52,10 @@ public class SearchCourseResultUseCaseFactory {
                     goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
+            AddCourseToProfileController addCourseToProfileController = createAddCourseProfileController(searchCourseResultViewModel,
+                    addCourseToProfileDAI, getUserDAI);
             return new SearchCourseResultView(searchCourseResultViewModel, goToSearchController, goToChatListController,
-                    goToChatListViewModel, goToPersonalProfileController, goToPersonalProfileViewModel);
+                    goToChatListViewModel, goToPersonalProfileController, goToPersonalProfileViewModel, addCourseToProfileController);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -86,5 +97,16 @@ public class SearchCourseResultUseCaseFactory {
                 new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
 
         return new GoToChatListController(goToChatListInteractor);
+    }
+
+    private static AddCourseToProfileController createAddCourseProfileController(
+            SearchCourseResultViewModel searchCourseResultViewModel,
+            AddCourseToProfileDataAccessInterface addCourseToProfileDataAccessInterface,
+            GetUserDataAccessInterface getUserDataAccessInterface
+    ){
+        AddCourseToProfileOutputBoundary presenter = new AddCourseToProfilePresenter(searchCourseResultViewModel);
+        AddCourseToProfileInputBoundary interator = new AddCourseToProfileInteractor(addCourseToProfileDataAccessInterface,
+                getUserDataAccessInterface, presenter);
+        return new AddCourseToProfileController(interator);
     }
 }

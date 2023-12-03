@@ -9,10 +9,10 @@ public class SearchCourseResultState {
     private List<String> sortedIds;
     private String courseCode;
     private boolean searchForTutor;
+    public boolean courseAddedToProfile = false;
     private String error;
     public Integer numbersResults = 0;
     public SearchCourseResultState(){}
-    //todo: implement me
     public void setSortedIds(List<String> ids){
         this.sortedIds = ids;
         this.numbersResults = ids.size();
@@ -39,5 +39,12 @@ public class SearchCourseResultState {
 
     public Map<String, List<String>> getResultUserTags() {
         return resultUserTags;
+    }
+
+    public void setCourseAddedToProfile(boolean b) {
+        courseAddedToProfile = b;
+    }
+    public boolean getCourseAddedToProfile() {
+        return courseAddedToProfile;
     }
 }
