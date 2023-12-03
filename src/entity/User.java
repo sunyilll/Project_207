@@ -146,7 +146,7 @@ public class User implements Student, Tutor{
     }
 
     @Override
-    public boolean setPreferredModeOfTeaching(String mode) {
+    public boolean addPreferredModeOfTeaching(String mode) {
         preferredModeOfTeaching.add(mode);
         return true;
     }
@@ -204,7 +204,7 @@ public class User implements Student, Tutor{
     }
 
     @Override
-    public boolean setPreferredModeOfLearning(String mode) {
+    public boolean addPreferredModeOfLearning(String mode) {
         preferredModeOfLearning.add(mode);
         return true;
     }
