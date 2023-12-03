@@ -36,21 +36,21 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
 //         User testUser = new User("test", "test", "test");
 //         jsonUserDataAccessObject.save(testUser);
         // System.out.println(jsonUserDataAccessObject.toString());
-        System.out.println(jsonUserDataAccessObject.existsByName("test"));
+        System.out.println(jsonUserDataAccessObject.existsById("test"));
         System.out.println(jsonUserDataAccessObject.get("test").getPersonalityTags());
     }
 
     // TODO: Refactor code so that we are searching for the user by ID instead of nickname
     @Override
-    public User get(String userID) {
-        if (!existsByName(userID)) {
+    public User get(String userid) {
+        if (!existsById(userid)) {
             return null;
         } else {
             UserBuilder userBuilder = new UserBuilder();
-            JSONObject userJSON = userFile.getJSONObject(userID);
+            JSONObject userJSON = userFile.getJSONObject(userid);
             String nickname = userJSON.getString("nickname");
             String password = userJSON.getString("password");
-            userBuilder.create(userID, nickname, password);
+            userBuilder.create(userid, nickname, password);
             try {
                 String pronouns = userJSON.getString("pronouns");
                 userBuilder.setPronouns(pronouns);
@@ -147,8 +147,8 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, 
     }
 
     @Override
-    public boolean existsByName(String userID) {
-        return userFile.has(userID);
+    public boolean existsById(String userid) {
+        return userFile.has(userid);
     }
 
     public void save() {
