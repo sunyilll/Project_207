@@ -18,6 +18,7 @@ import use_case.go_to_channel.GoToChannelInteractor;
 import use_case.go_to_channel.GoToChannelOutputBoundary;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInteractor;
+import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
@@ -37,6 +38,7 @@ public class ChatListUsesCaseFactory {
             GoToChatListViewModel goToChatListViewModel,
             GoToChatListDataAccessInterface goToChatListDataAccessObject,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
             GoToChannelViewModel goToChannelViewModel,
             SearchCourseViewModel searchCourseViewModel
     ) {
@@ -46,7 +48,7 @@ public class ChatListUsesCaseFactory {
             GoToChannelController goToChannelController =
                     createGoToChannelUseCase(viewManagerModel, goToChannelViewModel);
             GoToPersonalProfileController goToPersonalProfileController =
-                    createGoToPersonalProfileUseCase(viewManagerModel, goToPersonalProfileViewModel);
+                    createGoToPersonalProfileUseCase(viewManagerModel, goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject);
             GoToSearchController goToSearchController =
                     createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
             return new ChatListView(goToChatListViewModel, goToChatListController,
@@ -84,13 +86,14 @@ public class ChatListUsesCaseFactory {
     }
     private static GoToPersonalProfileController createGoToPersonalProfileUseCase(
             ViewManagerModel viewManagerModel,
-            GoToPersonalProfileViewModel goToPersonalProfileViewModel) throws IOException {
+            GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject) throws IOException {
 
         GoToPersonalProfileOutputBoundary personalProfilePresenter =
                 new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
 
         GoToPersonalProfileInputBoundary personalProfileInteractor =
-                new GoToPersonalProfileInteractor(personalProfilePresenter);
+                new GoToPersonalProfileInteractor(personalProfilePresenter, goToPersonalProfileDataAccessObject);
 
         return new GoToPersonalProfileController(personalProfileInteractor);
     }

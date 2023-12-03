@@ -42,8 +42,6 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
         homeBar = new HomeBar(goToPersonalProfileViewModel, personalProfileController, goToChatListViewModel,
                 goToChatListController, goToSearchController);
 
-        JLabel title = new JLabel(GoToPersonalProfileViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         nickName = new JLabel(goToPersonalProfileViewModel.nicknameText);
         nickName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -79,7 +77,6 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
         JPanel mainPanel = new JPanel();
 
-        mainPanel.add(title);
         mainPanel.add(nickName);
         mainPanel.add(leftAlignedContent);
         mainPanel.add(buttons);

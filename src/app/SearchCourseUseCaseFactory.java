@@ -20,6 +20,7 @@ import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInputBoundary;
 import use_case.go_to_chat_list.GoToChatListInteractor;
 import use_case.go_to_chat_list.GoToChatListOutputBoundary;
+import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
@@ -43,6 +44,7 @@ public class SearchCourseUseCaseFactory {
             SearchCourseDataAccessInterface searchCourseDAO,
             GetUserDataAccessInterface getUserDAO,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
             GoToChatListViewModel goToChatListViewModel,
             GoToChatListDataAccessInterface goToChatListDataAccessObject,
             MatchTutorAlgorithm matchTutorAlgorithm,
@@ -50,7 +52,7 @@ public class SearchCourseUseCaseFactory {
         try {
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
-                    goToPersonalProfileViewModel);
+                    goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
             SearchCourseController searchController = createSearchUseCase(viewManagerModel, searchCourseViewModel, searchCourseResultViewModel, searchCourseDAO,
@@ -89,13 +91,14 @@ public class SearchCourseUseCaseFactory {
 
     private static GoToPersonalProfileController createGoToPersonalProfileUseCase(
             ViewManagerModel viewManagerModel,
-            GoToPersonalProfileViewModel goToPersonalProfileViewModel) throws IOException {
+            GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject) throws IOException {
 
         GoToPersonalProfileOutputBoundary personalProfilePresenter =
                 new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
 
         GoToPersonalProfileInputBoundary personalProfileInteractor =
-                new GoToPersonalProfileInteractor(personalProfilePresenter);
+                new GoToPersonalProfileInteractor(personalProfilePresenter, goToPersonalProfileDataAccessObject);
 
         return new GoToPersonalProfileController(personalProfileInteractor);
     }

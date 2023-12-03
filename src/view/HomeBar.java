@@ -83,8 +83,7 @@ public class HomeBar extends JPanel implements PropertyChangeListener, ActionLis
         profileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(profileButton)) {
-                    GoToPersonalProfileState currentState = goToPersonalProfileViewModel.getState();
-                    goToPersonalProfileController.execute(currentState.getUser());
+                    goToPersonalProfileController.execute();
                 }
             }
         });

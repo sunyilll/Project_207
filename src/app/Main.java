@@ -77,7 +77,6 @@ public class Main {
         SearchCourseViewModel searchCourseViewModel = new SearchCourseViewModel();
         SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
-        goToPersonalProfileViewModel.getState().setUser(testUser1);
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
@@ -108,7 +107,7 @@ public class Main {
         jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
         JsonCourseDataAccessObject jsonCourseDataAccessObject;
-        jsonCourseDataAccessObject = new JsonCourseDataAccessObject("./courses.csv", new CourseFactory(jsonUserDataAccessObject));
+        jsonCourseDataAccessObject = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(jsonUserDataAccessObject));
         MatchTutorAlgorithm matchTutorAlgorithm = new MatchByTutorRating();
         MatchStudentAlgorithm matchStudentAlgorithm = new MatchByStudentRating();
 
@@ -119,24 +118,23 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, toSignupViewModel, signupViewModel,searchCourseViewModel,jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        SearchCourseView searchCourseView= SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, jsonCourseDataAccessObject, userDataAccessObject, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+        SearchCourseView searchCourseView = SearchCourseUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
+                searchCourseResultViewModel, jsonCourseDataAccessObject, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, matchTutorAlgorithm, matchStudentAlgorithm);
+
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject);
+                searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(searchCourseResultView, searchCourseResultView.viewName);
       
         PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
-                goToPersonalProfileViewModel, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
+                goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
-
-
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(channelView, channelView.viewName);
 
-        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, goToChannelViewModel, searchCourseViewModel);
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChannelViewModel, searchCourseViewModel);
         views.add(chatListView, chatListView.viewName);
 
         // This is for testing purposes. Please delete this for final submission

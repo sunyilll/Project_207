@@ -1,6 +1,7 @@
 package app;
 
 import data_access.GoToChatListDataAccessObject;
+import data_access.JsonUserDataAccessObject;
 import data_access.RefreshChatPageDataAccessObject;
 import data_access.SendMessageDataAccessObject;
 import entity.ChatChannel;
@@ -106,7 +107,11 @@ public class MainForAlysa {
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, goToChatListDataAccessObject);
         views.add(channelView, channelView.viewName);
 
-        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, goToChannelViewModel, searchCourseViewModel);
+        JsonUserDataAccessObject jsonUserDataAccessObject;
+        jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
+
+
+        ChatListView chatListView = ChatListUsesCaseFactory.create(viewManagerModel, goToChatListViewModel, goToChatListDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChannelViewModel, searchCourseViewModel);
         views.add(chatListView, chatListView.viewName);
 
         viewManagerModel.setActiveView(chatListView.viewName);

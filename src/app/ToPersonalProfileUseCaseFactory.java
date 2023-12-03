@@ -14,6 +14,7 @@ import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInputBoundary;
 import use_case.go_to_chat_list.GoToChatListInteractor;
 import use_case.go_to_chat_list.GoToChatListOutputBoundary;
+import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
@@ -32,13 +33,14 @@ public class ToPersonalProfileUseCaseFactory {
     public static PersonalProfileView create(
             ViewManagerModel viewManagerModel,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
             GoToChatListViewModel goToChatListViewModel,
             GoToChatListDataAccessInterface goToChatListDataAccessObject,
             SearchCourseViewModel searchCourseViewModel) {
 
         try {
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
-                    goToPersonalProfileViewModel);
+                    goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject);
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
@@ -60,13 +62,14 @@ public class ToPersonalProfileUseCaseFactory {
     }
     private static GoToPersonalProfileController createGoToPersonalProfileUseCase(
             ViewManagerModel viewManagerModel,
-            GoToPersonalProfileViewModel goToPersonalProfileViewModel) throws IOException {
+            GoToPersonalProfileViewModel goToPersonalProfileViewModel,
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject) throws IOException {
 
         GoToPersonalProfileOutputBoundary personalProfilePresenter =
                 new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
 
         GoToPersonalProfileInputBoundary personalProfileInteractor =
-                new GoToPersonalProfileInteractor(personalProfilePresenter);
+                new GoToPersonalProfileInteractor(personalProfilePresenter, goToPersonalProfileDataAccessObject);
 
         return new GoToPersonalProfileController(personalProfileInteractor);
     }
