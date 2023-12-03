@@ -1,4 +1,5 @@
-package use_case;
+package use_case.go_to_personal_profile;
+
 import entity.ChatChannel;
 import entity.User;
 import interface_adapter.ViewManagerModel;
@@ -6,9 +7,6 @@ import interface_adapter.go_to_personal_profile.GoToPersonalProfilePresenter;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileState;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import org.junit.jupiter.api.Test;
-import use_case.go_to_personal_profile.GoToPersonalProfileInputData;
-import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
-import use_case.go_to_personal_profile.GoToPersonalProfileOutputData;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -16,7 +14,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GoToPersonalProfileTest {
+class GoToPersonalProfileInteractorTest {
     private final User testUser1 = new User("test1", "test1", "test1");
     private final User testUser2 = new User("non-existent", "test1", "test1");
     private final Map<String, User> testMap = new HashMap<>();
@@ -30,15 +28,7 @@ public class GoToPersonalProfileTest {
     private final GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
     private final GoToPersonalProfileOutputData testOutputData = new GoToPersonalProfileOutputData(testUser1);
     @Test
-    void testGoToPersonalProfileInputData(){
-        assertEquals(testUser1, testInputData.getUser());
-    }
-    @Test
-    void testGoToPersonalProfileOutputData(){
-        assertEquals(testUser1, testOutputData.getUser());
-    }
-    @Test
-    void testGoToPersonalProfileInteractorSuccess(){
+    void execute() {
         testState.setUser(testUser1);
         goToPersonalProfileViewModel.setState(testState);
         GoToPersonalProfilePresenter goToPersonalProfilePresenter = new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
@@ -61,8 +51,4 @@ public class GoToPersonalProfileTest {
         }
 
     }
-
-
-
-
 }
