@@ -131,14 +131,18 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         if (hasCourse(courseCode)){
             if (courses.containsKey(courseCode)){
                 Course c = courses.get(courseCode);
-                c.addStudent(user);
-                this.save(c);
+                if (!c.containStudent(user.getUserID())){
+                    c.addStudent(user);
+                    this.save(c);
+                }
             } else {  // in courses.json but not courses
                 JSONObject j = courseFile.getJSONObject(courseCode);
                 loadToCourses(j);
                 Course c = courses.get(courseCode);
-                c.addStudent(user);
-                this.save(c);
+                if (!c.containStudent(user.getUserID())){
+                    c.addStudent(user);
+                    this.save(c);
+                }
             }
         } else { //initalize course
             List<String> s = new ArrayList<>();
@@ -152,14 +156,18 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         if (hasCourse(courseCode)) {
             if (courses.containsKey(courseCode)) {
                 Course c = courses.get(courseCode);
-                c.addTutor(user);
-                this.save(c);
+                if (!c.containTutor(user.getUserID())){
+                    c.addTutor(user);
+                    this.save(c);
+                }
             } else {  // in courses.json but not courses
                 JSONObject j = courseFile.getJSONObject(courseCode);
                 loadToCourses(j);
                 Course c = courses.get(courseCode);
-                c.addTutor(user);
-                this.save(c);
+                if (!c.containTutor(user.getUserID())){
+                    c.addTutor(user);
+                    this.save(c);
+                }
             }
         } else { //initalize course
             List<String> s = new ArrayList<>();
