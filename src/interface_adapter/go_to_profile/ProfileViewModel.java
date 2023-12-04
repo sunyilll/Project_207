@@ -15,7 +15,7 @@ public abstract class ProfileViewModel extends ViewModel {
     public static final String TUTOR_TITLE_LABLE = "TUTOR INFORMATION";
     public static final String TUTOR_RATING_LABEL = "Tutor Rating";
     public static final String COURSES_TO_TEACH_LABEL = "Courses to Teach";
-    public static final String TUTOR_AVAILABILITY_LABEL = "TuTor Availability";
+    public static final String TUTOR_AVAILABILITY_LABEL = "Tutor Availability";
     public static final String EXPECTED_WAGE_LABEL = "Expected Hourly Payment";
 
     public static final String STUDENT_TITLE_LABLE = "STUDENT INFORMATION";
@@ -46,7 +46,7 @@ public abstract class ProfileViewModel extends ViewModel {
             sb.append(s);
             sb.append(", ");
         }
-        return sb.toString();
+        return removeLastChar(sb);
     }
     protected static String mapToString(Map<String, Integer> map) {
         StringBuilder sb = new StringBuilder();
@@ -56,7 +56,14 @@ public abstract class ProfileViewModel extends ViewModel {
             sb.append(entry.getValue());
             sb.append(", ");
         }
-        return sb.toString();
+        return removeLastChar(sb);
+    }
+    private static String removeLastChar(StringBuilder sb) {
+        String str = sb.toString().trim();
+        if (!str.isEmpty() && str.charAt(str.length() - 1) == ',') {
+            str = str.substring(0, str.length() - 1);
+        }
+        return str;
     }
 
 }
