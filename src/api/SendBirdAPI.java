@@ -35,11 +35,11 @@ public class SendBirdAPI {
 
     }
 
-    public void setUser(String user_id, String nickname, String profile_url, boolean issue_access_token) {
+    public void setUser(String user_id, String nickname) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \"test\",\n\"nickname\": \"test\",\n\"profile_url\": \"\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \""+user_id+"\",\n\"nickname\": \"" + nickname + "\",\n\"profile_url\": \"\"}");
         Request request = new Request.Builder()
                 .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/users")
                 .method("POST", body)
@@ -259,4 +259,41 @@ public class SendBirdAPI {
             throw new RuntimeException(e);
         }
     }
+
+    public String createChatChannel(String userID1, String userID2) { //creates chat channel and returns channel url
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"user_ids\": [\"" + userID1 + "\", \"" + userID2 + "\"]}");
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels")
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println(response);
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
+
+
+            if (responseBody.has("name")) {
+                System.out.println("successful");
+                return responseBody.getString("channel_url");
+
+            } else {
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+
+
+
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

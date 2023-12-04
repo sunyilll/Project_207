@@ -1,5 +1,6 @@
 package entity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Course {
@@ -32,6 +33,14 @@ public class Course {
         List<String> lst = new ArrayList<>();
         for (Student s: students){lst.add(s.getUserID());}
         return lst;
+    }
+    public boolean containTutor(String id){
+        List<String> lst = this.getTutorsIds();
+        return lst.contains(id);
+    }
+    public boolean containStudent(String id){
+        List<String> lst = this.getStudentsIds();
+        return lst.contains(id);
     }
     public String getCourseName() {return courseName;}
 }

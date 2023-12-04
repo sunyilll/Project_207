@@ -2,16 +2,20 @@ package use_case.save_profile;
 
 import entity.User;
 import entity.UserBuilder;
+import use_case.add_course_to_profile.AddCourseToProfileDataAccessInterface;
 
 public class SaveProfileInteractor implements SaveProfileInputBoundary {
     final private SaveProfileOutputBoundary presenter;
     final private SaveProfileDataAccessInterface dataAccessObject;
     final private UserBuilder userBuilder = new UserBuilder();
+    final private AddCourseToProfileDataAccessInterface courseDataAccessObject;
 
     public SaveProfileInteractor(SaveProfileOutputBoundary presenter,
-                                 SaveProfileDataAccessInterface dataAccessObject) {
+                                 SaveProfileDataAccessInterface dataAccessObject,
+                                 AddCourseToProfileDataAccessInterface courseDataAccessObject) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
+        this.courseDataAccessObject = courseDataAccessObject;
     }
     @Override
     public void execute(SaveProfileInputData inputData) {
@@ -29,9 +33,13 @@ public class SaveProfileInteractor implements SaveProfileInputBoundary {
         }
         for (String course : inputData.getCoursesToTeach()) {
             userBuilder.addCoursesToTeach(course);
+            // update Course DAO
+            courseDataAccessObject.addTutor(user, course);
         }
         for (String course : inputData.getCoursesToLearn()) {
             userBuilder.addCoursesToLearn(course);
+            // update Course DAO
+            courseDataAccessObject.addStudent(user, course);
         }
         for (String mode : inputData.getPreferredModeOfTeaching()) {
             userBuilder.addPreferredModeOfTeaching(mode);

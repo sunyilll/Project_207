@@ -7,8 +7,7 @@ public class GoToPublicProfileInteractor implements GoToPublicProfileInputBounda
     final private GoToPublicProfileOutputBoundary presenter;
     final private GoToPublicProfileDataAccessInterface dataAccessObject;
 
-    public GoToPublicProfileInteractor(GoToPublicProfileInputData inputData,
-                                       GoToPublicProfileOutputBoundary presenter,
+    public GoToPublicProfileInteractor(GoToPublicProfileOutputBoundary presenter,
                                        GoToPublicProfileDataAccessInterface dataAccessObject) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;

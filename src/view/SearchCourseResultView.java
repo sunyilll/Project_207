@@ -5,6 +5,7 @@ import interface_adapter.go_to_chat_list.GoToChatListController;
 import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import interface_adapter.go_to_public_profile.GoToPublicProfileController;
 import interface_adapter.go_to_search.GoToSearchController;
 import interface_adapter.search_course_result.SearchCourseResultState;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
@@ -43,7 +44,8 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
                                   GoToChatListViewModel goToChatListViewModel,
                                   GoToPersonalProfileController goToPersonalProfileController,
                                   GoToPersonalProfileViewModel goToPersonalProfileViewModel,
-                                  AddCourseToProfileController addCourseToProfileController
+                                  AddCourseToProfileController addCourseToProfileController,
+                                  GoToPublicProfileController goToPublicProfileController
                                   ){
         homeBar = new HomeBar(goToPersonalProfileViewModel, goToPersonalProfileController, goToChatListViewModel,
                 goToChatListController, goToSearchController);
@@ -53,7 +55,6 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
         this.searchCourseResultViewModel = searchCourseResultViewModel;
         this.searchCourseResultViewModel.addPropertyChangeListener(this);
         SearchCourseResultState s = searchCourseResultViewModel.getState();
-        // todo: updateUserInfo(s.getResultUsers(), s.getResultUserTags());
         this.viewName = searchCourseResultViewModel.getViewName();
 
         ListCellRenderer renderer = new UserListCellRenderer();
@@ -85,15 +86,17 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(listUsers.getSelectedValue());
-            }});
+                UserInfo a = (UserInfo) listUsers.getSelectedValue();
+                goToPublicProfileController.execute(a.id);
+            }
+        });
 
     }
+
     public void updateJListUsers(List<String> sortedIds, Map<String, Map<String, String>> resultUsers, Map<String, List<String>> resultUserTags){
-        //todo: initListView();
         DefaultListModel<UserInfo> model = new DefaultListModel<UserInfo>();
         for (String id: sortedIds){
-            UserInfo userInfo = new UserInfo(resultUsers.get(id), resultUserTags.get(id));
+            UserInfo userInfo = new UserInfo(resultUsers.get(id), resultUserTags.get(id), id);
             model.addElement(userInfo);
         }
         listUsers.setModel(model);
@@ -205,10 +208,12 @@ public class SearchCourseResultView extends JPanel implements PropertyChangeList
         String name;
         String rating;
         String profileURL = "src/view/other_icons/default_profilePhoto.png";  // default profile picture
+        String id;
         List<String> tags;
 
-        UserInfo(Map<String, String> infos, List<String> tags){
+        UserInfo(Map<String, String> infos, List<String> tags, String id){
             this.name = infos.get("name");
+            this.id = id;
             this.rating = infos.get("rating");
             if (infos.get("profileURL") != null){
                 this.profileURL = infos.get("profileURL");

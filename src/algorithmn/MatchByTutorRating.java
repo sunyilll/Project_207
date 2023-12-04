@@ -3,10 +3,7 @@ package algorithmn;
 import entity.Tutor;
 import entity.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MatchByTutorRating implements MatchTutorAlgorithm{
     public MatchByTutorRating(){}
@@ -18,7 +15,7 @@ public class MatchByTutorRating implements MatchTutorAlgorithm{
             map.put((User) t, t.getTutorRating());
         }
         List<Map.Entry<User, Float>> list = new ArrayList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue());
+        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
         return list;
     }
 }

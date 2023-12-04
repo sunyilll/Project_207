@@ -25,10 +25,10 @@ import view.PersonalProfileView;
 import javax.swing.*;
 import java.io.IOException;
 
-public class ToPersonalProfileUseCaseFactory {
+public class PersonalProfileUseCaseFactory {
 
     /* Prevent instantiation. */
-    private ToPersonalProfileUseCaseFactory() {}
+    private PersonalProfileUseCaseFactory() {}
 
     public static PersonalProfileView create(
             ViewManagerModel viewManagerModel,

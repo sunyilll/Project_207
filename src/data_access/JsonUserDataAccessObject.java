@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import use_case.GetUserDataAccessInterface;
 import use_case.edit_profile.EditProfileDataAccessInterface;
+import use_case.go_to_channel.GoToChannelDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_public_profile.GoToPublicProfileDataAccessInterface;
@@ -18,6 +19,7 @@ import use_case.save_profile.SaveProfileDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
+import java.nio.channels.Channel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
         GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface,
         GoToPublicProfileDataAccessInterface, EditProfileDataAccessInterface,
         SaveProfileDataAccessInterface,
-        GoToChatListDataAccessInterface {
+        GoToChatListDataAccessInterface, GoToChannelDataAccessInterface {
     String file_path;
     String current_userid;
     JSONObject userFile = new JSONObject();
@@ -187,9 +189,21 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
             throw new RuntimeException(e);
         }
     }
+    public void createUserinAPI(String userID, String nickname) {
+        SendBirdAPI sendBirdAPIObject = new SendBirdAPI("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
+                "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5",
+                "0ecfef313ab2989479b70e30e3ee37a1d105b770");
+        try {
+            sendBirdAPIObject.setUser(userID, nickname);
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        }
+    }
 
     @Override
     public void save(User user) {
+        users.put(user.getUserID(), user);
+
         JSONObject userJson = new JSONObject();
         userJson.put("nickname", user.getNickname());
         userJson.put("password", user.getPassword());
@@ -225,6 +239,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
 
         userFile.put(user.getUserID(), userJson);
         this.save();
+        this.createUserinAPI(user.getUserID(), user.getNickname());
     }
 
     @Override
@@ -251,5 +266,10 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public Channel getChannel(String currentUserid, String targetUserid) {
+        return null;
     }
 }

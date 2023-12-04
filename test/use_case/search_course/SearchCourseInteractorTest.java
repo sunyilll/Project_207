@@ -58,6 +58,16 @@ public class SearchCourseInteractorTest {
                 if (userid == "yanxi6") {return user1;}
                 return null;
             }
+
+            @Override
+            public User getCurrentUser() {
+                return null;
+            }
+
+            @Override
+            public void save(User user) {
+
+            }
         };
         matchTutorAlgorithm = new MatchTutorAlgorithm() {
             @Override
