@@ -272,7 +272,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
                 "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5",
                 "0ecfef313ab2989479b70e30e3ee37a1d105b770");
         try {
-            ArrayList<ChatChannel> channels = sendBirdAPIObject.getAllChatChannels(user1+"%C2"+user2);
+            ArrayList<ChatChannel> channels = sendBirdAPIObject.getAllChatChannels(user1+"%2C"+user2);
             if (channels == null || channels.isEmpty()) {
                 String channelUrl = sendBirdAPIObject.createChatChannel(user1, user2);
                 return channelUrl;
