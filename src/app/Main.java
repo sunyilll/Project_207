@@ -137,7 +137,7 @@ public class Main {
         views.add(personalProfileView, personalProfileView.viewName);
 
         PublicProfileView publicProfileView = PublicProfileUseCaseFactory.create(viewManagerModel,
-                goToPublicProfileViewModel, goToChannelViewModel, jsonUserDataAccessObject);
+                goToPublicProfileViewModel, goToChannelViewModel, jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(publicProfileView, publicProfileView.viewName);
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, goToChannelViewModel);
