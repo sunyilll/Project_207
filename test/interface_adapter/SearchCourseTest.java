@@ -310,6 +310,16 @@ class SearchCourseTest {
             }
             return null;
         }
+
+        @Override
+        public User getCurrentUser() {
+            return null;
+        }
+
+        @Override
+        public void save(User user) {
+
+        }
     }
 
     public class MockMatchTutorAlgorithm implements MatchTutorAlgorithm {

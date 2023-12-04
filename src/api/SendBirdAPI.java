@@ -35,11 +35,11 @@ public class SendBirdAPI {
 
     }
 
-    public void setUser(String user_id, String nickname, String profile_url, boolean issue_access_token) {
+    public void setUser(String user_id, String nickname) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \"test\",\n\"nickname\": \"test\",\n\"profile_url\": \"\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"user_id\": \""+user_id+"\",\n\"nickname\": \"" + nickname + "\",\n\"profile_url\": \"\"}");
         Request request = new Request.Builder()
                 .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/users")
                 .method("POST", body)
