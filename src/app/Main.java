@@ -129,7 +129,7 @@ public class Main {
         views.add(searchCourseView, searchCourseView.viewName);
 
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
-                searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, jsonCourseDataAccessObject, jsonUserDataAccessObject);
+                searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, jsonCourseDataAccessObject, jsonUserDataAccessObject, goToPublicProfileViewModel, jsonUserDataAccessObject);
         views.add(searchCourseResultView, searchCourseResultView.viewName);
 
         PersonalProfileView personalProfileView = PersonalProfileUseCaseFactory.create(viewManagerModel,

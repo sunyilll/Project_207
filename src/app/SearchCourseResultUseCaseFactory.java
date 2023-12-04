@@ -9,6 +9,9 @@ import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfilePresenter;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import interface_adapter.go_to_public_profile.GoToPublicProfileController;
+import interface_adapter.go_to_public_profile.GoToPublicProfilePresenter;
+import interface_adapter.go_to_public_profile.GoToPublicProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
 import interface_adapter.go_to_search.GoToSearchPresenter;
 import interface_adapter.search_course.SearchCourseViewModel;
@@ -26,6 +29,10 @@ import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
 import use_case.go_to_personal_profile.GoToPersonalProfileOutputBoundary;
+import use_case.go_to_public_profile.GoToPublicProfileDataAccessInterface;
+import use_case.go_to_public_profile.GoToPublicProfileInputBoundary;
+import use_case.go_to_public_profile.GoToPublicProfileInteractor;
+import use_case.go_to_public_profile.GoToPublicProfileOutputBoundary;
 import use_case.go_to_search.GoToSearchInputBoundary;
 import use_case.go_to_search.GoToSearchInteractor;
 import view.SearchCourseResultView;
@@ -44,7 +51,9 @@ public class SearchCourseResultUseCaseFactory {
             GoToChatListViewModel goToChatListViewModel,
             GoToChatListDataAccessInterface goToChatListDataAccessObject,
             AddCourseToProfileDataAccessInterface addCourseToProfileDAI,
-            GetUserDataAccessInterface getUserDAI
+            GetUserDataAccessInterface getUserDAI,
+            GoToPublicProfileViewModel goToPublicProfileViewModel,
+            GoToPublicProfileDataAccessInterface goToPublicProfileDataAccessInterface
     ){
         try{
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
@@ -54,8 +63,9 @@ public class SearchCourseResultUseCaseFactory {
                     goToChatListViewModel, goToChatListDataAccessObject);
             AddCourseToProfileController addCourseToProfileController = createAddCourseProfileController(searchCourseResultViewModel,
                     addCourseToProfileDAI, getUserDAI);
-            return new SearchCourseResultView(searchCourseResultViewModel, goToSearchController, goToChatListController,
-                    goToChatListViewModel, goToPersonalProfileController, goToPersonalProfileViewModel, addCourseToProfileController);
+            GoToPublicProfileController goToPublicProfileController = createGoToPublicProfileController(goToPublicProfileViewModel, viewManagerModel, goToPublicProfileDataAccessInterface);
+            return new SearchCourseResultView(searchCourseResultViewModel, goToSearchController, goToChatListController, goToChatListViewModel,
+                    goToPersonalProfileController, goToPersonalProfileViewModel, addCourseToProfileController, goToPublicProfileController);
         } catch (IOException e){
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -108,5 +118,14 @@ public class SearchCourseResultUseCaseFactory {
         AddCourseToProfileInputBoundary interator = new AddCourseToProfileInteractor(addCourseToProfileDataAccessInterface,
                 getUserDataAccessInterface, presenter);
         return new AddCourseToProfileController(interator);
+    }
+    private static GoToPublicProfileController createGoToPublicProfileController(
+            GoToPublicProfileViewModel goToPublicProfileViewModel,
+            ViewManagerModel viewManagerModel,
+            GoToPublicProfileDataAccessInterface dao
+    ){
+        GoToPublicProfileOutputBoundary presenter = new GoToPublicProfilePresenter(goToPublicProfileViewModel, viewManagerModel);
+        GoToPublicProfileInputBoundary interactor = new GoToPublicProfileInteractor(presenter, dao);
+        return new GoToPublicProfileController(interactor);
     }
 }
