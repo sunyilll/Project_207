@@ -75,7 +75,7 @@ public class SendBirdAPI {
         JSONObject requestBody = new JSONObject();
         RequestBody body = RequestBody.create(mediaType, requestBody.toString());
         Request request = new Request.Builder()
-                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/users/test")
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/users/" + user_id)
                 .get()
                 .addHeader("Api-Token", API_TOKEN)
                 .addHeader("Content-Type", "application/json")
