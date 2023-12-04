@@ -31,7 +31,9 @@ class GoToPersonalProfileInteractorTest {
         try {
             goToPersonalProfileViewModel.setState(testState);
             GoToPersonalProfilePresenter goToPersonalProfilePresenter = new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
-            GoToPersonalProfileInteractor testInteractor = new GoToPersonalProfileInteractor(goToPersonalProfilePresenter, new JsonUserDataAccessObject("data/users.json"));
+            JsonUserDataAccessObject jsonUserDataAccessObject = new JsonUserDataAccessObject("./users.json");
+            jsonUserDataAccessObject.saveCurrentUser(testUser2.getUserID());
+            GoToPersonalProfileInteractor testInteractor = new GoToPersonalProfileInteractor(goToPersonalProfilePresenter, jsonUserDataAccessObject);
             testInteractor.execute();
         } catch (NullPointerException e){
             fail();

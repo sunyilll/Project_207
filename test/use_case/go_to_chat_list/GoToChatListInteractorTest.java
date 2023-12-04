@@ -27,17 +27,20 @@ class GoToChatListInteractorTest {
     private final GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
     private final GoToChatListState testState = new GoToChatListState();
     private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>(), testUser1);
-    private final GoToChatListDataAccessInterface goToChatListDataAccessObject = new JsonUserDataAccessObject("data/users.json");
+    private final JsonUserDataAccessObject goToChatListDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
 
     @Test
     void execute() {
-//        User testUser1 = new User("test1", "test1", "test1");
-//        goToChatListViewModel.setState(testState);
-//        GoToChatListPresenter goToChatListPresenter = new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
-//        GoToChatListInteractor testInteractor = new GoToChatListInteractor(new JsonUserDataAccessObject("data/users.json"), goToChatListPresenter);
-//        testInteractor.execute();
-//        assertTrue(goToChatListViewModel.getState().getSuccess());
+        User testUser1 = new User("test2", "test2", "test2");
+        testState.setUser(testUser1);
+        goToChatListViewModel.setState(testState);
+        goToChatListDataAccessObject.saveCurrentUser(testUser1.getUserID());
+
+        GoToChatListPresenter goToChatListPresenter = new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
+        GoToChatListInteractor testInteractor = new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
+        testInteractor.execute();
+        assertTrue(goToChatListViewModel.getState().getSuccess());
 
 
 
