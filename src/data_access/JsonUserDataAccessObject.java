@@ -190,6 +190,8 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public void save(User user) {
+        users.put(user.getUserID(), user);
+
         JSONObject userJson = new JSONObject();
         userJson.put("nickname", user.getNickname());
         userJson.put("password", user.getPassword());

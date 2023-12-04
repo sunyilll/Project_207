@@ -125,6 +125,4 @@ public class GoToPersonalProfileState {
     public void setPreferredModeOfLearning(List<String> preferredModeOfLearning) {
         this.preferredModeOfLearning = preferredModeOfLearning;
     }
-
-    // TODO: Remove these
 }

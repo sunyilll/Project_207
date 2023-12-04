@@ -1,45 +1,24 @@
 package interface_adapter.go_to_personal_profile;
 
 import interface_adapter.ViewModel;
+import interface_adapter.go_to_profile.ProfileViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class GoToPersonalProfileViewModel extends ViewModel {
+public class GoToPersonalProfileViewModel extends ProfileViewModel {
     private GoToPersonalProfileState state = new GoToPersonalProfileState();
 
-    public static final String DESCRIPTION_LABEL = "About Me";
-    public static final String PERSONALITY_TAGS_LABEL = "Personality Tags";
-    public static final String COURSES_TO_TEACH_LABEL = "Courses to Teach";
-    public static final String TUTOR_RATING_LABEL = "Tutor Rating";
-    public static final String COURSES_TO_LEARN_LABEL = "Courses to Learn";
-    public static final String STUDENT_RATING_LABEL = "Student Rating";
     public static final String EDIT_PROFILE_BUTTON_LABEL = "Edit Profile";
     public static final String SIGN_OUT_BUTTON_LABEL = "Sign Out";
-    public final String HOME_BUTTON_LABEL = "Home";
-    public final String CHAT_LIST_BUTTON_LABEL = "Chat";
-    public final String PRIVATE_PROFILE_BUTTON_LABEL = "My Profile";
 
-    public String nicknameText = "NICKNAME";
-    public String descriptionText = "HELLO WORLD!";
-    public String pronounsText = "";
-    public String personalityTagsText = "";
-    public String coursesToTeachText = "None";
-    public String tutorRatingText = "N/A";
-    public String coursesToLearnText = "None";
-    public String studentRatingText = "N/A";
 
     public static final String viewName = "personal profile";
-
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public GoToPersonalProfileViewModel() {
         super(viewName);
     }
-
-    public String getViewName() {
-        return viewName;
-    }
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     @Override
     public void firePropertyChanged() {
@@ -51,6 +30,10 @@ public class GoToPersonalProfileViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
+    public String getViewName() {
+        return viewName;
+    }
+
     public GoToPersonalProfileState getState() {
         return state;
     }
@@ -60,13 +43,18 @@ public class GoToPersonalProfileViewModel extends ViewModel {
         if (state.getUserid() == null) {
             return;
         }
+        useridText = state.getUserid();
         nicknameText = state.getNickname();
         descriptionText = state.getDescription();
         pronounsText = state.getPronouns();
-        personalityTagsText = state.getPersonalityTags().toString();
-        coursesToTeachText = state.getCoursesToTeach().toString();
-        tutorRatingText = String.valueOf(state.getTutorRating());
-        coursesToLearnText = state.getCoursesToLearn().toString();
-        studentRatingText = String.valueOf(state.getStudentRating());
+        personalityTagsText = listToString(state.getPersonalityTags());
+        coursesToTeachText = listToString(state.getCoursesToTeach());
+        tutorRatingText = Float.toString(state.getTutorRating());
+        tutorAvailabilityText = state.getTutorAvailability();
+        expectedWageText = mapToString(state.getExpectedWage());
+        coursesToLearnText = listToString(state.getCoursesToLearn());
+        studentRatingText = Float.toString(state.getStudentRating());
+        expectedPriceText = mapToString(state.getExpectedPrice());
     }
+
 }

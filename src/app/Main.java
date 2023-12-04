@@ -148,7 +148,6 @@ public class Main {
         // This is for testing purposes. Please change the View name to the one you want to test.
 //        viewManagerModel.setActiveView(homeBar.viewName);
         viewManagerModel.setActiveView(loginView.viewName);
-
         viewManagerModel.firePropertyChanged();
 
         application.setVisible(true);
