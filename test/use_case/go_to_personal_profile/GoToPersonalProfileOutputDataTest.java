@@ -25,5 +25,7 @@ class GoToPersonalProfileOutputDataTest {
         assertEquals(0, testOutputData.getCoursesToLearn().size());
         assertEquals(0, testOutputData.getExpectedPrice().size());
         assertEquals(0, testOutputData.getPreferredModeOfLearning().size());
+
+
     }
 }

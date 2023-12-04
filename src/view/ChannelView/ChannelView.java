@@ -250,6 +250,15 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
             JOptionPane.showMessageDialog(this, sendMessageState.getErrorMessage());
         }
     }
+    public JButton getBackButton(){
+        return back;
+    }
+    public JButton getRefreshButton(){
+        return refresh;
+    }
+    public JButton getSendButton(){
+        return send;
+    }
 
 
 }
