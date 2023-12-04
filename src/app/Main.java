@@ -8,8 +8,8 @@ import data_access.*;
 import entity.*;
 import interface_adapter.go_to_channel.GoToChannelState;
 import interface_adapter.go_to_channel.GoToChannelViewModel;
-import interface_adapter.go_to_chatl_list.GoToChatListState;
-import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import interface_adapter.go_to_chat_list.GoToChatListState;
+import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.refresh_chat_page.RefreshChatPageState;
 import interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
@@ -28,7 +28,6 @@ import view.ChatListView.ChatListView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;

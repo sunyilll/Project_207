@@ -1,12 +1,11 @@
 package view;
 
 import interface_adapter.add_course_to_profile.AddCourseToProfileController;
-import interface_adapter.go_to_chatl_list.GoToChatListController;
-import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import interface_adapter.go_to_chat_list.GoToChatListController;
+import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
-import interface_adapter.search_course.SearchCourseState;
 import interface_adapter.search_course_result.SearchCourseResultState;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
 
