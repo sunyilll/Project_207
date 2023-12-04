@@ -18,7 +18,7 @@ public class SaveProfileInputData {
     private Map<String, Integer> expectedPrice = new HashMap<>();
     private List<String> preferredModeOfLearning = new ArrayList<>();
 
-    public SaveProfileInputData(String userid, String nickname, String pronouns, List<String> personalityTags, String description, List<String> coursesToTeach, String tutorAvailability, Map<String, Integer> expectedWage, List<String> preferredModeOfTeaching, List<String> coursesToLearn, Map<String, Integer> expectedPrice, List<String> preferredModeOfLearning) {
+    public SaveProfileInputData(String nickname, String pronouns, List<String> personalityTags, String description, List<String> coursesToTeach, String tutorAvailability, Map<String, Integer> expectedWage, List<String> preferredModeOfTeaching, List<String> coursesToLearn, Map<String, Integer> expectedPrice, List<String> preferredModeOfLearning) {
         this.nickname = nickname;
         this.pronouns = pronouns;
         this.personalityTags = personalityTags;

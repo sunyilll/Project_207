@@ -1,5 +1,8 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.edit_profile.EditProfileController;
+import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.go_to_chat_list.GoToChatListController;
 import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
@@ -17,6 +20,7 @@ import java.beans.PropertyChangeListener;
 public class PersonalProfileView extends ProfileView implements ActionListener, PropertyChangeListener {
     public static final String viewName = "personal profile";
     private final GoToPersonalProfileViewModel goToPersonalProfileViewModel;
+    private final ViewManagerModel viewManagerModel;
     private final JPanel homeBar;
     private final JButton editProfile;
     private final JButton signOut;
@@ -25,10 +29,14 @@ public class PersonalProfileView extends ProfileView implements ActionListener, 
                                GoToPersonalProfileController personalProfileController,
                                GoToChatListViewModel goToChatListViewModel,
                                GoToChatListController goToChatListController,
-                               GoToSearchController goToSearchController) {
+                               GoToSearchController goToSearchController,
+                               EditProfileViewModel editProfileViewModel,
+                               EditProfileController editProfileController,
+                               ViewManagerModel viewManagerModel) {
         super(goToPersonalProfileViewModel);
 
         this.goToPersonalProfileViewModel = goToPersonalProfileViewModel;
+        this.viewManagerModel = viewManagerModel;
         goToChatListViewModel.addPropertyChangeListener(this);
         goToPersonalProfileViewModel.addPropertyChangeListener(this);
 
@@ -46,6 +54,18 @@ public class PersonalProfileView extends ProfileView implements ActionListener, 
         this.setLayout(new BorderLayout());
         this.add(homeBar, BorderLayout.SOUTH);
         this.add(mainPanel, BorderLayout.CENTER);
+
+        editProfile.addActionListener(
+            // This creates an anonymous subclass of ActionListener and instantiates it.
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    editProfileController.execute();
+                    viewManagerModel.setActiveView(editProfileViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+
+            }
+        );
     }
 
     @Override

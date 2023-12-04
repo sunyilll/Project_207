@@ -6,6 +6,7 @@ import algorithmn.MatchStudentAlgorithm;
 import algorithmn.MatchTutorAlgorithm;
 import data_access.*;
 import entity.*;
+import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.go_to_channel.GoToChannelState;
 import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_chat_list.GoToChatListState;
@@ -14,6 +15,7 @@ import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.go_to_public_profile.GoToPublicProfileViewModel;
 import interface_adapter.refresh_chat_page.RefreshChatPageState;
 import interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
+import interface_adapter.save_profile.SaveProfileViewModel;
 import interface_adapter.search_course.SearchCourseViewModel;
 import interface_adapter.search_course_result.SearchCourseResultViewModel;
 import interface_adapter.send_message.SendMessageState;
@@ -82,6 +84,8 @@ public class Main {
         SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
         GoToPublicProfileViewModel goToPublicProfileViewModel = new GoToPublicProfileViewModel();
+        EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
+        SaveProfileViewModel saveProfileViewModel = new SaveProfileViewModel();
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
@@ -133,12 +137,15 @@ public class Main {
         views.add(searchCourseResultView, searchCourseResultView.viewName);
 
         PersonalProfileView personalProfileView = PersonalProfileUseCaseFactory.create(viewManagerModel,
-                goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, searchCourseViewModel);
+                goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, searchCourseViewModel, editProfileViewModel, jsonUserDataAccessObject);
         views.add(personalProfileView, personalProfileView.viewName);
 
         PublicProfileView publicProfileView = PublicProfileUseCaseFactory.create(viewManagerModel,
                 goToPublicProfileViewModel, goToChannelViewModel, jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(publicProfileView, publicProfileView.viewName);
+
+        ProfileEditView profileEditView = EditProfileUseCaseFactory.create(viewManagerModel, editProfileViewModel, saveProfileViewModel, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject);
+        views.add(profileEditView, profileEditView.viewName);
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, goToChannelViewModel);
         views.add(channelView, channelView.viewName);

@@ -1,6 +1,9 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.edit_profile.EditProfileController;
+import interface_adapter.edit_profile.EditProfilePresenter;
+import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.go_to_chat_list.GoToChatListController;
 import interface_adapter.go_to_chat_list.GoToChatListPresenter;
 import interface_adapter.go_to_chat_list.GoToChatListViewModel;
@@ -10,6 +13,10 @@ import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
 import interface_adapter.go_to_search.GoToSearchPresenter;
 import interface_adapter.search_course.SearchCourseViewModel;
+import use_case.edit_profile.EditProfileDataAccessInterface;
+import use_case.edit_profile.EditProfileInputBoundary;
+import use_case.edit_profile.EditProfileInteractor;
+import use_case.edit_profile.EditProfileOutputBoundary;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListInputBoundary;
 import use_case.go_to_chat_list.GoToChatListInteractor;
@@ -36,7 +43,10 @@ public class PersonalProfileUseCaseFactory {
             GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
             GoToChatListViewModel goToChatListViewModel,
             GoToChatListDataAccessInterface goToChatListDataAccessObject,
-            SearchCourseViewModel searchCourseViewModel) {
+            SearchCourseViewModel searchCourseViewModel,
+            EditProfileViewModel editProfileViewModel,
+            EditProfileDataAccessInterface editProfileDataAccessObject
+            ) {
 
         try {
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
@@ -44,8 +54,9 @@ public class PersonalProfileUseCaseFactory {
             GoToChatListController goToChatListController = createGoToChatListUseCase(viewManagerModel,
                     goToChatListViewModel, goToChatListDataAccessObject);
             GoToSearchController goToSearchController = createGoToSearchUseCase(viewManagerModel, searchCourseViewModel);
+            EditProfileController editProfileController = createEditProfileUseCase(viewManagerModel, editProfileViewModel, editProfileDataAccessObject);
             return new PersonalProfileView(goToPersonalProfileViewModel, goToPersonalProfileController,
-                    goToChatListViewModel, goToChatListController, goToSearchController);
+                    goToChatListViewModel, goToChatListController, goToSearchController, editProfileViewModel, editProfileController, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -86,5 +97,19 @@ public class PersonalProfileUseCaseFactory {
                 new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
 
         return new GoToChatListController(goToChatListInteractor);
+    }
+
+    private static EditProfileController createEditProfileUseCase(
+            ViewManagerModel viewManagerModel,
+            EditProfileViewModel editProfileViewModel,
+            EditProfileDataAccessInterface editProfileDataAccessObject) throws IOException {
+
+        EditProfileOutputBoundary editProfilePresenter =
+                new EditProfilePresenter(editProfileViewModel, viewManagerModel);
+
+        EditProfileInputBoundary editProfileInteractor =
+                new EditProfileInteractor(editProfilePresenter, editProfileDataAccessObject);
+
+        return new EditProfileController(editProfileInteractor);
     }
 }
