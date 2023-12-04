@@ -9,9 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import use_case.GetUserDataAccessInterface;
+import use_case.edit_profile.EditProfileDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
+import use_case.go_to_public_profile.GoToPublicProfileDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.save_profile.SaveProfileDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
@@ -21,8 +24,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface, GoToChatListDataAccessInterface {
+public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
+        LoginUserDataAccessInterface,
+        GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface,
+        GoToPublicProfileDataAccessInterface, EditProfileDataAccessInterface,
+        SaveProfileDataAccessInterface,
+        GoToChatListDataAccessInterface {
     String file_path;
     String current_userid;
     JSONObject userFile = new JSONObject();
