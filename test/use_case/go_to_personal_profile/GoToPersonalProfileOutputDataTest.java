@@ -11,6 +11,19 @@ class GoToPersonalProfileOutputDataTest {
 
     @Test
     void getUser() {
-        assertEquals(testUser1, testOutputData.getUser());
+        assertEquals("test1", testOutputData.getUserid());
+        assertEquals("test1", testOutputData.getNickname());
+        assertNull(testOutputData.getPronouns());
+        assertEquals(0, testOutputData.getPersonalityTags().size());
+        assertNull(testOutputData.getDescription());
+        assertEquals(0, testOutputData.getTutorRating());
+        assertEquals(0, testOutputData.getCoursesToTeach().size());
+        assertNull(testOutputData.getTutorAvailability());
+        assertEquals(0, testOutputData.getExpectedWage().size());
+        assertEquals(0, testOutputData.getPreferredModeOfTeaching().size());
+        assertEquals(0, testOutputData.getStudentRating());
+        assertEquals(0, testOutputData.getCoursesToLearn().size());
+        assertEquals(0, testOutputData.getExpectedPrice().size());
+        assertEquals(0, testOutputData.getPreferredModeOfLearning().size());
     }
 }

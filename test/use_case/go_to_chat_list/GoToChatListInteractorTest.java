@@ -1,6 +1,5 @@
 package use_case.go_to_chat_list;
 
-import data_access.GoToChatListDataAccessObject;
 import data_access.JsonUserDataAccessObject;
 import entity.ChatChannel;
 import entity.User;
@@ -28,7 +27,7 @@ class GoToChatListInteractorTest {
     private final GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
     private final GoToChatListState testState = new GoToChatListState(testUser1, new ArrayList<>());
     private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>(), testUser1);
-    private final GoToChatListDataAccessInterface goToChatListDataAccessObject = new JsonUserDataAccessObject()
+    private final GoToChatListDataAccessInterface goToChatListDataAccessObject = new JsonUserDataAccessObject("data/users.json");
 
 
     @Test
@@ -36,11 +35,11 @@ class GoToChatListInteractorTest {
         goToChatListViewModel.setState(testState);
         GoToChatListPresenter goToChatListPresenter = new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
         GoToChatListInteractor testInteractor = new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
-        testInteractor.execute(testInputData);
+        testInteractor.execute();
         assertTrue(goToChatListViewModel.getState().getSuccess());
 
         goToChatListViewModel.setState(testState);
-        testInteractor.execute(badTestInputData);
+        testInteractor.execute();
         assertFalse(goToChatListViewModel.getState().getSuccess());
 
     }
