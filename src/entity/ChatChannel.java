@@ -24,6 +24,11 @@ public class ChatChannel {
     public String getChannelURL(){
         return channelURL;
     }
+
+    public void setChannelURL(String channelURL) {
+        this.channelURL = channelURL;
+    }
+
     public Map<String, User> getMembers(){
         return members;
     }
