@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import use_case.GetUserDataAccessInterface;
 import use_case.edit_profile.EditProfileDataAccessInterface;
+import use_case.go_to_channel.GoToChannelDataAccessInterface;
 import use_case.go_to_chat_list.GoToChatListDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_public_profile.GoToPublicProfileDataAccessInterface;
@@ -18,6 +19,7 @@ import use_case.save_profile.SaveProfileDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
+import java.nio.channels.Channel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
         GetUserDataAccessInterface, GoToPersonalProfileDataAccessInterface,
         GoToPublicProfileDataAccessInterface, EditProfileDataAccessInterface,
         SaveProfileDataAccessInterface,
-        GoToChatListDataAccessInterface {
+        GoToChatListDataAccessInterface, GoToChannelDataAccessInterface {
     String file_path;
     String current_userid;
     JSONObject userFile = new JSONObject();
@@ -253,5 +255,10 @@ public class JsonUserDataAccessObject implements SignupUserDataAccessInterface,
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public Channel getChannel(String currentUserid, String targetUserid) {
+        return null;
     }
 }

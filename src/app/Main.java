@@ -11,6 +11,7 @@ import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_chat_list.GoToChatListState;
 import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+import interface_adapter.go_to_public_profile.GoToPublicProfileViewModel;
 import interface_adapter.refresh_chat_page.RefreshChatPageState;
 import interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 import interface_adapter.search_course.SearchCourseViewModel;
@@ -80,6 +81,7 @@ public class Main {
         SearchCourseViewModel searchCourseViewModel = new SearchCourseViewModel();
         SearchCourseResultViewModel searchCourseResultViewModel = new SearchCourseResultViewModel();
         GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
+        GoToPublicProfileViewModel goToPublicProfileViewModel = new GoToPublicProfileViewModel();
 
         // FIXME: instantiating a ViewModel shouldn't depend on inputs
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
@@ -129,10 +131,14 @@ public class Main {
         SearchCourseResultView searchCourseResultView = SearchCourseResultUseCaseFactory.create(viewManagerModel, searchCourseViewModel,
                 searchCourseResultViewModel, goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, jsonCourseDataAccessObject, jsonUserDataAccessObject);
         views.add(searchCourseResultView, searchCourseResultView.viewName);
-      
-        PersonalProfileView personalProfileView = ToPersonalProfileUseCaseFactory.create(viewManagerModel,
+
+        PersonalProfileView personalProfileView = PersonalProfileUseCaseFactory.create(viewManagerModel,
                 goToPersonalProfileViewModel, jsonUserDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, searchCourseViewModel);
         views.add(personalProfileView, personalProfileView.viewName);
+
+        PublicProfileView publicProfileView = PublicProfileUseCaseFactory.create(viewManagerModel,
+                goToPublicProfileViewModel, goToChannelViewModel, jsonUserDataAccessObject);
+        views.add(publicProfileView, publicProfileView.viewName);
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, goToChannelViewModel);
         views.add(channelView, channelView.viewName);

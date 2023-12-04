@@ -10,7 +10,8 @@ import java.beans.PropertyChangeSupport;
 public class GoToPublicProfileViewModel extends ProfileViewModel {
     private GoToPublicProfileState state = new GoToPublicProfileState();
 
-    public static final String MESSAGE_BUTTON_LABEL = "Send Message";
+    public static final String MESSAGE_BUTTON_LABEL = "Date!";
+    public static final String BACK_BUTTON_LABEL = "Back";
 
     public static final String viewName = "public profile";
 
@@ -26,7 +27,7 @@ public class GoToPublicProfileViewModel extends ProfileViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("personal profile", null, this.state);
+        support.firePropertyChange("public profile", null, this.state);
     }
 
     @Override
