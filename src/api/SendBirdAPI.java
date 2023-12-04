@@ -259,4 +259,21 @@ public class SendBirdAPI {
             throw new RuntimeException(e);
         }
     }
+
+    public String createChatChannel(String userID1, String userID2) {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"user_ids\": [\"" + userID1 + "\", \"" + userID2 + "\"]}");
+        Request request = new Request.Builder()
+                .url("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3/group_channels")
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("Api-Token", API_TOKEN)
+                .build();
+
+        try {
+
+        }
+    }
 }
