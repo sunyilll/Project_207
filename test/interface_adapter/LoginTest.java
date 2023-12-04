@@ -146,6 +146,11 @@ public class LoginTest {
             return users.get(username);
         }
 
+        @Override
+        public void saveCurrentUser(String userid) {
+
+        }
+
         public boolean checkPassword(String username, String password) {
             User user = get(username);
             return user != null && user.getPassword().equals(password);

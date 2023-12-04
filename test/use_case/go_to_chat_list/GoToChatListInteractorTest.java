@@ -1,6 +1,6 @@
 package use_case.go_to_chat_list;
 
-import data_access.GoToChatListDataAccessObject;
+import data_access.JsonUserDataAccessObject;
 import entity.ChatChannel;
 import entity.User;
 import interface_adapter.ViewManagerModel;
@@ -25,24 +25,39 @@ class GoToChatListInteractorTest {
     private final ChatChannel channel = new ChatChannel(testMap, currentDateTime, "sendbird_group_channel_12586989_cbf2eb24180c0399084a22b8acb6519571db23f7");
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final GoToChatListViewModel goToChatListViewModel = new GoToChatListViewModel();
-    private final GoToChatListState testState = new GoToChatListState(testUser1, new ArrayList<>());
-    private final GoToChatListInputData testInputData = new GoToChatListInputData(testUser1);
-    private final GoToChatListInputData badTestInputData = new GoToChatListInputData(testUser2);
-    private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>());
-    private final GoToChatListDataAccessObject goToChatListDataAccessObject = new GoToChatListDataAccessObject();
+    private final GoToChatListState testState = new GoToChatListState();
+    private final GoToChatListOutputData testOutputData = new GoToChatListOutputData(new ArrayList<>(), testUser1);
+    private final JsonUserDataAccessObject goToChatListDataAccessObject = new JsonUserDataAccessObject("./users.json");
 
 
     @Test
     void execute() {
+        User testUser1 = new User("test2", "test2", "test2");
+        testState.setUser(testUser1);
         goToChatListViewModel.setState(testState);
+        goToChatListDataAccessObject.saveCurrentUser(testUser1.getUserID());
+
         GoToChatListPresenter goToChatListPresenter = new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
         GoToChatListInteractor testInteractor = new GoToChatListInteractor(goToChatListDataAccessObject, goToChatListPresenter);
-        testInteractor.execute(testInputData);
+        testInteractor.execute();
         assertTrue(goToChatListViewModel.getState().getSuccess());
 
-        goToChatListViewModel.setState(testState);
-        testInteractor.execute(badTestInputData);
-        assertFalse(goToChatListViewModel.getState().getSuccess());
+
+
+    }
+    @Test
+    void testGoToChatListInteractorFail(){
+        try{
+            goToChatListViewModel.setState(testState);
+            GoToChatListPresenter goToChatListPresenter = new GoToChatListPresenter(goToChatListViewModel, viewManagerModel);
+            GoToChatListInteractor testInteractor = new GoToChatListInteractor(null, goToChatListPresenter);
+
+            testInteractor.execute();
+
+
+        } catch (NullPointerException e){
+            fail();
+        }
 
     }
 }

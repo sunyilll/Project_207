@@ -34,8 +34,8 @@ public class SearchCourseResultViewTest {
         f.add(view);
         f.setVisible(true);
     }
-    @Test
-    public void testSearchCourseResultViewUpdate(){
-        // view.updateUsers(currState.getResultUsers(), currState.getResultUserTags());
-    }
+//    @Test
+//    public void testSearchCourseResultViewUpdate(){
+//        // view.updateUsers(currState.getResultUsers(), currState.getResultUserTags());
+//    }
 }

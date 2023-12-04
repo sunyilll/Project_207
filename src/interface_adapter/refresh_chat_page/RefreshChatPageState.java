@@ -62,6 +62,6 @@ public class RefreshChatPageState {
     public String toString() {
         return "RefreshChatPageState{" +
                 "refreshSuccessful=" + refreshSuccessful +
-                ", errorMessage='" + errorMessage +"\"";
+                ", errorMessage='" + errorMessage +"'}";
     }
 }
