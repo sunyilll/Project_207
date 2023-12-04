@@ -7,6 +7,7 @@ import interface_adapter.go_to_channel.GoToChannelViewModel;
 import interface_adapter.go_to_public_profile.GoToPublicProfileController;
 import interface_adapter.go_to_public_profile.GoToPublicProfilePresenter;
 import interface_adapter.go_to_public_profile.GoToPublicProfileViewModel;
+import use_case.GetUserDataAccessInterface;
 import use_case.go_to_channel.GoToChannelDataAccessInterface;
 import use_case.go_to_channel.GoToChannelInputBoundary;
 import use_case.go_to_channel.GoToChannelInteractor;
@@ -27,12 +28,13 @@ public class PublicProfileUseCaseFactory {
             ViewManagerModel viewManagerModel,
             GoToPublicProfileViewModel goToPublicProfileViewModel,
             GoToChannelViewModel goToChannelViewModel,
-            GoToChannelDataAccessInterface goToChannelDataAccessObject) {
+            GoToChannelDataAccessInterface goToChannelDataAccessObject,
+            GetUserDataAccessInterface getUserDAO) {
 
         try {
             GoToChannelController goToChannelController = createGoToChannelUseCase(viewManagerModel,
                     goToChannelViewModel, goToChannelDataAccessObject);
-            return new PublicProfileView(goToPublicProfileViewModel, goToChannelViewModel, goToChannelController, viewManagerModel);
+            return new PublicProfileView(goToPublicProfileViewModel, goToChannelViewModel, goToChannelController, viewManagerModel, getUserDAO);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
