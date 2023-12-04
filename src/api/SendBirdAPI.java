@@ -260,7 +260,7 @@ public class SendBirdAPI {
         }
     }
 
-    public String createChatChannel(String userID1, String userID2) {
+    public String createChatChannel(String userID1, String userID2) { //creates chat channel and returns channel url
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -273,7 +273,27 @@ public class SendBirdAPI {
                 .build();
 
         try {
+            Response response = client.newCall(request).execute();
+            System.out.println(response);
+            JSONObject responseBody = new JSONObject(response.body().string());
+            System.out.println(responseBody);
 
+
+            if (responseBody.has("name")) {
+                System.out.println("successful");
+                return responseBody.getString("channel_url");
+
+            } else {
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+
+
+
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
         }
+
     }
+
 }
