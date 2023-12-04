@@ -47,9 +47,10 @@ class GoToPersonalProfileInteractorTest {
             GoToPersonalProfileInteractor testInteractor = new GoToPersonalProfileInteractor(goToPersonalProfilePresenter, null);
 
             testInteractor.execute();
+            fail();
 
         } catch (NullPointerException e){
-            fail();
+
         }
 
     }
