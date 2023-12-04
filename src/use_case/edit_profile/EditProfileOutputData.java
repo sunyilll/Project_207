@@ -1,4 +1,4 @@
-package use_case.go_to_public_profile;
+package use_case.edit_profile;
 
 import entity.User;
 
@@ -7,24 +7,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoToPublicProfileOutputData {
+public class EditProfileOutputData {
     private String userid = null;
     private String nickname = null;
     private String pronouns = null;
     private List<String> personalityTags = new ArrayList<>();
     private String description = null;
-    private float tutorRating;
     private List<String> coursesToTeach = new ArrayList<>();
     private String tutorAvailability;
     private Map<String, Integer> expectedWage = new HashMap<>();
     private List<String> preferredModeOfTeaching = new ArrayList<>();
-    private float studentRating;
     private List<String> coursesToLearn = new ArrayList<>();
     private Map<String, Integer> expectedPrice = new HashMap<>();
     private List<String> preferredModeOfLearning = new ArrayList<>();
 
 
-    public GoToPublicProfileOutputData(User user) {
+    public EditProfileOutputData(User user) {
         if (user == null) {
             return;
         }
@@ -33,12 +31,10 @@ public class GoToPublicProfileOutputData {
         this.pronouns = user.getPronouns();
         this.personalityTags = user.getPersonalityTags();
         this.description = user.getDescription();
-        this.tutorRating = user.getTutorRating();
         this.coursesToTeach = user.getCoursesToTeach();
         this.tutorAvailability = user.getTutorAvailability();
         this.expectedWage = user.getExpectedWage();
         this.preferredModeOfTeaching = user.getPreferredModeOfTeaching();
-        this.studentRating = user.getStudentRating();
         this.coursesToLearn = user.getCoursesToLearn();
         this.expectedPrice = user.getExpectedPrice();
         this.preferredModeOfLearning = user.getPreferredModeOfLearning();
@@ -59,9 +55,6 @@ public class GoToPublicProfileOutputData {
     public String getDescription() {
         return description;
     }
-    public float getTutorRating() {
-        return tutorRating;
-    }
     public List<String> getCoursesToTeach() {
         return coursesToTeach;
     }
@@ -73,9 +66,6 @@ public class GoToPublicProfileOutputData {
     }
     public List<String> getPreferredModeOfTeaching() {
         return preferredModeOfTeaching;
-    }
-    public float getStudentRating() {
-        return studentRating;
     }
     public List<String> getCoursesToLearn() {
         return coursesToLearn;
