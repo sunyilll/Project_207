@@ -99,7 +99,9 @@ public class User implements Student, Tutor{
     }
 
     public boolean addCourseToTeach(String courseCode){
-        this.coursesToTeach.add(courseCode);
+        if (!this.coursesToTeach.contains(courseCode)){
+            this.coursesToTeach.add(courseCode);
+        }
         return true;
     }
 
@@ -166,7 +168,10 @@ public class User implements Student, Tutor{
     }
 
     public boolean addCourseToLearn(String courseCode){
-        this.coursesToLearn.add(courseCode);
+        if (!coursesToTeach.contains(courseCode)){
+            this.coursesToLearn.add(courseCode);
+        }
+
         return true;
     }
 
