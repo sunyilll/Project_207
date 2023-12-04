@@ -43,11 +43,6 @@ public class PersonalProfileView extends ProfileView implements ActionListener, 
         buttons.setLayout(new GridLayout(1, 2));
         mainPanel.add(buttons);
 
-//        JPanel leftAlignedContent = new JPanel();
-//        leftAlignedContent.add(content);
-//        leftAlignedContent.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-
         this.setLayout(new BorderLayout());
         this.add(homeBar, BorderLayout.SOUTH);
         this.add(mainPanel, BorderLayout.CENTER);
