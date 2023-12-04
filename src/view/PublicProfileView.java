@@ -13,6 +13,9 @@ import interface_adapter.go_to_public_profile.GoToPublicProfileController;
 import interface_adapter.go_to_public_profile.GoToPublicProfileState;
 import interface_adapter.go_to_public_profile.GoToPublicProfileViewModel;
 import interface_adapter.go_to_search.GoToSearchController;
+import entity.User;
+import entity.ChatChannel;
+import use_case.GetUserDataAccessInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PublicProfileView extends ProfileView implements ActionListener, PropertyChangeListener {
     public static final String viewName = "public profile";
@@ -29,13 +35,15 @@ public class PublicProfileView extends ProfileView implements ActionListener, Pr
     private final ViewManagerModel viewManagerModel;
     private final JButton message;
     private final JButton back;
+    private final GetUserDataAccessInterface userDAO;
 
     public PublicProfileView(GoToPublicProfileViewModel goToPublicProfileViewModel,
                              GoToChannelViewModel goToChannelViewModel,
                              GoToChannelController goToChannelController,
-                             ViewManagerModel viewManagerModel) {
+                             ViewManagerModel viewManagerModel,
+                             GetUserDataAccessInterface getUserDataAccessInterface) {
         super(goToPublicProfileViewModel);
-
+        this.userDAO = getUserDataAccessInterface;
         this.goToPublicProfileViewModel = goToPublicProfileViewModel;
         this.goToChannelViewModel = goToChannelViewModel;
         this.goToChannelController = goToChannelController;
@@ -62,8 +70,8 @@ public class PublicProfileView extends ProfileView implements ActionListener, Pr
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(back)){
-                    // TODO: Seems like it doesn't work??
                     viewManagerModel.setActiveView("search course result");
+                    viewManagerModel.firePropertyChanged();
                     System.out.println("back button pressed");
                     }
                 }
@@ -74,9 +82,15 @@ public class PublicProfileView extends ProfileView implements ActionListener, Pr
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(message)){
                     // TODO: Implement me
-                    System.out.println("message button pressed");
-
-                    // goToChannelController.execute();
+                    GoToPublicProfileState s = goToPublicProfileViewModel.getState();
+                    System.out.println(s.getUserid());
+                    User me = userDAO.getCurrentUser();
+                    Map<String, User> testMap = new HashMap<>();
+                    testMap.put(me.getUserID(), me);
+                    testMap.put(s.getUserid(), userDAO.get(s.getUserid()));
+                    LocalDateTime currentDateTime = LocalDateTime.now();
+                    ChatChannel channel = new ChatChannel(testMap, currentDateTime, "DNE");
+                    goToChannelController.execute(me, channel);
                     }
                 }
             }
