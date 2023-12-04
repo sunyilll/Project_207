@@ -1,4 +1,4 @@
-package interface_adapter.go_to_chatl_list;
+package interface_adapter.go_to_chat_list;
 
 import interface_adapter.ViewManagerModel;
 import use_case.go_to_chat_list.GoToChatListOutputBoundary;

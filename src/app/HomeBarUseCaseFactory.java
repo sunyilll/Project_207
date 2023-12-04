@@ -1,9 +1,9 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.go_to_chatl_list.GoToChatListController;
-import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
-import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import interface_adapter.go_to_chat_list.GoToChatListController;
+import interface_adapter.go_to_chat_list.GoToChatListPresenter;
+import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileController;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfilePresenter;
 import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;

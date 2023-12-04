@@ -1,6 +1,5 @@
-package interface_adapter.go_to_chatl_list;
+package interface_adapter.go_to_chat_list;
 
-import entity.User;
 import use_case.go_to_chat_list.GoToChatListInputBoundary;
 
 public class GoToChatListController {
