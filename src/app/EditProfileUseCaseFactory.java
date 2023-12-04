@@ -8,6 +8,7 @@ import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
 import interface_adapter.save_profile.SaveProfileController;
 import interface_adapter.save_profile.SaveProfilePresenter;
 import interface_adapter.save_profile.SaveProfileViewModel;
+import use_case.add_course_to_profile.AddCourseToProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileDataAccessInterface;
 import use_case.go_to_personal_profile.GoToPersonalProfileInputBoundary;
 import use_case.go_to_personal_profile.GoToPersonalProfileInteractor;
@@ -29,13 +30,14 @@ public class EditProfileUseCaseFactory {
             SaveProfileViewModel saveProfileViewModel,
             SaveProfileDataAccessInterface saveProfileDataAccessObject,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
-            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject) {
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
+            AddCourseToProfileDataAccessInterface courseDAO) {
 
 
         try {
             GoToPersonalProfileController goToPersonalProfileController = createGoToPersonalProfileUseCase(viewManagerModel,
-                    goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject);
-            SaveProfileController saveProfileController = createSaveProfileUseCase(viewManagerModel, saveProfileViewModel, saveProfileDataAccessObject);
+                    goToPersonalProfileViewModel, goToPersonalProfileDataAccessObject, courseDAO);
+            SaveProfileController saveProfileController = createSaveProfileUseCase(viewManagerModel, saveProfileViewModel, saveProfileDataAccessObject, courseDAO);
             return new ProfileEditView(viewManagerModel, saveProfileController, saveProfileViewModel, goToPersonalProfileViewModel, goToPersonalProfileController, editProfileViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -47,7 +49,8 @@ public class EditProfileUseCaseFactory {
     private static GoToPersonalProfileController createGoToPersonalProfileUseCase(
             ViewManagerModel viewManagerModel,
             GoToPersonalProfileViewModel goToPersonalProfileViewModel,
-            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject) throws IOException {
+            GoToPersonalProfileDataAccessInterface goToPersonalProfileDataAccessObject,
+            AddCourseToProfileDataAccessInterface courseDAO) throws IOException {
 
         GoToPersonalProfileOutputBoundary personalProfilePresenter =
                 new GoToPersonalProfilePresenter(goToPersonalProfileViewModel, viewManagerModel);
@@ -60,13 +63,14 @@ public class EditProfileUseCaseFactory {
     private static SaveProfileController createSaveProfileUseCase(
             ViewManagerModel viewManagerModel,
             SaveProfileViewModel saveProfileViewModel,
-            SaveProfileDataAccessInterface saveProfileDataAccessObject) throws IOException {
+            SaveProfileDataAccessInterface saveProfileDataAccessObject,
+            AddCourseToProfileDataAccessInterface courseDAO) throws IOException {
 
         SaveProfileOutputBoundary saveProfilePresenter =
                 new SaveProfilePresenter(saveProfileViewModel, viewManagerModel);
 
         SaveProfileInputBoundary saveProfileInteractor =
-                new SaveProfileInteractor(saveProfilePresenter, saveProfileDataAccessObject);
+                new SaveProfileInteractor(saveProfilePresenter, saveProfileDataAccessObject, courseDAO);
 
         return new SaveProfileController(saveProfileInteractor);
     }

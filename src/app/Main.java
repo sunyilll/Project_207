@@ -144,7 +144,7 @@ public class Main {
                 goToPublicProfileViewModel, goToChannelViewModel, jsonUserDataAccessObject, jsonUserDataAccessObject);
         views.add(publicProfileView, publicProfileView.viewName);
 
-        ProfileEditView profileEditView = EditProfileUseCaseFactory.create(viewManagerModel, editProfileViewModel, saveProfileViewModel, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject);
+        ProfileEditView profileEditView = EditProfileUseCaseFactory.create(viewManagerModel, editProfileViewModel, saveProfileViewModel, jsonUserDataAccessObject, goToPersonalProfileViewModel, jsonUserDataAccessObject, jsonCourseDataAccessObject);
         views.add(profileEditView, profileEditView.viewName);
 
         ChannelView channelView = ChannelUseCasesFactory.create(viewManagerModel, sendMessageViewModel, sendMessageDataAccessObject, refreshChatPageViewModel, refreshChatPageDataAccessObject, goToChatListViewModel, jsonUserDataAccessObject, goToChannelViewModel);
