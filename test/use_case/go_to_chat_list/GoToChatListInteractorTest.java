@@ -4,9 +4,9 @@ import data_access.JsonUserDataAccessObject;
 import entity.ChatChannel;
 import entity.User;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.go_to_chatl_list.GoToChatListPresenter;
-import interface_adapter.go_to_chatl_list.GoToChatListState;
-import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
+import interface_adapter.go_to_chat_list.GoToChatListPresenter;
+import interface_adapter.go_to_chat_list.GoToChatListState;
+import interface_adapter.go_to_chat_list.GoToChatListViewModel;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

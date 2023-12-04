@@ -1,5 +1,6 @@
 package api;
 
+
 import kotlin.Pair;
 import entity.ChatChannel;
 import entity.User;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 
-public class SendBirdAPI {
+public class testingApi {
     // TODO: Change all the concrete API info to be passed in by parameter, initialized by constructor
 
     private final String API_URL; // = "https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3";
@@ -28,7 +29,7 @@ public class SendBirdAPI {
 //        return API_TOKEN;
 //    }
 
-    public SendBirdAPI(String apiURL, String applicationId, String apiToken) {
+    public testingApi(String apiURL, String applicationId, String apiToken) {
         this.API_URL = apiURL;
         this.applicationId = applicationId;
         this.API_TOKEN = apiToken;
@@ -258,5 +259,12 @@ public class SendBirdAPI {
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        testingApi api = new testingApi("https://api-1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5.sendbird.com/v3",
+                "1F4C3D4F-01DB-4A99-8704-BE4CB1FE3AE5",
+                "0ecfef313ab2989479b70e30e3ee37a1d105b770");
+        api.setUser("test4", "test4");
     }
 }
