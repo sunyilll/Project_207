@@ -16,7 +16,7 @@ public class GoToChannelPresenter implements GoToChannelOutputBoundary {
         goToChannelState.setSuccess(true);
         goToChannelState.setCurrentChannel(goToChannelOutputData.getCurrentChannel());
         goToChannelState.setCurrentUser(goToChannelOutputData.getCurrentUser());
-        System.out.println(goToChannelState.getCurrentUser().getUserID());
+//        System.out.println(goToChannelState.getCurrentUser().getUserID());
 
         this.goToChannelViewModel.setState(goToChannelState);
         goToChannelViewModel.firePropertyChanged();
@@ -30,7 +30,6 @@ public class GoToChannelPresenter implements GoToChannelOutputBoundary {
         goToChannelState.setSuccess(false);
         goToChannelState.setErrorMessage(error);
         goToChannelViewModel.setState(goToChannelState);
-        System.out.println(goToChannelState.getSuccess());
         goToChannelViewModel.firePropertyChanged();
     }
 }
