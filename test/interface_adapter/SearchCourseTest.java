@@ -220,7 +220,7 @@ class SearchCourseTest {
                     }
 
                     @Override
-                    public boolean setPreferredModeOfTeaching(String mode) {
+                    public boolean addPreferredModeOfTeaching(String mode) {
                         return false;
                     }
 
@@ -283,10 +283,9 @@ class SearchCourseTest {
                     }
 
                     @Override
-                    public boolean setPreferredModeOfLearning(String mode) {
+                    public boolean addPreferredModeOfLearning(String mode) {
                         return false;
                     }
-
                     @Override
                     public String getUserID() {
                         return null;
