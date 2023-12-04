@@ -85,7 +85,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
 
         // Add some JPanels to the container panel
         for (int i = 0; i < 100; i++) {
-            MessagePanel innerPanel = new MessagePanel("User1", "hehe");
+            MessagePanel innerPanel = new MessagePanel(" ", " ");
             innerPanel.setPreferredSize(new Dimension(350, 50));
             innerPanel.setBackground(Color.LIGHT_GRAY);
             innerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -109,11 +109,11 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)){
                             String previousView = viewManagerModel1.popPreviousView();
-                            if (previousView.equals("chatList")) {
-                                GoToChatListState currState = goToChatListViewModel1.getState();
-                                goToChatListController1.execute();
-                                viewManagerModel1.addPreviousView("channel");
-                            }
+//                            if (previousView.equals("chatList")) {
+                            GoToChatListState currState = goToChatListViewModel1.getState();
+                            goToChatListController1.execute();
+                            viewManagerModel1.addPreviousView("channel");
+//                            }
                         }
                     }
                 }
