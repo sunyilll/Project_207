@@ -77,22 +77,6 @@ public class JsonCourseDataAccessObject implements SearchCourseDataAccessInterfa
         JsonUserDataAccessObject juser = new JsonUserDataAccessObject("./users.json");
         JsonCourseDataAccessObject j = new JsonCourseDataAccessObject("./courses.json", new CourseFactory(juser));
         // j.save(new Course("csc207", "Learning"));
-        User kevin2 = new User("bob", "Bob", "123");
-        User jack2 = new User("nicle", "Nicle", "123");
-        User ross2 = new User("dan", "Dan", "1243");
-        User lucy2 = new User("kitty", "Kitty", "124");
-
-
-        juser.save(kevin2);
-        juser.save(jack2);
-        juser.save(lucy2);
-        juser.save(ross2);
-
-        j.addTutor(ross2, "csc207");
-        j.addTutor(kevin2, "csc207");
-        j.addStudent(jack2, "csc207");
-        j.addTutor(lucy2, "csc207");
-
     }
 
     @Override
