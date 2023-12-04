@@ -176,6 +176,7 @@ public class ChannelView extends JPanel implements ActionListener, PropertyChang
                                     currentState.getUser_id(),
                                     currentState.getChannel()
                             );
+                            messageInputField.setText("");
                         }
                     }
                 }
