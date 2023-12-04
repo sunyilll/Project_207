@@ -14,55 +14,26 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class PersonalProfileView extends JPanel implements ActionListener, PropertyChangeListener {
+public class PersonalProfileView extends ProfileView implements ActionListener, PropertyChangeListener {
     public static final String viewName = "personal profile";
-    private final GoToChatListViewModel goToChatListViewModel;
-    private final GoToChatListController goToChatListController;
     private final GoToPersonalProfileViewModel goToPersonalProfileViewModel;
-    private final GoToPersonalProfileController goToPersonalProfileController;
     private final JPanel homeBar;
     private final JButton editProfile;
     private final JButton signOut;
-
-    private JLabel nickName;
-    private JLabel descriptionText;
 
     public PersonalProfileView(GoToPersonalProfileViewModel goToPersonalProfileViewModel,
                                GoToPersonalProfileController personalProfileController,
                                GoToChatListViewModel goToChatListViewModel,
                                GoToChatListController goToChatListController,
                                GoToSearchController goToSearchController) {
-        this.goToChatListViewModel = goToChatListViewModel;
-        this.goToChatListViewModel.addPropertyChangeListener(this);
-        this.goToChatListController = goToChatListController;
+        super(goToPersonalProfileViewModel);
+
         this.goToPersonalProfileViewModel = goToPersonalProfileViewModel;
-        this.goToPersonalProfileViewModel.addPropertyChangeListener(this);
-        this.goToPersonalProfileController = personalProfileController;
+        goToChatListViewModel.addPropertyChangeListener(this);
+        goToPersonalProfileViewModel.addPropertyChangeListener(this);
 
         homeBar = new HomeBar(goToPersonalProfileViewModel, personalProfileController, goToChatListViewModel,
                 goToChatListController, goToSearchController);
-
-        nickName = new JLabel(goToPersonalProfileViewModel.nicknameText);
-        nickName.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-
-        JLabel descriptionTitle = new JLabel(GoToPersonalProfileViewModel.DESCRIPTION_LABEL);
-        content.add(descriptionTitle);
-        descriptionText = new JLabel(goToPersonalProfileViewModel.descriptionText);
-        content.add(descriptionText);
-        JLabel personalityTags = new JLabel(GoToPersonalProfileViewModel.PERSONALITY_TAGS_LABEL);
-        content.add(personalityTags);
-        // TODO: add personality tags
-        JLabel coursesToTeach = new JLabel(GoToPersonalProfileViewModel.COURSES_TO_TEACH_LABEL);
-        content.add(coursesToTeach);
-        JLabel tutorRating = new JLabel(GoToPersonalProfileViewModel.TUTOR_RATING_LABEL);
-        content.add(tutorRating);
-        JLabel coursesToLearn = new JLabel(GoToPersonalProfileViewModel.COURSES_TO_LEARN_LABEL);
-        content.add(coursesToLearn);
-        JLabel studentRating = new JLabel(GoToPersonalProfileViewModel.STUDENT_RATING_LABEL);
-        content.add(studentRating);
 
         JPanel buttons = new JPanel();
         editProfile = new JButton(GoToPersonalProfileViewModel.EDIT_PROFILE_BUTTON_LABEL);
@@ -70,17 +41,12 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
         signOut = new JButton(GoToPersonalProfileViewModel.SIGN_OUT_BUTTON_LABEL);
         buttons.add(signOut);
         buttons.setLayout(new GridLayout(1, 2));
-
-        JPanel leftAlignedContent = new JPanel();
-        leftAlignedContent.add(content);
-        leftAlignedContent.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        JPanel mainPanel = new JPanel();
-
-        mainPanel.add(nickName);
-        mainPanel.add(leftAlignedContent);
         mainPanel.add(buttons);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+//        JPanel leftAlignedContent = new JPanel();
+//        leftAlignedContent.add(content);
+//        leftAlignedContent.setLayout(new FlowLayout(FlowLayout.LEFT));
+
 
         this.setLayout(new BorderLayout());
         this.add(homeBar, BorderLayout.SOUTH);
@@ -89,16 +55,22 @@ public class PersonalProfileView extends JPanel implements ActionListener, Prope
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO
+//        if (e.getSource() == editProfile) {
+//            goToPersonalProfileViewModel.setState(GoToPersonalProfileState.EDIT_PROFILE);
+//        } else if (e.getSource() == signOut) {
+//            goToPersonalProfileViewModel.setState(GoToPersonalProfileState.SIGN_OUT);
+//        }
+
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("personal profile")) {
             GoToPersonalProfileState state = (GoToPersonalProfileState) evt.getNewValue();
+
             goToPersonalProfileViewModel.setState(state);
-//            nickName.setText(goToPersonalProfileViewModel.nicknameText);
-            descriptionText.setText(goToPersonalProfileViewModel.descriptionText);
+            updateMainPanel();
+
         }
     }
 }

@@ -1,13 +1,11 @@
-package interface_adapter.go_to_personal_profile;
-
-import entity.User;
+package interface_adapter.go_to_public_profile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoToPersonalProfileState {
+public class GoToPublicProfileState {
     private String userid = null;
     private String nickname = null;
     private String pronouns = null;
@@ -23,7 +21,7 @@ public class GoToPersonalProfileState {
     private Map<String, Integer> expectedPrice = new HashMap<>();
     private List<String> preferredModeOfLearning = new ArrayList<>();
 
-    public GoToPersonalProfileState(GoToPersonalProfileState copy) {
+    public GoToPublicProfileState(GoToPublicProfileState copy) {
         this.userid = copy.userid;
         this.nickname = copy.nickname;
         this.pronouns = copy.pronouns;
@@ -39,7 +37,7 @@ public class GoToPersonalProfileState {
         this.expectedPrice = copy.expectedPrice;
         this.preferredModeOfLearning = copy.preferredModeOfLearning;
     }
-    public GoToPersonalProfileState() {}
+    public GoToPublicProfileState() {}
 
     public String getUserid() {
         return userid;
@@ -125,4 +123,6 @@ public class GoToPersonalProfileState {
     public void setPreferredModeOfLearning(List<String> preferredModeOfLearning) {
         this.preferredModeOfLearning = preferredModeOfLearning;
     }
+
+    // TODO: Remove these
 }

@@ -15,7 +15,6 @@ public class GoToPersonalProfileInteractor implements GoToPersonalProfileInputBo
         User user = dataAccessObject.getCurrentUser();
         if (user == null) {
             presenter.prepareFailView("User not logged in.");
-            return;
         } else {
             GoToPersonalProfileOutputData outputData = new GoToPersonalProfileOutputData(user);
             presenter.prepareSuccessView(outputData);

@@ -11,7 +11,7 @@
 //import interface_adapter.go_to_channel.GoToChannelViewModel;
 //import interface_adapter.go_to_chatl_list.GoToChatListState;
 //import interface_adapter.go_to_chatl_list.GoToChatListViewModel;
-//import interface_adapter.go_to_personal_profile.GoToPersonalProfileViewModel;
+//import interface_adapter.go_to_personal_profile.GoToPublicProfileViewModel;
 //import interface_adapter.refresh_chat_page.RefreshChatPageState;
 //import interface_adapter.refresh_chat_page.RefreshChatPageViewModel;
 //import interface_adapter.search_course.SearchCourseViewModel;
@@ -93,7 +93,7 @@
 //
 //
 //
-//        GoToPersonalProfileViewModel goToPersonalProfileViewModel = new GoToPersonalProfileViewModel();
+//        GoToPublicProfileViewModel goToPersonalProfileViewModel = new GoToPublicProfileViewModel();
 //
 //
 //        sendMessageDataAccessObject = new SendMessageDataAccessObject(
